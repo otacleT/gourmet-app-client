@@ -25,13 +25,19 @@ const Map: FC = () => {
   }, []);
 
   return (
-    <ReactMapGL
-      mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_GL_ACCESS_TOKEN}
-      style={{ width: "100vw", height: "100vh" }}
-      {...viewState}
-      onMove={(evt) => setViewState(evt.viewState)}
-      mapStyle="mapbox://styles/mapbox/satellite-streets-v11"
-    />
+    <div className="flex w-full">
+      <div className="w-[20%]">
+        <h1>Gourmet APP</h1>
+        <p>This is the awesome app!!!</p>
+      </div>
+      <ReactMapGL
+        mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_GL_ACCESS_TOKEN}
+        style={{ width: "80%", height: "100vh" }}
+        {...viewState}
+        onMove={(evt) => setViewState(evt.viewState)}
+        mapStyle="mapbox://styles/mapbox/satellite-streets-v11"
+      />
+    </div>
   );
 };
 
