@@ -1,28 +1,24 @@
 import { useEthers } from "@usedapp/core";
-import { BigNumber, ethers } from "ethers";
 import type { NextPage } from "next";
-import { useState } from "react";
-import ReactMapGL, { Marker } from "react-map-gl";
+import { useCallback, useState } from "react";
+import ReactMapGL, { Marker, Popup } from "react-map-gl";
 import { useAddMap } from "../hook/AddMap";
 import { useMap } from "../hook/Map";
+import { mapItem } from "../hook/Map/Map";
 
 const Home: NextPage = () => {
   const { activateBrowserWallet, account } = useEthers();
   const { maps } = useMap();
+  const [selected, setSelected] = useState<mapItem | null>(null);
   const { loading, success, error, send } = useAddMap();
   const [viewport, setViewport] = useState({
     latitude: 35.6762,
     longitude: 139.6503,
     zoom: 10,
   });
-  const handleAdd = async () => {
-    await send(
-      "足立区",
-      ethers.BigNumber.from(35.775),
-      ethers.BigNumber.from(139.8044),
-      5
-    );
-  };
+  const handleAdd = useCallback(async () => {
+    await send("足立区", 35775, 1398044, 5);
+  }, []);
 
   return (
     <div className="relative">
@@ -35,19 +31,28 @@ const Home: NextPage = () => {
       >
         {maps.map((item) => (
           <Marker
-            key={item.latitude}
-            latitude={ethers.BigNumber.from(item.latitude).toNumber()}
-            longitude={ethers.BigNumber.from(item.longitude).toNumber()}
+            key={Math.random()}
+            latitude={item.latitude / 1000}
+            longitude={item.longitude / 10000}
           >
-            {/* <h2>{item.name}</h2>
-            <ul>
-              <li>{String(item.latitude)}</li>
-              <li>{String(item.longitude)}</li>
-            </ul>
-            <p>評価：{String(item.star)}</p> */}
-            <button className="w-[20px] h-[20px] rounded-full bg-pink-600"></button>
+            <button
+              className="w-[20px] h-[20px] rounded-full bg-pink-600"
+              onClick={() => {
+                setSelected(item);
+              }}
+            ></button>
           </Marker>
         ))}
+        {selected && (
+          <Popup
+            latitude={35.6762}
+            longitude={139.6503}
+            anchor="bottom"
+            onClose={() => handleAdd()}
+          >
+            test
+          </Popup>
+        )}
       </ReactMapGL>
       {account ? (
         <div className="absolute top-2 right-2">
