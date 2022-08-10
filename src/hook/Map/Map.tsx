@@ -17,9 +17,9 @@ export const useMap = () => {
       logs?.value?.map((log) => {
         const floor: mapItem = {
           name: log.data.name,
-          latitude: log.data.latitude,
-          longitude: log.data.longitude,
-          star: log.data.star,
+          latitude: Number(log.data.latitude),
+          longitude: Number(log.data.longitude),
+          star: Number(log.data.star),
         };
         return floor;
       }) || []
