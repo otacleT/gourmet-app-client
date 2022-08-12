@@ -18,7 +18,7 @@ const Home: NextPage = () => {
   });
   const handleAdd = useCallback(async () => {
     await send("足立区", 35775, 1398044, 5);
-  }, []);
+  }, [account]);
 
   return (
     <div className="relative">
@@ -59,7 +59,7 @@ const Home: NextPage = () => {
           <p className="px-4 py-2 bg-black text-white text-lg">Connected</p>
           <button
             className="px-4 py-2 bg-black text-white text-lg mt-4"
-            onClick={() => handleAdd()}
+            onClick={handleAdd}
           >
             add shop
           </button>
