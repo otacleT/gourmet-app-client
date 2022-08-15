@@ -10,6 +10,7 @@ const Home: NextPage = () => {
   const { activateBrowserWallet, account } = useEthers();
   const { maps } = useMap();
   const [selected, setSelected] = useState<mapItem | null>(null);
+  const [showPopup, setShowPopup] = useState(false);
   const { loading, success, error, send } = useAddMap();
   const [viewport, setViewport] = useState({
     latitude: 35.6762,
@@ -43,26 +44,32 @@ const Home: NextPage = () => {
             ></button>
           </Marker>
         ))}
-        {selected && (
+        <Marker key={Math.random()} latitude={35.6762} longitude={139.6503}>
+          <button
+            className="w-[20px] h-[20px] rounded-full bg-pink-600"
+            onClick={() => setShowPopup(false)}
+          ></button>
+        </Marker>
+        {showPopup && (
           <Popup
             latitude={35.6762}
             longitude={139.6503}
             anchor="bottom"
-            onClose={() => handleAdd()}
+            onClose={() => setShowPopup(false)}
           >
-            test
+            You are here
           </Popup>
         )}
       </ReactMapGL>
       {account ? (
         <div className="absolute top-2 right-2">
-          <p className="px-4 py-2 bg-black text-white text-lg">Connected</p>
+          {/* <p className="px-4 py-2 bg-black text-white text-lg">Connected</p>
           <button
             className="px-4 py-2 bg-black text-white text-lg mt-4"
             onClick={handleAdd}
           >
             add shop
-          </button>
+          </button> */}
         </div>
       ) : (
         <button
