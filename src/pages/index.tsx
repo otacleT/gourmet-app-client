@@ -10,7 +10,6 @@ const Home: NextPage = () => {
   const { activateBrowserWallet, account } = useEthers();
   const { maps } = useMap();
   const [selected, setSelected] = useState<mapItem | null>(null);
-  const [showPopup, setShowPopup] = useState(false);
   const { loading, success, error, send } = useAddMap();
   const [viewport, setViewport] = useState({
     latitude: 35.6762,
@@ -35,27 +34,21 @@ const Home: NextPage = () => {
             key={Math.random()}
             latitude={item.latitude / 1000}
             longitude={item.longitude / 10000}
+            anchor="top"
+            onClick={(e) => {
+              e.originalEvent.stopPropagation();
+              setSelected(item);
+            }}
           >
-            <button
-              className="w-[20px] h-[20px] rounded-full bg-pink-600"
-              onClick={() => {
-                setSelected(item);
-              }}
-            ></button>
+            <button className="w-[20px] h-[20px] rounded-full bg-pink-600"></button>
           </Marker>
         ))}
-        <Marker key={Math.random()} latitude={35.6762} longitude={139.6503}>
-          <button
-            className="w-[20px] h-[20px] rounded-full bg-pink-600"
-            onClick={() => setShowPopup(false)}
-          ></button>
-        </Marker>
-        {showPopup && (
+        {selected && (
           <Popup
-            latitude={35.6762}
-            longitude={139.6503}
+            latitude={selected.latitude / 1000}
+            longitude={selected.longitude / 10000}
             anchor="bottom"
-            onClose={() => setShowPopup(false)}
+            onClose={() => setSelected(null)}
           >
             You are here
           </Popup>
@@ -63,13 +56,13 @@ const Home: NextPage = () => {
       </ReactMapGL>
       {account ? (
         <div className="absolute top-2 right-2">
-          {/* <p className="px-4 py-2 bg-black text-white text-lg">Connected</p>
+          <p className="px-4 py-2 bg-black text-white text-lg">Connected</p>
           <button
             className="px-4 py-2 bg-black text-white text-lg mt-4"
             onClick={handleAdd}
           >
             add shop
-          </button> */}
+          </button>
         </div>
       ) : (
         <button
