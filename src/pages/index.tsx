@@ -55,14 +55,8 @@ const Home: NextPage = () => {
         )}
       </ReactMapGL>
       {account ? (
-        <div className="absolute top-2 right-2">
-          <p className="px-4 py-2 bg-black text-white text-lg">Connected</p>
-          <button
-            className="px-4 py-2 bg-black text-white text-lg mt-4"
-            onClick={handleAdd}
-          >
-            add shop
-          </button>
+        <div className="absolute top-2 right-2 px-4 py-2 bg-black text-white text-lg">
+          Connected
         </div>
       ) : (
         <button
@@ -70,6 +64,14 @@ const Home: NextPage = () => {
           onClick={activateBrowserWallet}
         >
           Connect wallet
+        </button>
+      )}
+      {account && (
+        <button
+          className="absolute bottom-6 right-2 px-4 py-2 bg-black text-white text-lg mt-4"
+          onClick={handleAdd}
+        >
+          add shop
         </button>
       )}
     </div>
