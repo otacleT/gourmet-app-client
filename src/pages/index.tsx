@@ -14,6 +14,7 @@ import { useMap } from "../hook/Map";
 import { mapItem } from "../hook/Map/Map";
 import { FaMapMarker } from "react-icons/fa";
 import { IconContext } from "react-icons";
+import { useAddMap } from "../hook/AddMap";
 
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_GL_ACCESS_TOKEN;
 
@@ -29,11 +30,14 @@ const Home: NextPage = () => {
   const mapRef = useRef(null);
   const [show, setShow] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
+  const { loading, success, error, send } = useAddMap();
   const [viewport, setViewport] = useState<Test>({
     latitude: 35.6762,
     longitude: 139.6503,
     zoom: 8,
   });
+  console.log(maps);
+
   const [search, setSearch] = useState<mapItem>({
     name: "",
     latitude: 0,
@@ -57,6 +61,15 @@ const Home: NextPage = () => {
     [handleViewportChange]
   );
 
+  const handleAdd = useCallback(async () => {
+    await send(
+      search.name,
+      Math.round(search.latitude * 10000000),
+      Math.round(search.longitude * 10000000),
+      search.star
+    );
+  }, [account, search]);
+
   const handleResult = useCallback(
     (e: any) => {
       setSearch((prevItems) => {
@@ -68,7 +81,6 @@ const Home: NextPage = () => {
         };
         return newItems;
       });
-      console.log(e);
 
       setShow(true);
     },
@@ -95,6 +107,22 @@ const Home: NextPage = () => {
           onResult={handleResult}
           marker={true}
         />
+        {maps.map((item) => (
+          <Marker
+            key={Math.random()}
+            latitude={item.latitude / 10000000}
+            longitude={item.longitude / 10000000}
+          >
+            <IconContext.Provider
+              value={{
+                color: "#000000",
+                className: "text-4xl cursor-pointer",
+              }}
+            >
+              <FaMapMarker />
+            </IconContext.Provider>
+          </Marker>
+        ))}
         {show && (
           <Marker
             className="w-[36px] h-[36px]"
@@ -132,6 +160,12 @@ const Home: NextPage = () => {
           <li>{search.latitude}</li>
           <li>{search.longitude}</li>
         </ul>
+        <button
+          className="w-full p-2 text-lg text-white bg-black"
+          onClick={handleAdd}
+        >
+          Add blockchain
+        </button>
       </Drawer>
       {account ? (
         <div className="absolute top-2 right-2 px-4 py-2 bg-black text-white text-lg">
