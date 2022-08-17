@@ -3,6 +3,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import "../styles/globals.css";
 import { DAppProvider, Hardhat } from "@usedapp/core";
 import Head from "next/head";
+import { MantineProvider } from "@mantine/core";
 
 const config = {
   multicallAddresses: {
@@ -18,7 +19,16 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta name="description" content="Gourmet App" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Component {...pageProps} />
+      <MantineProvider
+        withGlobalStyles
+        withNormalizeCSS
+        theme={{
+          /** Put your mantine theme override here */
+          colorScheme: "light",
+        }}
+      >
+        <Component {...pageProps} />
+      </MantineProvider>
     </DAppProvider>
   );
 }
