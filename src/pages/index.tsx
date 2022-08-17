@@ -12,6 +12,8 @@ import { useEthers } from "@usedapp/core";
 import { Drawer } from "@mantine/core";
 import { useMap } from "../hook/Map";
 import { mapItem } from "../hook/Map/Map";
+import { FaMapMarker } from "react-icons/fa";
+import { IconContext } from "react-icons";
 
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_GL_ACCESS_TOKEN;
 
@@ -66,6 +68,8 @@ const Home: NextPage = () => {
         };
         return newItems;
       });
+      console.log(e);
+
       setShow(true);
     },
     [show, search]
@@ -93,28 +97,25 @@ const Home: NextPage = () => {
         />
         {show && (
           <Marker
-            className="w-[30px] h-[30px] bg-black rounded-full"
-            offsetLeft={-15}
-            offsetTop={-15}
+            className="w-[36px] h-[36px]"
+            offsetLeft={-18}
+            offsetTop={-18}
             latitude={search.latitude}
             longitude={search.longitude}
             onClick={(e: any) => {
               // e.originalEvent.stopPropagation();
               setOpen(true);
             }}
-          />
-        )}
-        {show && (
-          <Popup
-            latitude={search.latitude}
-            longitude={search.longitude}
-            className="p-3"
-            onClose={() => setShow(false)}
           >
-            <button className="p-2 text-sm text-white bg-black rounded-sm">
-              この場所を追加する
-            </button>
-          </Popup>
+            <IconContext.Provider
+              value={{
+                color: "#C51700",
+                className: "text-4xl cursor-pointer",
+              }}
+            >
+              <FaMapMarker />
+            </IconContext.Provider>
+          </Marker>
         )}
         <GeolocateControl label="現在地" className="bottom-24 right-2" />
         <NavigationControl className="bottom-1 right-2" />
@@ -122,11 +123,15 @@ const Home: NextPage = () => {
       <Drawer
         opened={open}
         onClose={() => setOpen(false)}
-        title="Register"
+        title={search.name}
         padding="xl"
-        size="xl"
+        size="lg"
       >
-        {/* Drawer content */}
+        <p>{search.star}</p>
+        <ul>
+          <li>{search.latitude}</li>
+          <li>{search.longitude}</li>
+        </ul>
       </Drawer>
       {account ? (
         <div className="absolute top-2 right-2 px-4 py-2 bg-black text-white text-lg">
