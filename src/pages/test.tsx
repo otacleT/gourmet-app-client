@@ -1,10 +1,16 @@
-import "mapbox-gl/dist/mapbox-gl.css";
 import "react-map-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import React, { useState, useRef, useCallback } from "react";
-import MapGL, { Popup } from "react-map-gl";
+import MapGL, {
+  AttributionControl,
+  GeolocateControl,
+  Marker,
+  NavigationControl,
+  Popup,
+} from "react-map-gl";
 import Geocoder from "react-map-gl-geocoder";
 import { NextPage } from "next";
 import { mapItem } from "../hook/Map/Map";
+import { Drawer } from "@mantine/core";
 
 // Please be a decent human and don't abuse my Mapbox API token.
 // If you fork this sandbox, replace my API token with your own.
@@ -18,19 +24,20 @@ type Test = {
 };
 
 const Test: NextPage = () => {
+  const mapRef = useRef(null);
+  const [show, setShow] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false);
   const [viewport, setViewport] = useState<Test>({
-    latitude: 37.7577,
-    longitude: -122.4376,
+    latitude: 35.6762,
+    longitude: 139.6503,
     zoom: 8,
   });
-  const [selected, setSelected] = useState<mapItem>({
+  const [search, setSearch] = useState<mapItem>({
     name: "",
     latitude: 0,
     longitude: 0,
     star: 0,
   });
-  const [show, setShow] = useState(false);
-  const mapRef = useRef(null);
   const handleViewportChange = useCallback(
     (newViewport: Test) => setViewport(newViewport),
     []
@@ -40,6 +47,7 @@ const Test: NextPage = () => {
   const handleGeocoderViewportChange = useCallback(
     (newViewport: Test) => {
       const geocoderDefaultOverrides = { transitionDuration: 1000 };
+      console.log(newViewport);
 
       return handleViewportChange({
         ...newViewport,
@@ -49,9 +57,9 @@ const Test: NextPage = () => {
     [handleViewportChange]
   );
 
-  const handleSet = useCallback(
+  const handleResult = useCallback(
     (e: any) => {
-      setSelected((prevItems) => {
+      setSearch((prevItems) => {
         const newItems = {
           ...prevItems,
           name: e.result.text_ja,
@@ -63,7 +71,7 @@ const Test: NextPage = () => {
       setShow(true);
       console.log(e);
     },
-    [show, selected]
+    [show, search]
   );
 
   return (
@@ -76,6 +84,7 @@ const Test: NextPage = () => {
         onViewportChange={handleViewportChange}
         mapboxApiAccessToken={MAPBOX_TOKEN}
         mapStyle="mapbox://styles/taisei-m/cl6lh9446000h14pebx8w9o75"
+        attributionControl={false}
       >
         <Geocoder
           mapRef={mapRef}
@@ -83,23 +92,46 @@ const Test: NextPage = () => {
           mapboxApiAccessToken={MAPBOX_TOKEN}
           position="top-left"
           types="poi"
-          onResult={handleSet}
+          onResult={handleResult}
+          marker={true}
         />
         {show && (
+          <Marker
+            className="w-[30px] h-[30px] bg-black rounded-full"
+            offsetLeft={-15}
+            offsetTop={-15}
+            latitude={search.latitude}
+            longitude={search.longitude}
+            onClick={(e: any) => {
+              // e.originalEvent.stopPropagation();
+              setOpen(true);
+            }}
+          />
+        )}
+        {show && (
           <Popup
-            latitude={selected.latitude}
-            longitude={selected.longitude}
-            anchor="bottom"
+            latitude={search.latitude}
+            longitude={search.longitude}
+            className="p-3"
             onClose={() => setShow(false)}
           >
-            <div className="p-4 ">
-              <p className="text-lg font-bold ">{selected.name}</p>
-              <p className="text-lg font-bold ">{selected.latitude}</p>
-              <p className="text-lg font-bold ">{selected.longitude}</p>
-            </div>
+            <button className="p-2 text-sm text-white bg-black rounded-sm">
+              この場所を追加する
+            </button>
           </Popup>
         )}
+        <GeolocateControl label="現在地" className="bottom-24 right-2" />
+        <NavigationControl className="bottom-1 right-2" />
       </MapGL>
+      <Drawer
+        opened={open}
+        onClose={() => setOpen(false)}
+        title="Register"
+        padding="xl"
+        size="xl"
+      >
+        {/* Drawer content */}
+      </Drawer>
     </div>
   );
 };
