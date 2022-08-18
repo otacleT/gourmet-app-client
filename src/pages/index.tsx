@@ -64,7 +64,21 @@ const Home: NextPage = () => {
       mapboxgl: mapboxgl as any,
       types: "poi",
     });
+    const geolocate = new mapboxgl.GeolocateControl({
+      positionOptions: {
+        enableHighAccuracy: true,
+      },
+      // When active the map will receive updates to the device's location as it changes.
+      trackUserLocation: true,
+      // Draw an arrow next to the location dot to indicate which direction the device is heading.
+      showUserHeading: true,
+    });
+    const nav = new mapboxgl.NavigationControl({
+      visualizePitch: true,
+    });
     map.current.addControl(geocoder, "top-left");
+    map.current.addControl(nav, "bottom-right");
+    map.current.addControl(geolocate, "bottom-right");
     map.current.on("load", () => {
       geojson.features.forEach((marker) => {
         new mapboxgl.Marker({
@@ -114,7 +128,7 @@ const Home: NextPage = () => {
         </div>
       ) : (
         <button
-          className="absolute top-2 right-2 px-4 py-2 bg-black text-white text-lg"
+          className="absolute top-2 right-2 px-4 py-2 bg-black text-white text-lg z-10"
           onClick={activateBrowserWallet}
         >
           Connect wallet
