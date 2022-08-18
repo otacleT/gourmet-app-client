@@ -1,18 +1,33 @@
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { NextPage } from "next";
 import "react-map-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import { useEthers } from "@usedapp/core";
-import { Drawer } from "@mantine/core";
+import {
+  Button,
+  Dialog,
+  Drawer,
+  Group,
+  Space,
+  Text,
+  TextInput,
+} from "@mantine/core";
 import mapboxgl from "mapbox-gl";
 import { useMap } from "../hook/Map";
 import { useAddMap } from "../hook/AddMap";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
+import { useForm } from "@mantine/form";
 
 type Marker = {
   name: string;
   latCoord: number;
   longCoord: number;
+};
+
+type Info = {
+  name: string;
+  latitude: number;
+  longitude: number;
 };
 
 export const markers: Marker[] = [
@@ -32,22 +47,51 @@ const Home: NextPage = () => {
   const { activateBrowserWallet, account } = useEthers();
   const { loading, success, error, send } = useAddMap();
   const { maps } = useMap();
+  const [info, setInfo] = useState<Info>();
+  const [show, setShow] = useState<boolean>(false);
   const mapContainer = useRef<any>(null);
   const map = useRef<mapboxgl.Map | any>(null);
+  const form = useForm({
+    initialValues: {
+      name: "",
+      latitude: 123,
+      longitude: 123,
+      star: 3,
+    },
+  });
   const geojson = {
     type: "Feature",
-    features: markers.map((marker) => ({
+    features: maps.map((marker) => ({
       properties: {
         name: marker.name,
       },
       geometry: {
         type: "Point",
         coordinates: {
-          lat: marker.latCoord,
-          lng: marker.longCoord,
+          lat: marker.latitude / 100000,
+          lng: marker.longitude / 100000,
         },
       },
     })),
+  };
+
+  const handleInfo = useCallback((e: any) => {
+    setInfo((prevstate) => {
+      return {
+        ...prevstate,
+        name: e.result.text_ja,
+        latitude: e.result.geometry.coordinates[1],
+        longitude: e.result.geometry.coordinates[0],
+      };
+    });
+  }, []);
+  const handleSubmit = async (values: typeof form.values) => {
+    await send(
+      values.name,
+      values.latitude * 100000,
+      values.longitude * 100000,
+      3
+    );
   };
   useEffect(() => {
     mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_GL_ACCESS_TOKEN ?? "";
@@ -98,30 +142,76 @@ const Home: NextPage = () => {
     });
     geocoder.on("result", function (e) {
       console.log(e);
+      handleInfo(e);
+      setShow(true);
     });
   }, []);
   return (
     <div>
       <div className="w-screen h-screen" ref={mapContainer} />
-      {/* <Drawer
-        opened={open}
-        onClose={() => setOpen(false)}
-        title={search.name}
-        padding="xl"
-        size="lg"
-      >
-        <p>{search.star}</p>
-        <ul>
-          <li>{search.latitude}</li>
-          <li>{search.longitude}</li>
-        </ul>
-        <button
-          className="w-full p-2 text-lg text-white bg-black"
-          onClick={handleAdd}
+      {info !== undefined && (
+        // <Drawer
+        //   opened={show}
+        //   closeOnClickOutside={false}
+        //   onClose={() => setShow(false)}
+        //   withOverlay={true}
+        //   title={info.name}
+        //   position="right"
+        //   padding="xl"
+        //   size="lg"
+        // >
+        //   <ul>
+        //     <li>{info.latitude}</li>
+        //     <li>{info.longitude}</li>
+        //   </ul>
+        //   <button className="w-full p-2 text-lg text-white bg-black">
+        //     Add blockchain
+        //   </button>
+        // </Drawer>
+        <Dialog
+          opened={show}
+          withCloseButton
+          onClose={() => setShow(false)}
+          size="xl"
+          radius="md"
         >
-          Add blockchain
-        </button>
-      </Drawer> */}
+          <form onSubmit={form.onSubmit(handleSubmit)}>
+            <TextInput
+              required
+              label="Owner name"
+              placeholder="Satoshi Nakamoto"
+              {...form.getInputProps("name")}
+              value={info.name}
+            />
+            <Space h="md" />
+            <TextInput
+              label="Latitude"
+              placeholder="add latitude"
+              {...form.getInputProps("latitude")}
+              value={info.latitude}
+            />
+            <Space h="md" />
+            <TextInput
+              label="Longitude"
+              placeholder="add longitude"
+              {...form.getInputProps("longitude")}
+              value={info.longitude}
+            />
+            {!!error && (
+              <>
+                <Space h="md" />
+                <Text color="red">An error occured...</Text>
+              </>
+            )}
+            <Space h="md" />
+            <Group position="right">
+              <Button type="submit" loading={loading}>
+                Add
+              </Button>
+            </Group>
+          </form>
+        </Dialog>
+      )}
       {account ? (
         <div className="absolute top-2 right-2 px-4 py-2 bg-black text-white text-lg">
           Connected
