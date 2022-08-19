@@ -2,15 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { NextPage } from "next";
 import "react-map-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import { useEthers } from "@usedapp/core";
-import {
-  Button,
-  Dialog,
-  Drawer,
-  Group,
-  Space,
-  Text,
-  TextInput,
-} from "@mantine/core";
+import { Button, Dialog, Group, Space, Text, TextInput } from "@mantine/core";
 import mapboxgl from "mapbox-gl";
 import { useMap } from "../hook/Map";
 import { useAddMap } from "../hook/AddMap";
@@ -54,8 +46,8 @@ const Home: NextPage = () => {
   const form = useForm({
     initialValues: {
       name: "",
-      latitude: 123,
-      longitude: 123,
+      latitude: 35.6762,
+      longitude: 139.6503,
       star: 3,
     },
   });
@@ -88,8 +80,8 @@ const Home: NextPage = () => {
   const handleSubmit = async (values: typeof form.values) => {
     await send(
       values.name,
-      values.latitude * 100000,
-      values.longitude * 100000,
+      Math.round(values.latitude * 100000),
+      Math.round(values.longitude * 100000),
       3
     );
   };
@@ -123,6 +115,13 @@ const Home: NextPage = () => {
     map.current.addControl(geocoder, "top-left");
     map.current.addControl(nav, "bottom-right");
     map.current.addControl(geolocate, "bottom-right");
+    geocoder.on("result", function (e) {
+      console.log(e);
+      handleInfo(e);
+      setShow(true);
+    });
+  }, []);
+  useEffect(() => {
     map.current.on("load", () => {
       geojson.features.forEach((marker) => {
         new mapboxgl.Marker({
@@ -140,34 +139,12 @@ const Home: NextPage = () => {
           .addTo(map.current);
       });
     });
-    geocoder.on("result", function (e) {
-      console.log(e);
-      handleInfo(e);
-      setShow(true);
-    });
-  }, []);
+  }, [maps]);
+
   return (
     <div>
       <div className="w-screen h-screen" ref={mapContainer} />
       {info !== undefined && (
-        // <Drawer
-        //   opened={show}
-        //   closeOnClickOutside={false}
-        //   onClose={() => setShow(false)}
-        //   withOverlay={true}
-        //   title={info.name}
-        //   position="right"
-        //   padding="xl"
-        //   size="lg"
-        // >
-        //   <ul>
-        //     <li>{info.latitude}</li>
-        //     <li>{info.longitude}</li>
-        //   </ul>
-        //   <button className="w-full p-2 text-lg text-white bg-black">
-        //     Add blockchain
-        //   </button>
-        // </Drawer>
         <Dialog
           opened={show}
           withCloseButton
@@ -179,23 +156,20 @@ const Home: NextPage = () => {
             <TextInput
               required
               label="Owner name"
-              placeholder="Satoshi Nakamoto"
+              placeholder={info.name}
               {...form.getInputProps("name")}
-              value={info.name}
             />
             <Space h="md" />
             <TextInput
               label="Latitude"
-              placeholder="add latitude"
+              placeholder={info.latitude}
               {...form.getInputProps("latitude")}
-              value={info.latitude}
             />
             <Space h="md" />
             <TextInput
               label="Longitude"
-              placeholder="add longitude"
+              placeholder={info.longitude}
               {...form.getInputProps("longitude")}
-              value={info.longitude}
             />
             {!!error && (
               <>
@@ -218,7 +192,7 @@ const Home: NextPage = () => {
         </div>
       ) : (
         <button
-          className="absolute top-2 right-2 px-4 py-2 bg-black text-white text-lg z-10"
+          className="absolute top-2 right-2 px-4 py-2 bg-black text-white text-lg z-10 cursor-pointer"
           onClick={activateBrowserWallet}
         >
           Connect wallet
