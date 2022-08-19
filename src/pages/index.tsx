@@ -125,6 +125,7 @@ const Home: NextPage = () => {
       mapboxgl: mapboxgl as any,
       types: "poi",
       marker: false,
+      placeholder: "登録する",
     });
     const geolocate = new mapboxgl.GeolocateControl({
       positionOptions: {
@@ -143,14 +144,14 @@ const Home: NextPage = () => {
       handleInfo(e);
       setShow1(true);
 
-      // var marker1 = new mapboxgl.Marker({ color: "blue" })
-      //   .setLngLat(e.result.center)
-      //   .addTo(map.current);
-      // map.current.flyTo({
-      //   center: e.result.center,
-      //   zoom: 15,
-      //   speed: 5,
-      // });
+      var marker1 = new mapboxgl.Marker({ color: "blue" })
+        .setLngLat(e.result.center)
+        .addTo(map.current);
+      map.current.flyTo({
+        center: e.result.center,
+        zoom: 15,
+        speed: 5,
+      });
 
       // new mapboxgl.Popup({ offset: 35, closeOnClick: true })
       //   .setLngLat(e.result.center)
@@ -240,6 +241,7 @@ const Home: NextPage = () => {
         position="right"
         className="h-[calc(100vh-70px)] top-auto bottom-0"
       >
+        <h3>{ev?.name}</h3>
         <ul>
           <li>{ev?.latitude}</li>
           <li>{ev?.longitude}</li>
