@@ -36,7 +36,6 @@ export const markers: Marker[] = [
 ];
 
 const Home: NextPage = () => {
-  const { activateBrowserWallet, account } = useEthers();
   const { loading, success, error, send } = useAddMap();
   const { maps } = useMap();
   const [info, setInfo] = useState<Info>();
@@ -143,7 +142,7 @@ const Home: NextPage = () => {
 
   return (
     <div>
-      <div className="w-screen h-screen" ref={mapContainer} />
+      <div className="w-screen h-[calc(100vh-70px)]" ref={mapContainer} />
       {info !== undefined && (
         <Dialog
           opened={show}
@@ -185,18 +184,6 @@ const Home: NextPage = () => {
             </Group>
           </form>
         </Dialog>
-      )}
-      {account ? (
-        <div className="absolute top-2 right-2 px-4 py-2 bg-black text-white text-lg">
-          Connected
-        </div>
-      ) : (
-        <button
-          className="absolute top-2 right-2 px-4 py-2 bg-black text-white text-lg z-10 cursor-pointer"
-          onClick={activateBrowserWallet}
-        >
-          Connect wallet
-        </button>
       )}
     </div>
   );
