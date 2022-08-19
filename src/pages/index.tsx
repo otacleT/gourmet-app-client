@@ -112,8 +112,8 @@ const Home: NextPage = () => {
       visualizePitch: true,
     });
     map.current.addControl(geocoder, "top-left");
-    map.current.addControl(nav, "bottom-right");
-    map.current.addControl(geolocate, "bottom-right");
+    map.current.addControl(geolocate, "top-right");
+    map.current.addControl(nav, "top-right");
     geocoder.on("result", function (e) {
       console.log(e);
       handleInfo(e);
@@ -144,13 +144,8 @@ const Home: NextPage = () => {
     <div>
       <div className="w-screen h-[calc(100vh-70px)]" ref={mapContainer} />
       {info !== undefined && (
-        <Dialog
-          opened={show}
-          withCloseButton
-          onClose={() => setShow(false)}
-          size="xl"
-          radius="md"
-        >
+        <div className="w-[300px] py-2 px-3 bg-white absolute bottom-4 right-4">
+          <h3 className="text-lg ">店舗情報</h3>
           <form onSubmit={form.onSubmit(handleSubmit)}>
             <TextInput
               required
@@ -177,13 +172,11 @@ const Home: NextPage = () => {
               </>
             )}
             <Space h="md" />
-            <Group position="right">
-              <Button type="submit" loading={loading}>
-                Add
-              </Button>
-            </Group>
+            <button className="w-full border-t border-[#ED1C24] bg-inherit">
+              Add location
+            </button>
           </form>
-        </Dialog>
+        </div>
       )}
     </div>
   );
