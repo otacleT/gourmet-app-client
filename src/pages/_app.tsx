@@ -4,6 +4,7 @@ import "../styles/globals.css";
 import { DAppProvider, Hardhat } from "@usedapp/core";
 import Head from "next/head";
 import { MantineProvider } from "@mantine/core";
+import { Header } from "../component/Header";
 
 const config = {
   multicallAddresses: {
@@ -19,6 +20,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta name="description" content="Gourmet App" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Header />
       <MantineProvider
         withGlobalStyles
         withNormalizeCSS
