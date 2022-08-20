@@ -29,7 +29,7 @@ import type {
 
 export interface GourmetInterface extends utils.Interface {
   functions: {
-    "addMap(string,int256,int256,uint256)": FunctionFragment;
+    "addMap(string,string,string,int256,int256,uint256)": FunctionFragment;
     "eval(address)": FunctionFragment;
   };
 
@@ -38,6 +38,8 @@ export interface GourmetInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "addMap",
     values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
       PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
@@ -53,7 +55,7 @@ export interface GourmetInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "eval", data: BytesLike): Result;
 
   events: {
-    "NewMap(string,int256,int256,uint256)": EventFragment;
+    "NewMap(string,string,string,int256,int256,uint256)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "NewMap"): EventFragment;
@@ -61,12 +63,14 @@ export interface GourmetInterface extends utils.Interface {
 
 export interface NewMapEventObject {
   name: string;
+  category: string;
+  address_ja: string;
   latitude: BigNumber;
   longitude: BigNumber;
   star: BigNumber;
 }
 export type NewMapEvent = TypedEvent<
-  [string, BigNumber, BigNumber, BigNumber],
+  [string, string, string, BigNumber, BigNumber, BigNumber],
   NewMapEventObject
 >;
 
@@ -101,6 +105,8 @@ export interface Gourmet extends BaseContract {
   functions: {
     addMap(
       _name: PromiseOrValue<string>,
+      _category: PromiseOrValue<string>,
+      _address_ja: PromiseOrValue<string>,
       _latitude: PromiseOrValue<BigNumberish>,
       _longitude: PromiseOrValue<BigNumberish>,
       _star: PromiseOrValue<BigNumberish>,
@@ -111,8 +117,10 @@ export interface Gourmet extends BaseContract {
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<
-      [string, BigNumber, BigNumber, BigNumber] & {
+      [string, string, string, BigNumber, BigNumber, BigNumber] & {
         name: string;
+        category: string;
+        address_ja: string;
         latitude: BigNumber;
         longitude: BigNumber;
         star: BigNumber;
@@ -122,6 +130,8 @@ export interface Gourmet extends BaseContract {
 
   addMap(
     _name: PromiseOrValue<string>,
+    _category: PromiseOrValue<string>,
+    _address_ja: PromiseOrValue<string>,
     _latitude: PromiseOrValue<BigNumberish>,
     _longitude: PromiseOrValue<BigNumberish>,
     _star: PromiseOrValue<BigNumberish>,
@@ -132,8 +142,10 @@ export interface Gourmet extends BaseContract {
     arg0: PromiseOrValue<string>,
     overrides?: CallOverrides
   ): Promise<
-    [string, BigNumber, BigNumber, BigNumber] & {
+    [string, string, string, BigNumber, BigNumber, BigNumber] & {
       name: string;
+      category: string;
+      address_ja: string;
       latitude: BigNumber;
       longitude: BigNumber;
       star: BigNumber;
@@ -143,6 +155,8 @@ export interface Gourmet extends BaseContract {
   callStatic: {
     addMap(
       _name: PromiseOrValue<string>,
+      _category: PromiseOrValue<string>,
+      _address_ja: PromiseOrValue<string>,
       _latitude: PromiseOrValue<BigNumberish>,
       _longitude: PromiseOrValue<BigNumberish>,
       _star: PromiseOrValue<BigNumberish>,
@@ -153,8 +167,10 @@ export interface Gourmet extends BaseContract {
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<
-      [string, BigNumber, BigNumber, BigNumber] & {
+      [string, string, string, BigNumber, BigNumber, BigNumber] & {
         name: string;
+        category: string;
+        address_ja: string;
         latitude: BigNumber;
         longitude: BigNumber;
         star: BigNumber;
@@ -163,14 +179,18 @@ export interface Gourmet extends BaseContract {
   };
 
   filters: {
-    "NewMap(string,int256,int256,uint256)"(
+    "NewMap(string,string,string,int256,int256,uint256)"(
       name?: null,
+      category?: null,
+      address_ja?: null,
       latitude?: null,
       longitude?: null,
       star?: null
     ): NewMapEventFilter;
     NewMap(
       name?: null,
+      category?: null,
+      address_ja?: null,
       latitude?: null,
       longitude?: null,
       star?: null
@@ -180,6 +200,8 @@ export interface Gourmet extends BaseContract {
   estimateGas: {
     addMap(
       _name: PromiseOrValue<string>,
+      _category: PromiseOrValue<string>,
+      _address_ja: PromiseOrValue<string>,
       _latitude: PromiseOrValue<BigNumberish>,
       _longitude: PromiseOrValue<BigNumberish>,
       _star: PromiseOrValue<BigNumberish>,
@@ -195,6 +217,8 @@ export interface Gourmet extends BaseContract {
   populateTransaction: {
     addMap(
       _name: PromiseOrValue<string>,
+      _category: PromiseOrValue<string>,
+      _address_ja: PromiseOrValue<string>,
       _latitude: PromiseOrValue<BigNumberish>,
       _longitude: PromiseOrValue<BigNumberish>,
       _star: PromiseOrValue<BigNumberish>,
