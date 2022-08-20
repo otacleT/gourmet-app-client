@@ -1,16 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { NextPage } from "next";
 import "react-map-gl-geocoder/dist/mapbox-gl-geocoder.css";
-import { Dialog, Drawer, Text } from "@mantine/core";
+import { Drawer } from "@mantine/core";
 import mapboxgl from "mapbox-gl";
 import { useMap } from "../hook/Map";
-import { useAddMap } from "../hook/AddMap";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
-import { useForm } from "@mantine/form";
-import { RiMapPinLine } from "react-icons/ri";
-import { IconContext } from "react-icons";
-import { InfuraProvider } from "@ethersproject/providers";
+import { RegistInfo } from "src/component/RegistInfo";
+import { Evaluate } from "src/component/Evaluate";
 
 type Marker = {
   name: string;
@@ -18,7 +15,7 @@ type Marker = {
   longCoord: number;
 };
 
-type Info = {
+export type Info = {
   name: string;
   category: string;
   address: string;
@@ -26,8 +23,10 @@ type Info = {
   longitude: number;
 };
 
-type Eval = {
+export type Eval = {
   name: string;
+  category: string;
+  address: string;
   latitude: number;
   longitude: number;
 };
@@ -46,27 +45,20 @@ export const markers: Marker[] = [
 ];
 
 const Home: NextPage = () => {
-  const { loading, success, error, send } = useAddMap();
   const { maps } = useMap();
   const [info, setInfo] = useState<Info>();
   const [ev, setEv] = useState<Eval>();
-  const [show1, setShow1] = useState<boolean>(true);
-  const [show2, setShow2] = useState<boolean>(false);
+  const [regist, setRegist] = useState<boolean>(false);
+  const [elt, setElt] = useState<boolean>(false);
   const mapContainer = useRef<any>(null);
   const map = useRef<mapboxgl.Map | any>(null);
-  const form = useForm({
-    initialValues: {
-      name: "",
-      latitude: 35.6762,
-      longitude: 139.6503,
-      star: 3,
-    },
-  });
   const geojson = {
     type: "Feature",
     features: maps.map((marker) => ({
       properties: {
         name: marker.name,
+        category: marker.category,
+        address: marker.address,
       },
       geometry: {
         type: "Point",
@@ -95,31 +87,22 @@ const Home: NextPage = () => {
         longitude: e.result.geometry.coordinates[0],
       };
     });
-    form.setValues({
-      name: e.result.text_ja,
-      latitude: e.result.geometry.coordinates[1],
-      longitude: e.result.geometry.coordinates[0],
-      star: 3,
-    });
   }, []);
   const handleEv = useCallback((e: any) => {
     setEv((prevstate) => {
       return {
         ...prevstate,
         name: e.properties.name,
+        category: e.properties.category,
+        address: e.properties.address,
         latitude: e.geometry.coordinates.lat,
         longitude: e.geometry.coordinates.lng,
       };
     });
   }, []);
-  const handleSubmit = async (info: Info) => {
-    await send(
-      info.name,
-      Math.round(info.latitude * 100000),
-      Math.round(info.longitude * 100000),
-      3
-    );
-  };
+  const handleEval = useCallback(() => {
+    setElt(true);
+  }, []);
   useEffect(() => {
     mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_GL_ACCESS_TOKEN ?? "";
     map.current = new mapboxgl.Map({
@@ -152,8 +135,7 @@ const Home: NextPage = () => {
     map.current.addControl(nav, "top-right");
     geocoder.on("result", function (e) {
       handleInfo(e);
-      setShow1(true);
-      console.log(e);
+      setRegist(true);
 
       var marker1 = new mapboxgl.Marker({ color: "blue" })
         .setLngLat(e.result.center)
@@ -177,82 +159,36 @@ const Home: NextPage = () => {
     map.current.on("load", () => {
       geojson.features.forEach((marker) => {
         const registedMarker = new mapboxgl.Marker({
-          color: "#FF3333",
+          color: "#c9171e",
         })
           .setLngLat(marker.geometry.coordinates)
-          // .setPopup(
-          //   new mapboxgl.Popup({ offset: 25 }).setHTML(
-          //     `<p style="font-size: 15px; ">Name: ${marker.properties.name}</p>
-          //     <button style="font-size: 15px; color: #fff; background-color: #000; width: 100%; padding: 10px; margin-top: 20px; border-radius: 10px;">Evaluate</button>
-          //     `
-          //   )
-          // )
+          .setPopup(
+            new mapboxgl.Popup({ offset: 40 }).setHTML(
+              `<p style="font-size: 15px; font-weight: bold; color: #c9171e;">${marker.properties.name}</p>
+              <p style="font-size: 13px; line-height: 1.3;">category</p>
+              <div style="position: relative; width: 5em; height: 1em; font-size: 15px;">
+                <div style="position: absolute; top:0; left: 0; overflow: hidden; white-space: nowrap; color: #c9171e; width: 1.4em;">★★★★★</div>
+                <div style="color: #aeaeae;">☆☆☆☆☆</div>
+              </div>
+              `
+            )
+          )
           .addTo(map.current);
         registedMarker.getElement().addEventListener("click", function () {
-          setShow2(true);
           handleEv(marker);
+          setElt(true);
         });
       });
     });
-  }, [maps, show1]);
+  }, [maps]);
 
   return (
     <>
       <div className="w-screen h-[calc(100vh-70px)]" ref={mapContainer} />
-      {info !== undefined && (
-        <Dialog
-          opened={show1}
-          withCloseButton
-          onClose={() => setShow1(false)}
-          size="lg"
-          radius={0}
-          position={{ left: "20px", bottom: "20px" }}
-        >
-          <div className="absolute top-0 left-0 -translate-y-full w-full h-[200px] bg-gradient-to-r from-cyan-500 to-blue-500"></div>
-          <h3 className="text-xl font-bold">{info.name}</h3>
-          <p className="text-sm">{info.category}</p>
-          <dl className="flex flex-wrap w-full items-start justify-between mt-3">
-            <dt className="w-[30px] h-[22px]">
-              <IconContext.Provider value={{ size: "20px" }}>
-                <RiMapPinLine />
-              </IconContext.Provider>
-            </dt>
-            <dd className="w-[calc(100%-30px)] text-base leading-snug">
-              〒{info.address}
-            </dd>
-          </dl>
-          <div className="flex justify-around mt-5">
-            <button
-              className="flex w-[calc(50%-10px)] h-[40px] justify-center items-center text-sm font-bold text-[#333] border border-[#333]"
-              onClick={() => setShow1(false)}
-            >
-              CANCEL
-            </button>
-            <button
-              className="flex w-[calc(50%-10px)] h-[40px] justify-center items-center text-sm font-bold bg-[#333] text-white"
-              onClick={() => handleSubmit(info)}
-            >
-              REGISTER
-            </button>
-          </div>
-        </Dialog>
+      {info !== undefined && regist && (
+        <RegistInfo info={info} regist setRegist={setRegist} />
       )}
-      <Drawer
-        opened={show2}
-        onClose={() => setShow2(false)}
-        title="評価を行う"
-        padding="xl"
-        size="lg"
-        overlayOpacity={0.1}
-        position="right"
-        className="h-[calc(100vh-70px)] top-auto bottom-0"
-      >
-        <h3>{ev?.name}</h3>
-        <ul>
-          <li>{ev?.latitude}</li>
-          <li>{ev?.longitude}</li>
-        </ul>
-      </Drawer>
+      {ev !== undefined && <Evaluate ev={ev} elt setElt={setElt} />}
     </>
   );
 };
