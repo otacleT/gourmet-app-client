@@ -188,7 +188,7 @@ const Home: NextPage = () => {
       {info !== undefined && regist && (
         <RegistInfo info={info} regist setRegist={setRegist} />
       )}
-      {ev !== undefined && <Evaluate ev={ev} elt setElt={setElt} />}
+      {ev !== undefined && elt && <Evaluate ev={ev} elt setElt={setElt} />}
     </>
   );
 };
