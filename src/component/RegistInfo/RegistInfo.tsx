@@ -20,6 +20,8 @@ export const RegistInfo: FC<Regist> = (props) => {
     async (info: Info) => {
       await send(
         info.name,
+        info.category,
+        info.address,
         Math.round(info.latitude * 100000),
         Math.round(info.longitude * 100000),
         3
