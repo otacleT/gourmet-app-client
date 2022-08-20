@@ -1,22 +1,16 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { NextPage } from "next";
 import "react-map-gl-geocoder/dist/mapbox-gl-geocoder.css";
-import { useEthers } from "@usedapp/core";
-import {
-  Button,
-  Dialog,
-  Drawer,
-  Group,
-  Space,
-  Text,
-  TextInput,
-} from "@mantine/core";
+import { Dialog, Drawer, Text } from "@mantine/core";
 import mapboxgl from "mapbox-gl";
 import { useMap } from "../hook/Map";
 import { useAddMap } from "../hook/AddMap";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import { useForm } from "@mantine/form";
+import { RiMapPinLine } from "react-icons/ri";
+import { IconContext } from "react-icons";
+import { InfuraProvider } from "@ethersproject/providers";
 
 type Marker = {
   name: string;
@@ -25,6 +19,14 @@ type Marker = {
 };
 
 type Info = {
+  name: string;
+  category: string;
+  address: string;
+  latitude: number;
+  longitude: number;
+};
+
+type Eval = {
   name: string;
   latitude: number;
   longitude: number;
@@ -47,8 +49,8 @@ const Home: NextPage = () => {
   const { loading, success, error, send } = useAddMap();
   const { maps } = useMap();
   const [info, setInfo] = useState<Info>();
-  const [ev, setEv] = useState<Info>();
-  const [show1, setShow1] = useState<boolean>(false);
+  const [ev, setEv] = useState<Eval>();
+  const [show1, setShow1] = useState<boolean>(true);
   const [show2, setShow2] = useState<boolean>(false);
   const mapContainer = useRef<any>(null);
   const map = useRef<mapboxgl.Map | any>(null);
@@ -81,6 +83,14 @@ const Home: NextPage = () => {
       return {
         ...prevstate,
         name: e.result.text_ja,
+        category: e.result.properties.category,
+        address:
+          e.result.context[0].text_ja +
+          " " +
+          e.result.context[3].text_ja +
+          e.result.context[2].text_ja +
+          e.result.context[1].text_ja +
+          e.result.properties.address,
         latitude: e.result.geometry.coordinates[1],
         longitude: e.result.geometry.coordinates[0],
       };
@@ -102,11 +112,11 @@ const Home: NextPage = () => {
       };
     });
   }, []);
-  const handleSubmit = async (values: typeof form.values) => {
+  const handleSubmit = async (info: Info) => {
     await send(
-      values.name,
-      Math.round(values.latitude * 100000),
-      Math.round(values.longitude * 100000),
+      info.name,
+      Math.round(info.latitude * 100000),
+      Math.round(info.longitude * 100000),
       3
     );
   };
@@ -143,6 +153,7 @@ const Home: NextPage = () => {
     geocoder.on("result", function (e) {
       handleInfo(e);
       setShow1(true);
+      console.log(e);
 
       var marker1 = new mapboxgl.Marker({ color: "blue" })
         .setLngLat(e.result.center)
@@ -157,9 +168,9 @@ const Home: NextPage = () => {
       //   .setLngLat(e.result.center)
       //   .setHTML("MapBox Coordinate<br/>" + e.result.center)
       //   .addTo(map.current);
-      // map.current.on("click", function () {
-      //   marker1.remove();
-      // });
+      map.current.on("click", function () {
+        marker1.remove();
+      });
     });
   }, []);
   useEffect(() => {
@@ -194,41 +205,36 @@ const Home: NextPage = () => {
           withCloseButton
           onClose={() => setShow1(false)}
           size="lg"
-          radius="md"
+          radius={0}
           position={{ left: "20px", bottom: "20px" }}
-          // className="w-[300px] py-2 px-3 bg-white absolute bottom-4 right-4"
         >
-          <h3 className="text-lg ">店舗情報</h3>
-          <form onSubmit={form.onSubmit(handleSubmit)}>
-            <TextInput
-              required
-              label="Owner name"
-              placeholder={info.name}
-              {...form.getInputProps("name")}
-            />
-            <Space h="md" />
-            <TextInput
-              label="Latitude"
-              placeholder={info.latitude}
-              {...form.getInputProps("latitude")}
-            />
-            <Space h="md" />
-            <TextInput
-              label="Longitude"
-              placeholder={info.longitude}
-              {...form.getInputProps("longitude")}
-            />
-            {!!error && (
-              <>
-                <Space h="md" />
-                <Text color="red">An error occured...</Text>
-              </>
-            )}
-            <Space h="md" />
-            <button className="w-full border-t border-[#ED1C24] bg-inherit">
-              Add location
+          <div className="absolute top-0 left-0 -translate-y-full w-full h-[200px] bg-gradient-to-r from-cyan-500 to-blue-500"></div>
+          <h3 className="text-xl font-bold">{info.name}</h3>
+          <p className="text-sm">{info.category}</p>
+          <dl className="flex flex-wrap w-full items-start justify-between mt-3">
+            <dt className="w-[30px] h-[22px]">
+              <IconContext.Provider value={{ size: "20px" }}>
+                <RiMapPinLine />
+              </IconContext.Provider>
+            </dt>
+            <dd className="w-[calc(100%-30px)] text-base leading-snug">
+              〒{info.address}
+            </dd>
+          </dl>
+          <div className="flex justify-around mt-5">
+            <button
+              className="flex w-[calc(50%-10px)] h-[40px] justify-center items-center text-sm font-bold text-[#333] border border-[#333]"
+              onClick={() => setShow1(false)}
+            >
+              CANCEL
             </button>
-          </form>
+            <button
+              className="flex w-[calc(50%-10px)] h-[40px] justify-center items-center text-sm font-bold bg-[#333] text-white"
+              onClick={() => handleSubmit(info)}
+            >
+              REGISTER
+            </button>
+          </div>
         </Dialog>
       )}
       <Drawer
