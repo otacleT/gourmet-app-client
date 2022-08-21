@@ -5,10 +5,9 @@ import mapboxgl from "mapbox-gl";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import { RegistInfo } from "src/component/RegistInfo";
-import { Evaluate } from "src/component/Evaluate";
-import { useShops } from "src/hook/Shops";
 import { FirebaseApp, getApp } from "firebase/app";
 import "../lib/firebase/init";
+import { Marked } from "src/component/Marked";
 
 type Marker = {
   name: string;
@@ -17,14 +16,6 @@ type Marker = {
 };
 
 export type Info = {
-  name: string;
-  category: string;
-  address: string;
-  latitude: number;
-  longitude: number;
-};
-
-export type Eval = {
   name: string;
   category: string;
   address: string;
@@ -47,32 +38,10 @@ export const markers: Marker[] = [
 
 const Home: NextPage = () => {
   const [info, setInfo] = useState<Info>();
-  const [ev, setEv] = useState<Eval>();
   const [regist, setRegist] = useState<boolean>(false);
-  const [elt, setElt] = useState<boolean>(false);
   const mapContainer = useRef<any>(null);
   const map = useRef<mapboxgl.Map | any>(null);
   const app: FirebaseApp = getApp();
-  const { isLoading, shops } = useShops();
-
-  const geojson = {
-    type: "Feature",
-    features: shops.map((shop) => ({
-      properties: {
-        name: shop.name,
-        category: shop.category,
-        postcode: shop.postcode,
-        address: shop.address,
-      },
-      geometry: {
-        type: "Point",
-        coordinates: {
-          lat: shop.latitude,
-          lng: shop.longitude,
-        },
-      },
-    })),
-  };
 
   const handleInfo = useCallback((e: any) => {
     setInfo((prevstate) => {
@@ -91,21 +60,6 @@ const Home: NextPage = () => {
         longitude: e.result.geometry.coordinates[0],
       };
     });
-  }, []);
-  const handleEv = useCallback((e: any) => {
-    setEv((prevstate) => {
-      return {
-        ...prevstate,
-        name: e.properties.name,
-        category: e.properties.category,
-        address: e.properties.address,
-        latitude: e.geometry.coordinates.lat,
-        longitude: e.geometry.coordinates.lng,
-      };
-    });
-  }, []);
-  const handleEval = useCallback(() => {
-    setElt(true);
   }, []);
   useEffect(() => {
     mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_GL_ACCESS_TOKEN ?? "";
@@ -159,40 +113,14 @@ const Home: NextPage = () => {
       });
     });
   }, []);
-  useEffect(() => {
-    map.current.on("load", () => {
-      geojson.features.forEach((marker) => {
-        const registedMarker = new mapboxgl.Marker({
-          color: "#c9171e",
-        })
-          .setLngLat(marker.geometry.coordinates)
-          .setPopup(
-            new mapboxgl.Popup({ offset: 40 }).setHTML(
-              `<p style="font-size: 15px; font-weight: bold; color: #c9171e;">${marker.properties.name}</p>
-              <p style="font-size: 13px; line-height: 1.3;">category</p>
-              <div style="position: relative; width: 5em; height: 1em; font-size: 15px;">
-                <div style="position: absolute; top:0; left: 0; overflow: hidden; white-space: nowrap; color: #c9171e; width: 1.4em;">★★★★★</div>
-                <div style="color: #aeaeae;">☆☆☆☆☆</div>
-              </div>
-              `
-            )
-          )
-          .addTo(map.current);
-        registedMarker.getElement().addEventListener("click", function () {
-          handleEv(marker);
-          setElt(true);
-        });
-      });
-    });
-  }, [shops]);
 
   return (
     <>
       <div className="w-screen h-[calc(100vh-70px)]" ref={mapContainer} />
-      {info !== undefined && regist && (
+      {/* {info !== undefined && regist && (
         <RegistInfo info={info} regist setRegist={setRegist} />
-      )}
-      {ev !== undefined && elt && <Evaluate ev={ev} elt setElt={setElt} />}
+      )} */}
+      {/* <Marked map={map} /> */}
     </>
   );
 };
