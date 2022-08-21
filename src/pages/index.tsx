@@ -2,7 +2,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { NextPage } from "next";
 import "react-map-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import mapboxgl from "mapbox-gl";
-import { useMap } from "../hook/Map";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import { RegistInfo } from "src/component/RegistInfo";
@@ -47,7 +46,6 @@ export const markers: Marker[] = [
 ];
 
 const Home: NextPage = () => {
-  const { maps } = useMap();
   const [info, setInfo] = useState<Info>();
   const [ev, setEv] = useState<Eval>();
   const [regist, setRegist] = useState<boolean>(false);
@@ -56,21 +54,21 @@ const Home: NextPage = () => {
   const map = useRef<mapboxgl.Map | any>(null);
   const app: FirebaseApp = getApp();
   const { isLoading, shops } = useShops();
-  console.log(shops);
 
   const geojson = {
     type: "Feature",
-    features: maps.map((marker) => ({
+    features: shops.map((shop) => ({
       properties: {
-        name: marker.name,
-        category: marker.category,
-        address: marker.address,
+        name: shop.name,
+        category: shop.category,
+        postcode: shop.postcode,
+        address: shop.address,
       },
       geometry: {
         type: "Point",
         coordinates: {
-          lat: marker.latitude / 100000,
-          lng: marker.longitude / 100000,
+          lat: shop.latitude,
+          lng: shop.longitude,
         },
       },
     })),
@@ -186,7 +184,7 @@ const Home: NextPage = () => {
         });
       });
     });
-  }, [maps]);
+  }, [shops]);
 
   return (
     <>
