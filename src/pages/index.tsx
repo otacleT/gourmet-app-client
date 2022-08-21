@@ -1,19 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { NextPage } from "next";
-import "react-map-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import mapboxgl from "mapbox-gl";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
-import { RegistInfo } from "src/component/RegistInfo";
 import { FirebaseApp, getApp } from "firebase/app";
 import "../lib/firebase/init";
 import { Marked } from "src/component/Marked";
-
-type Marker = {
-  name: string;
-  latCoord: number;
-  longCoord: number;
-};
+import { useShops } from "src/hook/Shops";
 
 export type Info = {
   name: string;
@@ -23,41 +16,40 @@ export type Info = {
   longitude: number;
 };
 
-export const markers: Marker[] = [
-  {
-    name: "天神駅",
-    latCoord: 33.5914,
-    longCoord: 130.3989,
-  },
-  {
-    name: "博多駅",
-    latCoord: 33.5897,
-    longCoord: 130.4207,
-  },
-];
-
 const Home: NextPage = () => {
   const [info, setInfo] = useState<Info>();
-  const [regist, setRegist] = useState<boolean>(false);
+  const [opened, setOpened] = useState<boolean>(false);
   const mapContainer = useRef<any>(null);
   const map = useRef<mapboxgl.Map | any>(null);
   const app: FirebaseApp = getApp();
-
+  const { isLoading, shops } = useShops();
+  const geojson = {
+    type: "Feature",
+    features: shops.map((shop) => ({
+      properties: {
+        name: shop.name,
+        category: shop.category,
+        postcode: shop.postcode,
+        address: shop.address,
+      },
+      geometry: {
+        type: "Point",
+        coordinates: {
+          lat: shop.latitude,
+          lng: shop.longitude,
+        },
+      },
+    })),
+  };
   const handleInfo = useCallback((e: any) => {
     setInfo((prevstate) => {
       return {
         ...prevstate,
-        name: e.result.text_ja,
-        category: e.result.properties.category,
-        address:
-          e.result.context[0].text_ja +
-          " " +
-          e.result.context[3].text_ja +
-          e.result.context[2].text_ja +
-          e.result.context[1].text_ja +
-          e.result.properties.address,
-        latitude: e.result.geometry.coordinates[1],
-        longitude: e.result.geometry.coordinates[0],
+        name: e.properties.name,
+        category: e.properties.category,
+        address: e.properties.address,
+        latitude: e.geometry.coordinates.lat,
+        longitude: e.geometry.coordinates.lng,
       };
     });
   }, []);
@@ -76,7 +68,7 @@ const Home: NextPage = () => {
       mapboxgl: mapboxgl as any,
       types: "poi",
       marker: false,
-      placeholder: "登録する",
+      placeholder: "seach a store",
     });
     const geolocate = new mapboxgl.GeolocateControl({
       positionOptions: {
@@ -91,37 +83,29 @@ const Home: NextPage = () => {
     map.current.addControl(geocoder, "top-left");
     map.current.addControl(geolocate, "top-right");
     map.current.addControl(nav, "top-right");
-    geocoder.on("result", function (e) {
-      handleInfo(e);
-      setRegist(true);
-
-      var marker1 = new mapboxgl.Marker({ color: "blue" })
-        .setLngLat(e.result.center)
-        .addTo(map.current);
-      map.current.flyTo({
-        center: e.result.center,
-        zoom: 15,
-        speed: 5,
-      });
-
-      // new mapboxgl.Popup({ offset: 35, closeOnClick: true })
-      //   .setLngLat(e.result.center)
-      //   .setHTML("MapBox Coordinate<br/>" + e.result.center)
-      //   .addTo(map.current);
-      map.current.on("click", function () {
-        marker1.remove();
-      });
-    });
   }, []);
 
+  useEffect(() => {
+    map.current.on("load", () => {
+      geojson.features.forEach((marker) => {
+        const registedMarker = new mapboxgl.Marker({
+          color: "#c9171e",
+        })
+          .setLngLat(marker.geometry.coordinates)
+          .addTo(map.current);
+        registedMarker.getElement().addEventListener("click", function () {
+          handleInfo(marker);
+          setOpened(true);
+        });
+      });
+    });
+  }, [shops]);
+
   return (
-    <>
+    <main>
       <div className="w-screen h-[calc(100vh-70px)]" ref={mapContainer} />
-      {/* {info !== undefined && regist && (
-        <RegistInfo info={info} regist setRegist={setRegist} />
-      )} */}
-      {/* <Marked map={map} /> */}
-    </>
+      <Marked info={info} opened={opened} setOpened={setOpened} />
+    </main>
   );
 };
 
