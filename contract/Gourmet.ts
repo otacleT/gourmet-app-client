@@ -29,52 +29,31 @@ import type {
 
 export interface GourmetInterface extends utils.Interface {
   functions: {
-    "addMap(string,string,string,int256,int256,uint256)": FunctionFragment;
-    "eval(address)": FunctionFragment;
+    "Evaluate(uint256,uint256)": FunctionFragment;
   };
 
-  getFunction(nameOrSignatureOrTopic: "addMap" | "eval"): FunctionFragment;
+  getFunction(nameOrSignatureOrTopic: "Evaluate"): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "addMap",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "eval",
-    values: [PromiseOrValue<string>]
+    functionFragment: "Evaluate",
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
 
-  decodeFunctionResult(functionFragment: "addMap", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "eval", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "Evaluate", data: BytesLike): Result;
 
   events: {
-    "NewMap(string,string,string,int256,int256,uint256)": EventFragment;
+    "starLog(uint256)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "NewMap"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "starLog"): EventFragment;
 }
 
-export interface NewMapEventObject {
-  name: string;
-  category: string;
-  address_ja: string;
-  latitude: BigNumber;
-  longitude: BigNumber;
-  star: BigNumber;
+export interface starLogEventObject {
+  result: BigNumber;
 }
-export type NewMapEvent = TypedEvent<
-  [string, string, string, BigNumber, BigNumber, BigNumber],
-  NewMapEventObject
->;
+export type starLogEvent = TypedEvent<[BigNumber], starLogEventObject>;
 
-export type NewMapEventFilter = TypedEventFilter<NewMapEvent>;
+export type starLogEventFilter = TypedEventFilter<starLogEvent>;
 
 export interface Gourmet extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -103,131 +82,45 @@ export interface Gourmet extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    addMap(
-      _name: PromiseOrValue<string>,
-      _category: PromiseOrValue<string>,
-      _address_ja: PromiseOrValue<string>,
-      _latitude: PromiseOrValue<BigNumberish>,
-      _longitude: PromiseOrValue<BigNumberish>,
-      _star: PromiseOrValue<BigNumberish>,
+    Evaluate(
+      _uStar: PromiseOrValue<BigNumberish>,
+      _shopId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
-
-    eval(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<
-      [string, string, string, BigNumber, BigNumber, BigNumber] & {
-        name: string;
-        category: string;
-        address_ja: string;
-        latitude: BigNumber;
-        longitude: BigNumber;
-        star: BigNumber;
-      }
-    >;
   };
 
-  addMap(
-    _name: PromiseOrValue<string>,
-    _category: PromiseOrValue<string>,
-    _address_ja: PromiseOrValue<string>,
-    _latitude: PromiseOrValue<BigNumberish>,
-    _longitude: PromiseOrValue<BigNumberish>,
-    _star: PromiseOrValue<BigNumberish>,
+  Evaluate(
+    _uStar: PromiseOrValue<BigNumberish>,
+    _shopId: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  eval(
-    arg0: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<
-    [string, string, string, BigNumber, BigNumber, BigNumber] & {
-      name: string;
-      category: string;
-      address_ja: string;
-      latitude: BigNumber;
-      longitude: BigNumber;
-      star: BigNumber;
-    }
-  >;
-
   callStatic: {
-    addMap(
-      _name: PromiseOrValue<string>,
-      _category: PromiseOrValue<string>,
-      _address_ja: PromiseOrValue<string>,
-      _latitude: PromiseOrValue<BigNumberish>,
-      _longitude: PromiseOrValue<BigNumberish>,
-      _star: PromiseOrValue<BigNumberish>,
+    Evaluate(
+      _uStar: PromiseOrValue<BigNumberish>,
+      _shopId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
-
-    eval(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<
-      [string, string, string, BigNumber, BigNumber, BigNumber] & {
-        name: string;
-        category: string;
-        address_ja: string;
-        latitude: BigNumber;
-        longitude: BigNumber;
-        star: BigNumber;
-      }
-    >;
   };
 
   filters: {
-    "NewMap(string,string,string,int256,int256,uint256)"(
-      name?: null,
-      category?: null,
-      address_ja?: null,
-      latitude?: null,
-      longitude?: null,
-      star?: null
-    ): NewMapEventFilter;
-    NewMap(
-      name?: null,
-      category?: null,
-      address_ja?: null,
-      latitude?: null,
-      longitude?: null,
-      star?: null
-    ): NewMapEventFilter;
+    "starLog(uint256)"(result?: null): starLogEventFilter;
+    starLog(result?: null): starLogEventFilter;
   };
 
   estimateGas: {
-    addMap(
-      _name: PromiseOrValue<string>,
-      _category: PromiseOrValue<string>,
-      _address_ja: PromiseOrValue<string>,
-      _latitude: PromiseOrValue<BigNumberish>,
-      _longitude: PromiseOrValue<BigNumberish>,
-      _star: PromiseOrValue<BigNumberish>,
+    Evaluate(
+      _uStar: PromiseOrValue<BigNumberish>,
+      _shopId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    eval(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    addMap(
-      _name: PromiseOrValue<string>,
-      _category: PromiseOrValue<string>,
-      _address_ja: PromiseOrValue<string>,
-      _latitude: PromiseOrValue<BigNumberish>,
-      _longitude: PromiseOrValue<BigNumberish>,
-      _star: PromiseOrValue<BigNumberish>,
+    Evaluate(
+      _uStar: PromiseOrValue<BigNumberish>,
+      _shopId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    eval(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };
 }
