@@ -1,5 +1,6 @@
-import { Drawer } from "@mantine/core";
-import { Dispatch, FC, SetStateAction } from "react";
+import { Button, Drawer } from "@mantine/core";
+import { Dispatch, FC, SetStateAction, useCallback } from "react";
+import { useEvaluate } from "src/hook/Evaluate";
 import { Info } from "src/pages";
 
 type Props = {
@@ -9,7 +10,14 @@ type Props = {
 };
 
 export const Marked: FC<Props> = (props) => {
+  const { loading, success, error, send } = useEvaluate();
   const { info, opened, setOpened } = props;
+  const handleSubmit = useCallback(
+    async (info: Info) => {
+      await send(5, info.id);
+    },
+    [info]
+  );
   return (
     <Drawer
       opened={opened}
@@ -36,6 +44,7 @@ export const Marked: FC<Props> = (props) => {
         <li>{info?.latitude}</li>
         <li>{info?.longitude}</li>
       </ul>
+      <Button onClick={() => handleSubmit}></Button>
     </Drawer>
   );
 };
