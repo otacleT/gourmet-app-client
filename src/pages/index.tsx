@@ -1,13 +1,15 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { NextPage } from "next";
 import "react-map-gl-geocoder/dist/mapbox-gl-geocoder.css";
-import { Drawer } from "@mantine/core";
 import mapboxgl from "mapbox-gl";
 import { useMap } from "../hook/Map";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import { RegistInfo } from "src/component/RegistInfo";
 import { Evaluate } from "src/component/Evaluate";
+import { useShops } from "src/hook/Shops";
+import { FirebaseApp, getApp } from "firebase/app";
+import "../lib/firebase/init";
 
 type Marker = {
   name: string;
@@ -52,6 +54,10 @@ const Home: NextPage = () => {
   const [elt, setElt] = useState<boolean>(false);
   const mapContainer = useRef<any>(null);
   const map = useRef<mapboxgl.Map | any>(null);
+  const app: FirebaseApp = getApp();
+  const { isLoading, shops } = useShops();
+  console.log(shops);
+
   const geojson = {
     type: "Feature",
     features: maps.map((marker) => ({
