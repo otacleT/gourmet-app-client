@@ -42,16 +42,20 @@ export interface GourmetInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "Evaluate", data: BytesLike): Result;
 
   events: {
-    "starLog(uint256)": EventFragment;
+    "starLog(uint256,uint256)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "starLog"): EventFragment;
 }
 
 export interface starLogEventObject {
+  shopId: BigNumber;
   result: BigNumber;
 }
-export type starLogEvent = TypedEvent<[BigNumber], starLogEventObject>;
+export type starLogEvent = TypedEvent<
+  [BigNumber, BigNumber],
+  starLogEventObject
+>;
 
 export type starLogEventFilter = TypedEventFilter<starLogEvent>;
 
@@ -83,43 +87,46 @@ export interface Gourmet extends BaseContract {
 
   functions: {
     Evaluate(
-      _uStar: PromiseOrValue<BigNumberish>,
       _shopId: PromiseOrValue<BigNumberish>,
+      _uStar: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
 
   Evaluate(
-    _uStar: PromiseOrValue<BigNumberish>,
     _shopId: PromiseOrValue<BigNumberish>,
+    _uStar: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     Evaluate(
-      _uStar: PromiseOrValue<BigNumberish>,
       _shopId: PromiseOrValue<BigNumberish>,
+      _uStar: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
   };
 
   filters: {
-    "starLog(uint256)"(result?: null): starLogEventFilter;
-    starLog(result?: null): starLogEventFilter;
+    "starLog(uint256,uint256)"(
+      shopId?: null,
+      result?: null
+    ): starLogEventFilter;
+    starLog(shopId?: null, result?: null): starLogEventFilter;
   };
 
   estimateGas: {
     Evaluate(
-      _uStar: PromiseOrValue<BigNumberish>,
       _shopId: PromiseOrValue<BigNumberish>,
+      _uStar: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     Evaluate(
-      _uStar: PromiseOrValue<BigNumberish>,
       _shopId: PromiseOrValue<BigNumberish>,
+      _uStar: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };
