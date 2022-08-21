@@ -5,10 +5,13 @@ import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import { FirebaseApp, getApp } from "firebase/app";
 import "../lib/firebase/init";
-import { Marked } from "src/component/Marked";
 import { useShops } from "src/hook/Shops";
+import { AddStar } from "src/component/AddStar";
+import { useStar } from "src/hook/Star";
+import { logItem } from "src/hook/Star/Star";
 
 export type Info = {
+  id: number;
   name: string;
   category: string;
   address: string;
@@ -23,11 +26,23 @@ const Home: NextPage = () => {
   const map = useRef<mapboxgl.Map | any>(null);
   const app: FirebaseApp = getApp();
   const { isLoading, shops } = useShops();
+  const { stars } = useStar();
+  const searchId = useCallback((stars: logItem[], id: number) => {
+    for (const x of stars) {
+      if (x.id == id) {
+        console.log(id, x.id, x.star);
+        return x.star;
+      }
+    }
+    return 0;
+  }, []);
   const geojson = {
     type: "Feature",
     features: shops.map((shop) => ({
       properties: {
+        id: shop.id,
         name: shop.name,
+        star: searchId(stars, shop.id),
         category: shop.category,
         postcode: shop.postcode,
         address: shop.address,
@@ -45,6 +60,7 @@ const Home: NextPage = () => {
     setInfo((prevstate) => {
       return {
         ...prevstate,
+        id: e.properties.id,
         name: e.properties.name,
         category: e.properties.category,
         address: e.properties.address,
@@ -104,7 +120,7 @@ const Home: NextPage = () => {
   return (
     <main>
       <div className="w-screen h-[calc(100vh-70px)]" ref={mapContainer} />
-      <Marked info={info} opened={opened} setOpened={setOpened} />
+      <AddStar info={info} opened={opened} setOpened={setOpened} />
     </main>
   );
 };
