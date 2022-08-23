@@ -26,21 +26,3 @@
     font-size: 14px;
   }
 }
-.mapboxgl-popup-tip {
-  border: 3px solid transparent;
-}
-.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
-  border-top-color: #c9171e;
-}
-.mapboxgl-popup-content {
-  width: 240px;
-  border-bottom: 2px solid #c9171e;
-  padding: 25px 15px;
-}
-.mapboxgl-popup-close-button {
-  font-size: 15px;
-  font-weight: bold;
-  color: #aeaeae;
-  width: 25px;
-  height: 25px;
-}
