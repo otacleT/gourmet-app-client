@@ -75,7 +75,7 @@ const Home: NextPage = () => {
       logoPosition: "bottom-left",
       attributionControl: false,
       container: mapContainer.current,
-      style: "mapbox://styles/taisei-m/cl6lh9446000h14pebx8w9o75",
+      style: process.env.NEXT_PUBLIC_MAPBOX_STYLE,
       center: [139.6503, 35.6762], // center map on Chad
       zoom: 10,
     });
