@@ -17,6 +17,7 @@ export type Info = {
   address: string;
   latitude: number;
   longitude: number;
+  star: number;
 };
 
 const Home: NextPage = () => {
@@ -30,7 +31,6 @@ const Home: NextPage = () => {
   const searchId = useCallback((stars: logItem[], id: number) => {
     for (const x of stars) {
       if (x.id == id) {
-        console.log(id, x.id, x.star);
         return x.star;
       }
     }
@@ -56,6 +56,7 @@ const Home: NextPage = () => {
       },
     })),
   };
+
   const handleInfo = useCallback((e: any) => {
     setInfo((prevstate) => {
       return {
@@ -66,6 +67,7 @@ const Home: NextPage = () => {
         address: e.properties.address,
         latitude: e.geometry.coordinates.lat,
         longitude: e.geometry.coordinates.lng,
+        star: e.properties.star,
       };
     });
   }, []);
