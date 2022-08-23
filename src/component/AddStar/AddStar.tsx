@@ -5,7 +5,6 @@ import { useCallback } from "react";
 import { IconContext } from "react-icons";
 import { RiMapPinLine } from "react-icons/ri";
 import { useEvaluate } from "src/hook/Evaluate";
-import { useStar } from "src/hook/Star";
 import { Info } from "src/pages";
 
 type Regist = {
@@ -38,7 +37,10 @@ export const AddStar: FC<Regist> = (props) => {
       <h3 className="text-xl font-bold">{info?.name}</h3>
       <p className="text-sm">{info?.category}</p>
       <div className="relative w-[5em] h-[1em] text-3xl leading-[1em]">
-        <div className="absolute top-0 left-0 overflow-hidden whitespace-nowrap text-[#c9171e] w-[1.4em]">
+        <div
+          className="absolute top-0 left-0 overflow-hidden whitespace-nowrap text-[#c9171e]"
+          style={{ width: `${info?.star}em` }}
+        >
           ★★★★★
         </div>
         <div className="text-[#aeaeae]">☆☆☆☆☆</div>
