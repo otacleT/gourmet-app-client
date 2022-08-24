@@ -16,25 +16,27 @@ type Regist = {
 export const AddStar: FC<Regist> = (props) => {
   const { loading, success, error, send } = useEvaluate();
   const { info, opened, setOpened } = props;
-  const [star, setStar] = useState<number>(5);
   const [show, setShow] = useState<boolean>(false);
+  const [hover, setHover] = useState<number>(-1);
+  const [selected, setSelected] = useState<number>(0);
   const handleSubmit = useCallback(
     async (info: Info | undefined) => {
       if (info == undefined) return;
-      await send(info.id, star);
+      await send(info.id, selected);
     },
-    [info, star]
+    [info, selected]
   );
   const handleOpened = useCallback(() => {
     setOpened(false);
     setShow(false);
   }, [show, opened]);
-  const handleStar: ChangeEventHandler<HTMLInputElement> = useCallback(
-    (e) => {
-      setStar(Number(e.target.value));
-    },
-    [star]
-  );
+  const handleClick = useCallback((num: number) => {
+    setSelected(num);
+    setHover(-1);
+  }, []);
+  const handleHover = useCallback((num: number) => {
+    setHover(num);
+  }, []);
 
   return (
     <Dialog
@@ -70,11 +72,28 @@ export const AddStar: FC<Regist> = (props) => {
       <button onClick={() => setShow(true)}>評価をおこなう</button>
       {show && (
         <div>
-          <input
-            type="number"
-            className="w-full border border-black"
-            onChange={handleStar}
-          />
+          <div className="relative w-[5em] h-[1em] text-3xl leading-[1em]">
+            <div className="absolute top-0 left-0 overflow-hidden whitespace-nowrap text-[#c9171e] w-[5em]">
+              {[...Array(5)]
+                .map((_, i) => i + 1)
+                .map((num: number) => (
+                  <span
+                    key={num}
+                    className={
+                      num <= selected || num <= hover
+                        ? "opacity-100 cursor-pointer"
+                        : "opacity-0 hover:opacity-100 cursor-pointer"
+                    }
+                    onClick={() => handleClick(num)}
+                    onMouseOver={() => handleHover(num)}
+                    onMouseLeave={() => setHover(-1)}
+                  >
+                    ★
+                  </span>
+                ))}
+            </div>
+            <div className="text-[#aeaeae]">☆☆☆☆☆</div>
+          </div>
           <div className="flex justify-around mt-5">
             <Button
               className="flex w-[calc(50%-10px)] h-[40px] justify-center items-center text-sm font-bold text-[#333] border border-[#333] hover:bg-inherit"
