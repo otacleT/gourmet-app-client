@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { NextPage } from "next";
 import mapboxgl from "mapbox-gl";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
@@ -36,26 +36,28 @@ const Map: NextPage = () => {
     }
     return 0;
   }, []);
-  const geojson = {
-    type: "Feature",
-    features: shops.map((shop) => ({
-      properties: {
-        id: shop.id,
-        name: shop.name,
-        star: searchId(stars, shop.id),
-        category: shop.category,
-        postcode: shop.postcode,
-        address: shop.address,
-      },
-      geometry: {
-        type: "Point",
-        coordinates: {
-          lat: shop.latitude,
-          lng: shop.longitude,
+  const geojson = useMemo(() => {
+    return {
+      type: "Feature",
+      features: shops.map((shop) => ({
+        properties: {
+          id: shop.id,
+          name: shop.name,
+          star: searchId(stars, shop.id),
+          category: shop.category,
+          postcode: shop.postcode,
+          address: shop.address,
         },
-      },
-    })),
-  };
+        geometry: {
+          type: "Point",
+          coordinates: {
+            lat: shop.latitude,
+            lng: shop.longitude,
+          },
+        },
+      })),
+    };
+  }, [shops, stars]);
 
   const handleInfo = useCallback((e: any) => {
     setInfo((prevstate) => {
@@ -117,7 +119,7 @@ const Map: NextPage = () => {
         });
       });
     });
-  }, [shops]);
+  }, [shops, geojson]);
 
   return (
     <main>
