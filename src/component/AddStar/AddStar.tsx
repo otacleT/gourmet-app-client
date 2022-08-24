@@ -1,11 +1,11 @@
 import { Button, Dialog } from "@mantine/core";
-import { SetStateAction } from "react";
+import { ChangeEventHandler, SetStateAction, useState } from "react";
 import { Dispatch, FC } from "react";
 import { useCallback } from "react";
 import { IconContext } from "react-icons";
 import { RiMapPinLine } from "react-icons/ri";
 import { useEvaluate } from "src/hook/Evaluate";
-import { Info } from "src/pages";
+import { Info } from "src/pages/map";
 
 type Regist = {
   info: Info | undefined;
@@ -16,12 +16,24 @@ type Regist = {
 export const AddStar: FC<Regist> = (props) => {
   const { loading, success, error, send } = useEvaluate();
   const { info, opened, setOpened } = props;
+  const [star, setStar] = useState<number>(5);
+  const [show, setShow] = useState<boolean>(false);
   const handleSubmit = useCallback(
     async (info: Info | undefined) => {
       if (info == undefined) return;
-      await send(info.id, 5);
+      await send(info.id, star);
     },
-    [info]
+    [info, star]
+  );
+  const handleOpened = useCallback(() => {
+    setOpened(false);
+    setShow(false);
+  }, [show, opened]);
+  const handleStar: ChangeEventHandler<HTMLInputElement> = useCallback(
+    (e) => {
+      setStar(Number(e.target.value));
+    },
+    [star]
   );
 
   return (
@@ -55,22 +67,32 @@ export const AddStar: FC<Regist> = (props) => {
           〒{info?.address}
         </dd>
       </dl>
-      <div className="flex justify-around mt-5">
-        <Button
-          className="flex w-[calc(50%-10px)] h-[40px] justify-center items-center text-sm font-bold text-[#333] border border-[#333] hover:bg-inherit"
-          onClick={() => setOpened(false)}
-        >
-          CANCEL
-        </Button>
-        <Button
-          loading={loading}
-          radius={0}
-          onClick={() => handleSubmit(info)}
-          className="flex w-[calc(50%-10px)] h-[40px] justify-center items-center text-sm font-bold bg-[#333] text-white hover:bg-[#333]"
-        >
-          REGISTER
-        </Button>
-      </div>
+      <button onClick={() => setShow(true)}>評価をおこなう</button>
+      {show && (
+        <div>
+          <input
+            type="number"
+            className="w-full border border-black"
+            onChange={handleStar}
+          />
+          <div className="flex justify-around mt-5">
+            <Button
+              className="flex w-[calc(50%-10px)] h-[40px] justify-center items-center text-sm font-bold text-[#333] border border-[#333] hover:bg-inherit"
+              onClick={() => handleOpened()}
+            >
+              CANCEL
+            </Button>
+            <Button
+              loading={loading}
+              radius={0}
+              onClick={() => handleSubmit(info)}
+              className="flex w-[calc(50%-10px)] h-[40px] justify-center items-center text-sm font-bold bg-[#333] text-white hover:bg-[#333]"
+            >
+              EVALUATE
+            </Button>
+          </div>
+        </div>
+      )}
     </Dialog>
   );
 };
