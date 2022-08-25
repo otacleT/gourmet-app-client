@@ -1,5 +1,6 @@
 import { Avatar } from "@mantine/core";
 import { useEthers } from "@usedapp/core";
+import Link from "next/link";
 import { FC } from "react";
 
 export const Header: FC = () => {
@@ -7,7 +8,9 @@ export const Header: FC = () => {
   return (
     <header className="w-full">
       <div className="max-w-6xl mx-auto h-[70px] px-5 flex justify-between items-center">
-        <p className="text-[20px] font-bold">Gourmet APP</p>
+        <Link href="/">
+          <a className="text-[20px] font-bold">Gourmet APP</a>
+        </Link>
         <div className="flex justify-between items-center">
           {account ? (
             <div
