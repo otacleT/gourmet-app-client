@@ -20,7 +20,6 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta name="description" content="Gourmet App" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Header />
       <MantineProvider
         withGlobalStyles
         withNormalizeCSS
@@ -29,6 +28,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           colorScheme: "light",
         }}
       >
+        <Header />
         <Component {...pageProps} />
       </MantineProvider>
     </DAppProvider>
