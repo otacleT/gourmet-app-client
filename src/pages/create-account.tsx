@@ -97,10 +97,7 @@ const CreateAccount = () => {
           {...form.getInputProps("birth")}
         />
         <Space h="md" />
-        <button
-          className="w-full py-3 rounded-md flex justify-center items-center text-lg bg-[#333] text-white"
-          type="submit"
-        >
+        <button className="w-full py-3 rounded-md flex justify-center items-center text-lg bg-[#333] text-white">
           更新
         </button>
       </form>
