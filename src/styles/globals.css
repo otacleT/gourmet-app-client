@@ -44,7 +44,7 @@
   height: 0;
   right: -3px;
   bottom: -3px;
-  border-left: 20px solid #000;
+  border-left: 20px solid #333;
   border-top: 3px solid transparent;
   border-bottom: 20px solid transparent;
   transform: rotate(50deg);
