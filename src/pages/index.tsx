@@ -9,7 +9,7 @@ const Home: NextPage = () => {
         <p className="text-3xl font-bold ">信頼度に応じた飲食店評価アプリ</p>
         <div className="flex items-center mt-10">
           <Link href="/login">
-            <a className="w-[150px] text-xl text-center py-3 px-4 rounded-lg bg-[#55c08f] text-white mr-10">
+            <a className="w-[150px] text-xl text-center py-3 px-4 rounded-lg bg-[#2cb696] text-white mr-10">
               Login
             </a>
           </Link>

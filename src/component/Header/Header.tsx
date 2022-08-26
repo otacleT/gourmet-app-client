@@ -23,7 +23,7 @@ export const Header: FC = () => {
           {user?.address}
           {!fbUser && (
             <Link href="/login">
-              <a className="text-sm leading-none cursor-pointer text-[#efefef] bg-[#55c08f] p-3 mr-5 rounded-md">
+              <a className="text-sm leading-none cursor-pointer text-[#efefef] bg-[#2cb696] p-3 mr-5 rounded-md">
                 Login
               </a>
             </Link>
@@ -31,14 +31,14 @@ export const Header: FC = () => {
           {fbUser &&
             (account ? (
               <div
-                className="text-sm leading-none cursor-pointer text-[#efefef] bg-[#55c08f] p-3 mr-5 rounded-md"
+                className="text-sm leading-none cursor-pointer text-[#efefef] bg-[#2cb696] p-3 mr-5 rounded-md"
                 // style={{ border: "1px solid #57606a" }}
               >
                 Connected
               </div>
             ) : (
               <button
-                className="text-sm leading-none cursor-pointer text-[#efefef] bg-[#55c08f] p-3 mr-5 rounded-md"
+                className="text-sm leading-none cursor-pointer text-[#efefef] bg-[#2cb696] p-3 mr-5 rounded-md"
                 // style={{ border: "1px solid #57606a" }}
                 onClick={activateBrowserWallet}
               >
