@@ -1,7 +1,6 @@
 import { NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { login, logout } from "src/lib/firebase/auth";
 
 const Home: NextPage = () => {
   return (
