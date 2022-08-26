@@ -17,7 +17,6 @@ const CreateAccount = () => {
       birth: "",
     },
   });
-  const id = useId();
   const handleSubmit = useCallback(async (values: typeof form.values) => {
     console.log(values);
   }, []);
@@ -25,17 +24,18 @@ const CreateAccount = () => {
     return true;
   }
   if (!isLoggedIn) {
-    router.push("/map");
+    router.push("/login");
     return null;
   }
   return (
-    <div className="max-w-xl mx-auto">
-      <h1>アカウント作成</h1>
+    <div className="max-w-xl mx-auto pt-20">
+      <h1 className="text-2xl text-center font-bold">アカウント作成</h1>
       <form className="mt-10" onSubmit={form.onSubmit(handleSubmit)}>
         <TextInput
           required
           label="ニックネーム"
           placeholder="Satoshi Nakamoto"
+          autoComplete="off"
           {...form.getInputProps("nickname")}
         />
         <Space h="md" />
@@ -106,6 +106,7 @@ const CreateAccount = () => {
         <TextInput
           label="生年月日"
           placeholder="××××/××/××"
+          autoComplete="off"
           {...form.getInputProps("birth")}
         />
         <Space h="md" />
