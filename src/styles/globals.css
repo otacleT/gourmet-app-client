@@ -79,6 +79,10 @@
   transform: rotate(50deg);
   z-index: 2;
 }
+.mantine-Dialog-closeButton {
+  top: 3px !important;
+  right: 3px !important;
+}
 @media screen and (min-width: 640px) {
   .mapboxgl-ctrl-geocoder {
     min-width: 400px !important;
