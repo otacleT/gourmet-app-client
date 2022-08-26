@@ -1,14 +1,5 @@
 import { collection, getDocs, getFirestore } from "firebase/firestore";
-
-export type Shop = {
-  id: number;
-  name: string;
-  category: string;
-  postcode: string;
-  address: string;
-  latitude: number;
-  longitude: number;
-};
+import { Shop } from "src/types/shop";
 
 export async function getShops(): Promise<Shop[]> {
   const shops = new Array<Shop>();

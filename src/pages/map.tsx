@@ -9,16 +9,7 @@ import { useShops } from "src/hook/Shops";
 import { AddStar } from "src/component/AddStar";
 import { useStar } from "src/hook/Star";
 import { logItem } from "src/hook/Star/Star";
-
-export type Info = {
-  id: number;
-  name: string;
-  category: string;
-  address: string;
-  latitude: number;
-  longitude: number;
-  star: number;
-};
+import { Info } from "src/types/info";
 
 const Map: NextPage = () => {
   const [info, setInfo] = useState<Info>();

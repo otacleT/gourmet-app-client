@@ -5,7 +5,7 @@ import { useCallback } from "react";
 import { IconContext } from "react-icons";
 import { RiMapPinLine } from "react-icons/ri";
 import { useEvaluate } from "src/hook/Evaluate";
-import { Info } from "src/pages/map";
+import { Info } from "src/types/info";
 
 type Regist = {
   info: Info | undefined;
