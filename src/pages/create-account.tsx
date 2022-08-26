@@ -8,7 +8,7 @@ import { useAuth } from "src/context/auth";
 import { db } from "src/lib/firebase/init";
 
 const CreateAccount = () => {
-  const { user, isLoading, fbUser } = useAuth();
+  const { user, fbUser } = useAuth();
   const router = useRouter();
 
   const form = useForm({
@@ -30,15 +30,12 @@ const CreateAccount = () => {
     },
     [fbUser]
   );
-  if (isLoading) {
+  if (!fbUser) {
+    router.push("/login");
     return null;
   }
   if (user) {
-    router.push("/");
-    return null;
-  }
-  if (!fbUser) {
-    router.push("/login");
+    router.push("/map");
     return null;
   }
 
