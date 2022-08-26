@@ -9,7 +9,7 @@ export const Header: FC = () => {
     <header className="w-full">
       <div className="max-w-6xl mx-auto h-[70px] px-5 flex justify-between items-center">
         <Link href="/">
-          <a className="text-[20px] font-bold">Gourmet APP</a>
+          <a className="text-2xl font-bold">Gourmet APP</a>
         </Link>
         <div className="flex justify-between items-center">
           {account ? (
