@@ -5,6 +5,7 @@ import { DAppProvider, Hardhat } from "@usedapp/core";
 import Head from "next/head";
 import { MantineProvider } from "@mantine/core";
 import { Header } from "../component/Header";
+import { AuthProvider } from "src/context/auth";
 
 const config = {
   multicallAddresses: {
@@ -20,17 +21,19 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta name="description" content="Gourmet App" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <MantineProvider
-        withGlobalStyles
-        withNormalizeCSS
-        theme={{
-          /** Put your mantine theme override here */
-          colorScheme: "light",
-        }}
-      >
-        <Header />
-        <Component {...pageProps} />
-      </MantineProvider>
+      <AuthProvider>
+        <MantineProvider
+          withGlobalStyles
+          withNormalizeCSS
+          theme={{
+            /** Put your mantine theme override here */
+            colorScheme: "light",
+          }}
+        >
+          <Header />
+          <Component {...pageProps} />
+        </MantineProvider>
+      </AuthProvider>
     </DAppProvider>
   );
 }
