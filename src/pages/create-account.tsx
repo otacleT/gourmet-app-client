@@ -1,12 +1,14 @@
 import { Input, Select, Space, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useId } from "@mantine/hooks";
+import { doc, setDoc } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { useCallback } from "react";
 import { useAuth } from "src/context/auth";
+import { db } from "src/lib/firebase/init";
 
 const CreateAccount = () => {
-  const { isLoading, isLoggedIn } = useAuth();
+  const { user, isLoading, fbUser } = useAuth();
   const router = useRouter();
 
   const form = useForm({
@@ -17,16 +19,29 @@ const CreateAccount = () => {
       birth: "",
     },
   });
-  const handleSubmit = useCallback(async (values: typeof form.values) => {
-    console.log(values);
-  }, []);
+  const handleSubmit = useCallback(
+    async (values: typeof form.values) => {
+      if (!fbUser) return;
+      const ref = doc(db, `users/${fbUser.uid}`);
+      setDoc(ref, values).then(() => {
+        alert("create user");
+        router.push("/");
+      });
+    },
+    [fbUser]
+  );
   if (isLoading) {
     return null;
   }
-  if (!isLoggedIn) {
+  if (user) {
+    router.push("/");
+    return null;
+  }
+  if (!fbUser) {
     router.push("/login");
     return null;
   }
+
   return (
     <div className="max-w-xl mx-auto pt-20">
       <h1 className="text-2xl text-center font-bold">アカウント作成</h1>
@@ -52,7 +67,7 @@ const CreateAccount = () => {
         <Space h="md" />
         <Input.Wrapper label="現住所">
           <Input component="select" {...form.getInputProps("address")}>
-            <option value="" selected></option>
+            <option value=""></option>
             <option value="北海道">北海道</option>
             <option value="青森県">青森県</option>
             <option value="岩手県">岩手県</option>
