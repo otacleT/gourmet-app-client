@@ -1,11 +1,14 @@
 import { Button, Dialog } from "@mantine/core";
-import { ChangeEventHandler, SetStateAction, useState } from "react";
+import { ChangeEventHandler, SetStateAction, useEffect, useState } from "react";
 import { Dispatch, FC } from "react";
 import { useCallback } from "react";
 import { IconContext } from "react-icons";
 import { RiMapPinLine } from "react-icons/ri";
+import { BiCategoryAlt } from "react-icons/bi";
+import { AiFillStar } from "react-icons/ai";
 import { useEvaluate } from "src/hook/Evaluate";
 import { Info } from "src/types/info";
+import { useEthers } from "@usedapp/core";
 
 type Regist = {
   info: Info | undefined;
@@ -14,6 +17,7 @@ type Regist = {
 };
 
 export const AddStar: FC<Regist> = (props) => {
+  const { account } = useEthers();
   const { loading, success, error, send } = useEvaluate();
   const { info, opened, setOpened } = props;
   const [show, setShow] = useState<boolean>(false);
@@ -37,6 +41,11 @@ export const AddStar: FC<Regist> = (props) => {
   const handleHover = useCallback((num: number) => {
     setHover(num);
   }, []);
+  useEffect(() => {
+    if (success) {
+      setOpened(false);
+    }
+  }, [success]);
 
   return (
     <Dialog
@@ -46,34 +55,43 @@ export const AddStar: FC<Regist> = (props) => {
       size="lg"
       radius={0}
       position={{ left: "20px", bottom: "20px" }}
+      className="pt-8 rounded-br-3xl rounded-bl-3xl"
     >
-      <div className="absolute top-0 left-0 -translate-y-full w-full h-[200px] bg-gradient-to-r from-cyan-500 to-blue-500"></div>
-      <h3 className="text-xl font-bold">{info?.name}</h3>
-      <p className="text-sm">{info?.category}</p>
-      <div className="relative w-[5em] h-[1em] text-3xl leading-[1em]">
-        <div
-          className="absolute top-0 left-0 overflow-hidden whitespace-nowrap text-[#c9171e]"
-          style={{ width: `${info?.star}em` }}
-        >
-          ★★★★★
-        </div>
-        <div className="text-[#aeaeae]">☆☆☆☆☆</div>
-      </div>
-      <dl className="flex flex-wrap w-full items-start justify-between mt-3">
-        <dt className="w-[30px] h-[22px]">
+      <div className="absolute top-0 left-0 -translate-y-full w-full h-[150px] rounded-tr-3xl rounded-tl-3xl bg-gradient-to-r from-cyan-500 to-blue-500"></div>
+      <h3 className="text-xl font-bold pr-7 relative">
+        {info?.name}
+        <span className="text-lg font-normal absolute right-0 top-0">
+          <AiFillStar className="inline text-xl" />
+          {info?.star}
+        </span>
+      </h3>
+      <p className="text-sm underline decoration-1 leading-none">
+        {info?.category}
+      </p>
+      <dl className="flex flex-wrap w-full justify-between mt-2 pb-4 border-b border-[#e0dccc]">
+        <dt className="w-[30px] h-[22px] mt-3">
           <IconContext.Provider value={{ size: "20px" }}>
             <RiMapPinLine />
           </IconContext.Provider>
         </dt>
-        <dd className="w-[calc(100%-30px)] text-base leading-snug">
-          〒{info?.address}
+        <dd className="w-[calc(100%-30px)] underline decoration-1 mt-3 leading-none">
+          {info?.address}
         </dd>
       </dl>
-      <button onClick={() => setShow(true)}>評価をおこなう</button>
+      {account ? (
+        <button
+          className="text-base text-[#c9171e]"
+          onClick={() => setShow(true)}
+        >
+          評価を行う
+        </button>
+      ) : (
+        <p className="text-base text-[#c9171e]">ウォレットを接続してください</p>
+      )}
       {show && (
         <div>
           <div className="relative w-[5em] h-[1em] text-3xl leading-[1em]">
-            <div className="absolute top-0 left-0 overflow-hidden whitespace-nowrap text-[#c9171e] w-[5em]">
+            <div className="absolute top-0 left-0 overflow-hidden whitespace-nowrap text-[#fa0] w-[5em]">
               {[...Array(5)]
                 .map((_, i) => i + 1)
                 .map((num: number) => (
