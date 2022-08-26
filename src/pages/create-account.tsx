@@ -21,7 +21,7 @@ const CreateAccount = () => {
     console.log(values);
   }, []);
   if (isLoading) {
-    return true;
+    return null;
   }
   if (!isLoggedIn) {
     router.push("/login");
