@@ -1,9 +1,14 @@
 import { Input, Select, Space, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useId } from "@mantine/hooks";
+import { useRouter } from "next/router";
 import { useCallback } from "react";
+import { useAuth } from "src/context/auth";
 
 const CreateAccount = () => {
+  const { isLoading, isLoggedIn } = useAuth();
+  const router = useRouter();
+
   const form = useForm({
     initialValues: {
       nickname: "",
@@ -16,6 +21,13 @@ const CreateAccount = () => {
   const handleSubmit = useCallback(async (values: typeof form.values) => {
     console.log(values);
   }, []);
+  if (isLoading) {
+    return true;
+  }
+  if (!isLoggedIn) {
+    router.push("/map");
+    return null;
+  }
   return (
     <div className="max-w-xl mx-auto">
       <h1>アカウント作成</h1>
