@@ -2,7 +2,7 @@ import { Button } from "@mantine/core";
 import { FcGoogle } from "react-icons/fc";
 import { login, logout } from "src/lib/firebase/auth";
 
-const Login = () => {
+const LoginPage = () => {
   return (
     <div className="max-w-xl mx-auto pt-20">
       <h1 className="text-2xl text-center font-bold">ログイン</h1>
@@ -23,4 +23,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginPage;
