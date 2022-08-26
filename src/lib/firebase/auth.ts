@@ -1,13 +1,14 @@
-import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
+import {
+  GoogleAuthProvider,
+  signInWithPopup,
+  signInWithRedirect,
+  signOut,
+} from "firebase/auth";
 import { auth } from "./init";
 
 export const login = async () => {
   const provider = new GoogleAuthProvider();
-  return signInWithPopup(auth, provider)
-    .then((result) => {
-      alert(`${result.user.displayName}さんこんにちは`);
-    })
-    .catch((e) => console.log(e));
+  return signInWithRedirect(auth, provider);
 };
 export const logout = async () => {
   return signOut(auth).then(() => {
