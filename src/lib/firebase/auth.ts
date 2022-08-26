@@ -1,7 +1,7 @@
 import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import { auth } from "./init";
 
-export const login = () => {
+export const login = async () => {
   const provider = new GoogleAuthProvider();
   return signInWithPopup(auth, provider)
     .then((result) => {
@@ -9,7 +9,7 @@ export const login = () => {
     })
     .catch((e) => console.log(e));
 };
-export const logout = () => {
+export const logout = async () => {
   return signOut(auth).then(() => {
     alert("サインアウト完了");
   });
