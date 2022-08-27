@@ -1,23 +1,36 @@
 import { NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { useAuth } from "src/context/auth";
 
 const Home: NextPage = () => {
+  const { user, fbUser } = useAuth();
   return (
     <main>
       <div className="w-full h-[calc(100vh-70px)] max-w-6xl px-5 pt-60 mx-auto relative">
         <p className="text-3xl font-bold ">信頼度に応じた飲食店評価アプリ</p>
         <div className="flex items-center mt-10">
-          <Link href="/login">
-            <a className="w-[150px] text-xl text-center py-3 px-4 rounded-lg bg-[#2cb696] text-white mr-10">
-              Login
-            </a>
-          </Link>
-          <Link href="/create-account">
-            <a className="w-auto text-xl text-center py-1 border-b-2 border-black">
-              Guest start
-            </a>
-          </Link>
+          {fbUser ? (
+            user ? (
+              <Link href="/map">
+                <a className="w-[150px] text-xl text-center py-3 px-4 rounded-lg bg-[#2cb696] text-white mr-10">
+                  Start
+                </a>
+              </Link>
+            ) : (
+              <Link href="/create-account">
+                <a className="w-[200px] text-xl text-center py-3 px-4 rounded-lg bg-[#2cb696] text-white mr-10">
+                  Create Account
+                </a>
+              </Link>
+            )
+          ) : (
+            <Link href="/login">
+              <a className="w-[150px] text-xl text-center py-3 px-4 rounded-lg bg-[#2cb696] text-white mr-10">
+                Login
+              </a>
+            </Link>
+          )}
         </div>
         <div className="absolute right-[32%] top-[50px] z-1">
           <div className="w-[230px] h-[310px] relative">
