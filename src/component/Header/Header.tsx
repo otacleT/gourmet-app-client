@@ -17,10 +17,6 @@ export const Header: FC = () => {
           <a className="text-2xl font-bold">Gourmet APP</a>
         </Link>
         <div className="flex justify-between items-center">
-          {user?.nickname}
-          {user?.sex}
-          {user?.birth}
-          {user?.address}
           {!fbUser && (
             <Link href="/login">
               <a className="text-sm leading-none cursor-pointer text-[#efefef] bg-[#2cb696] p-3 mr-5 rounded-md">
