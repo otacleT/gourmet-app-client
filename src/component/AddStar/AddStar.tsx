@@ -58,13 +58,7 @@ export const AddStar: FC<Regist> = (props) => {
       className="pt-8 rounded-br-3xl rounded-bl-3xl"
     >
       <div className="absolute top-0 left-0 -translate-y-full w-full h-[150px] rounded-tr-3xl rounded-tl-3xl bg-gradient-to-r from-cyan-500 to-blue-500"></div>
-      <h3 className="text-xl font-bold pr-7 relative">
-        {info?.name}
-        <span className="text-lg font-normal absolute right-0 top-0">
-          <AiFillStar className="inline text-xl" />
-          {info?.star}
-        </span>
-      </h3>
+      <h3 className="text-xl font-bold">{info?.name}</h3>
       <p className="text-sm underline decoration-1 leading-none">
         {info?.category}
       </p>
@@ -78,15 +72,31 @@ export const AddStar: FC<Regist> = (props) => {
           {info?.address}
         </dd>
       </dl>
+      <div className="flex justify-center flex-wrap mt-3">
+        <p className="text-4xl text-[#c9171e] w-full text-center">
+          {info?.star}/5
+        </p>
+        <div className="relative w-[5em] h-[1em] text-3xl leading-[1em] mt-1">
+          <div
+            className="absolute top-0 left-0 overflow-hidden whitespace-nowrap text-[#c9171e]"
+            style={{ width: `${info?.star}em` }}
+          >
+            ★★★★★
+          </div>
+          <div className="text-[#aeaeae]">☆☆☆☆☆</div>
+        </div>
+      </div>
       {account ? (
         <button
-          className="text-base text-[#c9171e]"
+          className="text-base text-[#c9171e] mt-3 text-center"
           onClick={() => setShow(true)}
         >
           評価を行う
         </button>
       ) : (
-        <p className="text-base text-[#c9171e]">ウォレットを接続してください</p>
+        <p className="text-base text-[#c9171e] mt-3 text-center">
+          ウォレットを接続してください
+        </p>
       )}
       {show && (
         <div>
