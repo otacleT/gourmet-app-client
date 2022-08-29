@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { getShops, Shop } from "src/lib/firebase/shops";
+import { getShops } from "src/lib/firebase/shops";
+import { Shop } from "src/types/shop";
 
 export type UseShopsOutput = {
   isLoading: boolean;
