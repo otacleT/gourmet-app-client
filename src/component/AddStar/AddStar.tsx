@@ -1,14 +1,20 @@
 import { Button, Dialog } from "@mantine/core";
-import { ChangeEventHandler, SetStateAction, useEffect, useState } from "react";
-import { Dispatch, FC } from "react";
-import { useCallback } from "react";
-import { IconContext } from "react-icons";
-import { RiMapPinLine } from "react-icons/ri";
-import { BiCategoryAlt } from "react-icons/bi";
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import { useEvaluate } from "src/hook/Evaluate";
-import { Info } from "src/types/info";
 import { useEthers } from "@usedapp/core";
+import {
+  Dispatch,
+  FC,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
+import { IconContext } from "react-icons";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { RiMapPinLine } from "react-icons/ri";
+import { useAuth } from "src/context/auth";
+import { useEvaluate } from "src/hook/Evaluate";
+import { addList } from "src/lib/firebase/evaluate";
+import { Info } from "src/types/info";
 
 type Regist = {
   info: Info | undefined;
@@ -23,10 +29,18 @@ export const AddStar: FC<Regist> = (props) => {
   const [show, setShow] = useState<boolean>(false);
   const [hover, setHover] = useState<number>(-1);
   const [selected, setSelected] = useState<number>(0);
+  const { fbUser } = useAuth();
   const handleSubmit = useCallback(
     async (info: Info | undefined) => {
       if (info == undefined) return;
       await send(info.id, selected);
+      addList({
+        user: fbUser,
+        name: info.name,
+        category: info.category,
+        address: info.address,
+        star: selected,
+      });
     },
     [info, selected]
   );
