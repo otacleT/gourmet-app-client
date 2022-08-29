@@ -105,7 +105,7 @@ const Map: NextPage = () => {
     map.current.on("load", () => {
       geojson.features.forEach((marker) => {
         const registedMarker = new mapboxgl.Marker({
-          color: "#009D5B",
+          color: "#DA382F",
         })
           .setLngLat(marker.geometry.coordinates)
           .addTo(map.current);
