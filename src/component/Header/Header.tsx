@@ -51,7 +51,7 @@ export const Header: FC = () => {
                     radius="xl"
                     className="shadow-md shadow-[#aeaeae]"
                   />
-                  <IoIosArrowDown className="text-xs absolute bottom-0 right-0 z-5 rounded-full bg-white shadow-sm shadow-black" />
+                  <IoIosArrowDown className="w-[11px] h-[11px] absolute bottom-0 right-0 z-5 rounded-full bg-white shadow-sm shadow-black" />
                 </div>
               </Menu.Target>
               <Menu.Dropdown>
