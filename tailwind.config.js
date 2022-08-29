@@ -39,7 +39,7 @@ module.exports = {
             width: "130px",
             height: "30px",
             border: "2px solid #333",
-            transform: "translate(0, 0)",
+            transform: "translate(50%, 50%)",
           },
         },
         people: {
