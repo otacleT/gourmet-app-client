@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { FC } from "react";
 import { useAuth } from "src/context/auth";
 import { logout } from "src/lib/firebase/auth";
+import { IoIosArrowDown } from "react-icons/io";
 
 export const Header: FC = () => {
   const { activateBrowserWallet, account } = useEthers();
@@ -44,7 +45,14 @@ export const Header: FC = () => {
           {fbUser ? (
             <Menu shadow="md" width={200}>
               <Menu.Target>
-                <Avatar src={fbUser.photoURL} radius="xl" />
+                <div className="relative ">
+                  <Avatar
+                    src={fbUser.photoURL}
+                    radius="xl"
+                    className="shadow-md shadow-[#aeaeae]"
+                  />
+                  <IoIosArrowDown className="text-xs absolute bottom-0 right-0 z-5 rounded-full bg-white shadow-sm shadow-black" />
+                </div>
               </Menu.Target>
               <Menu.Dropdown>
                 <Menu.Label>Menu</Menu.Label>
