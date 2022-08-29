@@ -5,7 +5,7 @@ import { useCallback } from "react";
 import { IconContext } from "react-icons";
 import { RiMapPinLine } from "react-icons/ri";
 import { BiCategoryAlt } from "react-icons/bi";
-import { AiFillStar } from "react-icons/ai";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { useEvaluate } from "src/hook/Evaluate";
 import { Info } from "src/types/info";
 import { useEthers } from "@usedapp/core";
@@ -73,12 +73,12 @@ export const AddStar: FC<Regist> = (props) => {
         </dd>
       </dl>
       <div className="flex justify-center flex-wrap mt-3">
-        <p className="text-4xl text-[#c9171e] w-full text-center">
+        <p className="text-4xl text-[#DA382F] w-full text-center">
           {info?.star}/5
         </p>
         <div className="relative w-[5em] h-[1em] text-3xl leading-[1em] mt-1">
           <div
-            className="absolute top-0 left-0 overflow-hidden whitespace-nowrap text-[#c9171e]"
+            className="absolute top-0 left-0 overflow-hidden whitespace-nowrap text-[#DA382F]"
             style={{ width: `${info?.star}em` }}
           >
             ★★★★★
@@ -88,20 +88,23 @@ export const AddStar: FC<Regist> = (props) => {
       </div>
       {account ? (
         <button
-          className="text-base text-[#c9171e] mt-3 text-center"
-          onClick={() => setShow(true)}
+          className="w-full text-base text-left text-[#DA382F] p-3 mt-4 relative"
+          onClick={() => setShow(!show)}
         >
           評価を行う
+          <span className="absolute top-1/2 right-0 -translate-y-1/2">
+            {show ? <IoIosArrowUp /> : <IoIosArrowDown />}
+          </span>
         </button>
       ) : (
-        <p className="text-base text-[#c9171e] mt-3 text-center">
+        <p className="w-full text-base text-left text-[#DA382F] p-3 mt-4">
           ウォレットを接続してください
         </p>
       )}
       {show && (
         <div>
           <div className="relative w-[5em] h-[1em] text-3xl leading-[1em]">
-            <div className="absolute top-0 left-0 overflow-hidden whitespace-nowrap text-[#fa0] w-[5em]">
+            <div className="absolute top-0 left-0 overflow-hidden whitespace-nowrap text-[#DA382F] w-[5em]">
               {[...Array(5)]
                 .map((_, i) => i + 1)
                 .map((num: number) => (
