@@ -6,11 +6,11 @@ import { FC } from "react";
 import { useAuth } from "src/context/auth";
 import { logout } from "src/lib/firebase/auth";
 import { IoIosArrowDown } from "react-icons/io";
+import { NextLink } from "@mantine/next";
 
 export const Header: FC = () => {
   const { activateBrowserWallet, account } = useEthers();
-  const { user, fbUser } = useAuth();
-  const router = useRouter();
+  const { fbUser } = useAuth();
   return (
     <header className="w-full">
       <div className="max-w-6xl mx-auto h-[70px] px-5 flex justify-between items-center">
@@ -56,7 +56,9 @@ export const Header: FC = () => {
               </Menu.Target>
               <Menu.Dropdown>
                 <Menu.Label>Menu</Menu.Label>
-                <Menu.Item>My page</Menu.Item>
+                <Menu.Item component={NextLink} href="/mypage">
+                  My page
+                </Menu.Item>
                 <Menu.Divider />
                 <Menu.Item color="red" onClick={logout}>
                   Logout
