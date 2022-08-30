@@ -17,6 +17,24 @@
     transform: rotate(360deg);
   }
 }
+.tag::before,
+.tag::after {
+  content: "";
+  width: 50%;
+  border-top: 10px solid #2cb696;
+  position: absolute;
+  bottom: 0;
+  transform: translateY(100%);
+}
+.tag::before {
+  border-left: 20px solid transparent;
+  right: 0;
+}
+.tag::after {
+  border-right: 20px solid transparent;
+  left: 0;
+  transform: translateY(100%);
+}
 .loading {
   display: inline-block;
   width: 80px;
