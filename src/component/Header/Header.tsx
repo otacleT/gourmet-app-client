@@ -1,17 +1,20 @@
-import { Avatar, Dialog, Drawer, Menu } from "@mantine/core";
+import { Avatar, Button, Dialog, Drawer, Menu, Modal } from "@mantine/core";
 import { useEthers } from "@usedapp/core";
 import Link from "next/link";
 import { FC, useState } from "react";
+import { FcGoogle } from "react-icons/fc";
 import { IoIosArrowDown } from "react-icons/io";
 import { useAuth } from "src/context/auth";
 import { useHistory } from "src/hook/History";
-import { logout } from "src/lib/firebase/auth";
+import { login, logout } from "src/lib/firebase/auth";
 
 export const Header: FC = () => {
   const { activateBrowserWallet, account } = useEthers();
   const { fbUser, user } = useAuth();
   const [isMypage, setIsMypage] = useState<boolean>(false);
   const { history } = useHistory();
+  const [isLogin, setIsLogin] = useState<boolean>(false);
+
   return (
     <header className="w-full">
       <div className="max-w-6xl mx-auto h-[70px] px-5 flex justify-between items-center">
@@ -20,11 +23,12 @@ export const Header: FC = () => {
         </Link>
         <div className="flex justify-between items-center">
           {!fbUser && (
-            <Link href="/login">
-              <a className="text-sm leading-none cursor-pointer font-medium text-white bg-[#2cb696] p-3 mr-5 rounded-md">
-                Login
-              </a>
-            </Link>
+            <button
+              onClick={() => setIsLogin(true)}
+              className="text-sm leading-none cursor-pointer font-medium text-white bg-[#2cb696] p-3 mr-5 rounded-md"
+            >
+              Login
+            </button>
           )}
           {fbUser &&
             (account ? (
@@ -65,6 +69,27 @@ export const Header: FC = () => {
           )}
         </div>
       </div>
+      <Modal
+        opened={isLogin}
+        withCloseButton={false}
+        onClose={() => setIsLogin(false)}
+        size="480px"
+        centered
+        className="text-lg font-medium"
+      >
+        <h1 className="text-2xl font-bold text-center pt-20">
+          信頼度に応じた飲食店評価アプリ
+        </h1>
+        <div className="w-[330px] mx-auto mt-14 mb-20">
+          <Button
+            leftIcon={<FcGoogle />}
+            className="w-full text-lg text-[#333] border-2 border-[#efefef] h-14 hover:bg-[#efefef]"
+            onClick={login}
+          >
+            Sign in with Google
+          </Button>
+        </div>
+      </Modal>
       <Drawer
         opened={isMypage}
         onClose={() => setIsMypage(false)}
