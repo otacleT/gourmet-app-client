@@ -13,20 +13,20 @@ const Home: NextPage = () => {
           {fbUser ? (
             user ? (
               <Link href="/map">
-                <a className="w-[150px] text-xl text-center py-3 px-4 rounded-lg bg-[#2cb696] text-white mr-10">
+                <a className="w-[150px] text-xl font-medium text-white text-center py-3 px-4 rounded-lg bg-[#2cb696] mr-10">
                   Start
                 </a>
               </Link>
             ) : (
               <Link href="/create-account">
-                <a className="w-[200px] text-xl text-center py-3 px-4 rounded-lg bg-[#2cb696] text-white mr-10">
+                <a className="w-[200px] text-xl font-medium text-white text-center py-3 px-4 rounded-lg bg-[#2cb696] mr-10">
                   Create Account
                 </a>
               </Link>
             )
           ) : (
             <Link href="/login">
-              <a className="w-[150px] text-xl text-center py-3 px-4 rounded-lg bg-[#2cb696] text-white mr-10">
+              <a className="w-[150px] text-xl font-medium text-white text-center py-3 px-4 rounded-lg bg-[#2cb696] mr-10">
                 Login
               </a>
             </Link>
