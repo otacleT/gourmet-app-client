@@ -1,4 +1,4 @@
-import { Button, Dialog } from "@mantine/core";
+import { Button, Dialog, Modal } from "@mantine/core";
 import { useEthers } from "@usedapp/core";
 import {
   Dispatch,
@@ -9,7 +9,6 @@ import {
   useState,
 } from "react";
 import { IconContext } from "react-icons";
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { RiMapPinLine } from "react-icons/ri";
 import { useAuth } from "src/context/auth";
 import { useEvaluate } from "src/hook/Evaluate";
@@ -44,10 +43,10 @@ export const AddStar: FC<Regist> = (props) => {
     },
     [info, selected]
   );
-  const handleOpened = useCallback(() => {
-    setOpened(false);
+  const handleCanceled = useCallback(() => {
     setShow(false);
-  }, [show, opened]);
+    setSelected(0);
+  }, []);
   const handleClick = useCallback((num: number) => {
     setSelected(num);
     setHover(-1);
@@ -69,9 +68,12 @@ export const AddStar: FC<Regist> = (props) => {
       size="lg"
       radius={0}
       position={{ left: "20px", bottom: "20px" }}
-      className="pt-8 rounded-br-3xl rounded-bl-3xl"
+      className="pt-8 rounded-xl z-10"
     >
-      <div className="absolute top-0 left-0 -translate-y-full w-full h-[150px] rounded-tr-3xl rounded-tl-3xl bg-gradient-to-r from-cyan-500 to-blue-500"></div>
+      <div className="tag absolute right-8 top-0 w-10 h-12 bg-[#2cb696] text-lg text-white font-bold leading-none flex items-center justify-center text-center">
+        ★<br />
+        {info?.star}
+      </div>
       <h3 className="text-xl font-bold">{info?.name}</h3>
       <p className="text-sm underline decoration-1 leading-none">
         {info?.category}
@@ -86,77 +88,71 @@ export const AddStar: FC<Regist> = (props) => {
           {info?.address}
         </dd>
       </dl>
-      <div className="flex justify-center flex-wrap mt-3">
-        <p className="text-4xl text-[#DA382F] w-full text-center">
-          {info?.star}/5
-        </p>
-        <div className="relative w-[5em] h-[1em] text-3xl leading-[1em] mt-1">
-          <div
-            className="absolute top-0 left-0 overflow-hidden whitespace-nowrap text-[#DA382F]"
-            style={{ width: `${info?.star}em` }}
-          >
-            ★★★★★
-          </div>
-          <div className="text-[#aeaeae]">☆☆☆☆☆</div>
-        </div>
-      </div>
       {account ? (
         <button
-          className="w-full text-base text-left text-[#DA382F] p-3 mt-4 relative"
+          className="w-full flex items-center rounded-md justify-center font-medium text-white bg-[#2cb696] p-3 mt-4 relative"
           onClick={() => setShow(!show)}
         >
-          評価を行う
-          <span className="absolute top-1/2 right-0 -translate-y-1/2">
-            {show ? <IoIosArrowUp /> : <IoIosArrowDown />}
-          </span>
+          このお店を評価する
         </button>
       ) : (
-        <p className="w-full text-base text-left text-[#DA382F] p-3 mt-4">
+        <p className="w-full text-base text-left text-[#fe553e] p-3 mt-4">
           ウォレットを接続してください
         </p>
       )}
-      {show && (
-        <div>
-          <div className="relative w-[5em] h-[1em] text-3xl leading-[1em]">
-            <div className="absolute top-0 left-0 overflow-hidden whitespace-nowrap text-[#DA382F] w-[5em]">
-              {[...Array(5)]
-                .map((_, i) => i + 1)
-                .map((num: number) => (
-                  <span
-                    key={num}
-                    className={
-                      num <= selected || num <= hover
-                        ? "opacity-100 cursor-pointer"
-                        : "opacity-0 hover:opacity-100 cursor-pointer"
-                    }
-                    onClick={() => handleClick(num)}
-                    onMouseOver={() => handleHover(num)}
-                    onMouseLeave={() => setHover(-1)}
-                  >
-                    ★
-                  </span>
-                ))}
-            </div>
-            <div className="text-[#aeaeae]">☆☆☆☆☆</div>
+      <Modal
+        opened={show}
+        onClose={() => handleCanceled()}
+        title="Star Rating"
+        centered
+        className="text-lg font-medium"
+      >
+        <p className="text-xl font-bold ">{info?.name}</p>
+        <p className="flex flex-wrap w-full items-center text-sm leading-none mt-2">
+          <IconContext.Provider value={{ size: "18px" }}>
+            <RiMapPinLine />
+          </IconContext.Provider>
+          {info?.address}
+        </p>
+        <div className="relative w-[5em] h-[1em] text-3xl leading-[1em] mt-3">
+          <div className="absolute top-0 left-0 overflow-hidden whitespace-nowrap text-[#fe553e] w-[5em]">
+            {[...Array(5)]
+              .map((_, i) => i + 1)
+              .map((num: number) => (
+                <span
+                  key={num}
+                  className={
+                    num <= selected || num <= hover
+                      ? "opacity-100 cursor-pointer"
+                      : "opacity-0 hover:opacity-100 cursor-pointer"
+                  }
+                  onClick={() => handleClick(num)}
+                  onMouseOver={() => handleHover(num)}
+                  onMouseLeave={() => setHover(-1)}
+                >
+                  ★
+                </span>
+              ))}
           </div>
-          <div className="flex justify-around mt-5">
-            <Button
-              className="flex w-[calc(50%-10px)] h-[40px] justify-center items-center text-sm font-bold text-[#333] border border-[#333] hover:bg-inherit"
-              onClick={() => handleOpened()}
-            >
-              CANCEL
-            </Button>
-            <Button
-              loading={loading}
-              radius={0}
-              onClick={() => handleSubmit(info)}
-              className="flex w-[calc(50%-10px)] h-[40px] justify-center items-center text-sm font-bold bg-[#333] text-white hover:bg-[#333]"
-            >
-              EVALUATE
-            </Button>
-          </div>
+          <div className="text-[#aeaeae]">☆☆☆☆☆</div>
         </div>
-      )}
+        <div className="flex justify-around mt-5">
+          <Button
+            className="flex w-[calc(50%-10px)] h-[40px] justify-center items-center text-sm font-bold rounded-none text-black border border-black hover:bg-inherit"
+            onClick={() => handleCanceled()}
+          >
+            CANCEL
+          </Button>
+          <Button
+            loading={loading}
+            radius={0}
+            onClick={() => handleSubmit(info)}
+            className="flex w-[calc(50%-10px)] h-[40px] justify-center items-center text-sm font-bold bg-black text-white hover:bg-black"
+          >
+            SUBMIT
+          </Button>
+        </div>
+      </Modal>
     </Dialog>
   );
 };
