@@ -2,24 +2,24 @@ import { useLogs } from "@usedapp/core";
 import { useMemo } from "react";
 import { contract } from "..";
 
-export type logItem = {
+export type Result = {
   id: number;
   star: number;
 };
 
-export const useStar = () => {
+export const useResult = () => {
   const logs = useLogs({ contract, event: "starLog", args: [null] });
 
-  const stars = useMemo(() => {
+  const results = useMemo(() => {
     return (
       logs?.value?.map((log) => {
-        const star: logItem = {
+        const result: Result = {
           id: Number(log.data.shopId),
           star: Number(log.data.result),
         };
-        return star;
+        return result;
       }) || []
     );
   }, [logs?.value]);
-  return { stars };
+  return { results };
 };
