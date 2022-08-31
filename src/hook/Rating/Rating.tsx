@@ -1,8 +1,8 @@
 import { useContractFunction } from "@usedapp/core";
 import { contract } from "..";
 
-export const useEvaluate = () => {
-  const { state, send } = useContractFunction(contract, "Evaluate", {
+export const useRating = () => {
+  const { state, send } = useContractFunction(contract, "Rating", {
     transactionName: "Add",
   });
   const loading =
