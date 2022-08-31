@@ -13,7 +13,7 @@ export const Header: FC = () => {
   const { fbUser, user } = useAuth();
   const [isMypage, setIsMypage] = useState<boolean>(false);
   const { history } = useHistory();
-  const [isLogin, setIsLogin] = useState<boolean>(false);
+  // const [isLogin, setIsLogin] = useState<boolean>(false);
 
   return (
     <header className="w-full">
@@ -23,12 +23,11 @@ export const Header: FC = () => {
         </Link>
         <div className="flex justify-between items-center">
           {!fbUser && (
-            <button
-              onClick={() => setIsLogin(true)}
-              className="text-sm leading-none cursor-pointer font-medium text-white bg-[#2cb696] p-3 mr-5 rounded-md"
-            >
-              Login
-            </button>
+            <Link href="/login">
+              <a className="text-sm leading-none cursor-pointer font-medium text-white bg-[#2cb696] p-3 mr-5 rounded-md">
+                Login
+              </a>
+            </Link>
           )}
           {fbUser &&
             (account ? (
@@ -69,7 +68,7 @@ export const Header: FC = () => {
           )}
         </div>
       </div>
-      <Modal
+      {/* <Modal
         opened={isLogin}
         withCloseButton={false}
         onClose={() => setIsLogin(false)}
@@ -77,9 +76,7 @@ export const Header: FC = () => {
         centered
         className="text-lg font-medium"
       >
-        <h1 className="text-2xl font-bold text-center pt-20">
-          信頼度に応じた飲食店評価アプリ
-        </h1>
+        <h1 className="text-2xl font-bold text-center pt-20">ログイン</h1>
         <div className="w-[330px] mx-auto mt-14 mb-20">
           <Button
             leftIcon={<FcGoogle />}
@@ -89,7 +86,7 @@ export const Header: FC = () => {
             Sign in with Google
           </Button>
         </div>
-      </Modal>
+      </Modal> */}
       <Drawer
         opened={isMypage}
         onClose={() => setIsMypage(false)}
