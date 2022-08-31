@@ -11,7 +11,7 @@ import {
 import { IconContext } from "react-icons";
 import { RiMapPinLine } from "react-icons/ri";
 import { useAuth } from "src/context/auth";
-import { useEvaluate } from "src/hook/Evaluate";
+import { useRating } from "src/hook/Rating";
 import { addList } from "src/lib/firebase/evaluate";
 import { Info } from "src/types/info";
 
@@ -23,7 +23,7 @@ type Regist = {
 
 export const AddStar: FC<Regist> = (props) => {
   const { account } = useEthers();
-  const { loading, success, error, send } = useEvaluate();
+  const { loading, success, error, send } = useRating();
   const { info, opened, setOpened } = props;
   const [show, setShow] = useState<boolean>(false);
   const [hover, setHover] = useState<number>(-1);
