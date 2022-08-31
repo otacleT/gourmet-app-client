@@ -7,11 +7,11 @@ import { FirebaseApp, getApp } from "firebase/app";
 import "../lib/firebase/init";
 import { useShops } from "src/hook/Shops";
 import { AddStar } from "src/component/AddStar";
-import { useStar } from "src/hook/Star";
-import { logItem } from "src/hook/Star/Star";
 import { Info } from "src/types/info";
 import { useAuth } from "src/context/auth";
 import { useRouter } from "next/router";
+import { useResult } from "src/hook/Result";
+import { Result } from "src/hook/Result/Result";
 
 const Map: NextPage = () => {
   const [info, setInfo] = useState<Info>();
@@ -20,12 +20,12 @@ const Map: NextPage = () => {
   const map = useRef<mapboxgl.Map | any>(null);
   const app: FirebaseApp = getApp();
   const { shops } = useShops();
-  const { stars } = useStar();
+  const { results } = useResult();
   const [point, setPoint] = useState<number>(1);
   const { user } = useAuth();
   const router = useRouter();
-  const searchId = useCallback((stars: logItem[], id: number) => {
-    for (const x of stars) {
+  const searchId = useCallback((results: Result[], id: number) => {
+    for (const x of results) {
       if (x.id == id) {
         return x.star;
       }
@@ -39,7 +39,7 @@ const Map: NextPage = () => {
         properties: {
           id: shop.id,
           name: shop.name,
-          star: searchId(stars, shop.id),
+          star: searchId(results, shop.id),
           category: shop.category,
           postcode: shop.postcode,
           address: shop.address,
@@ -53,7 +53,7 @@ const Map: NextPage = () => {
         },
       })),
     };
-  }, [shops, stars]);
+  }, [shops, results]);
 
   const handleInfo = useCallback((e: any) => {
     setInfo((prevstate) => {
