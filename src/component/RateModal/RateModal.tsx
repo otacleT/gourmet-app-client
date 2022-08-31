@@ -17,7 +17,6 @@ type Props = {
 export const RateModal: FC<Props> = (props) => {
   const { info, show, setShow } = props;
   const { loading, success, error, send } = useRating();
-  const [hover, setHover] = useState<number>(-1);
   const [selected, setSelected] = useState<number>(0);
   const { fbUser } = useAuth();
   const handleSubmit = useCallback(
@@ -38,6 +37,7 @@ export const RateModal: FC<Props> = (props) => {
     setShow(false);
     setSelected(0);
   }, []);
+
   return (
     <Modal
       opened={show}
