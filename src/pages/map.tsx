@@ -5,7 +5,6 @@ import mapboxgl from "mapbox-gl";
 import { NextPage } from "next";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ShopInfo } from "src/component/ShopInfo";
-import { useAuth } from "src/context/auth";
 import { useResult } from "src/hook/Result";
 import { Result } from "src/hook/Result/Result";
 import { useShops } from "src/hook/Shops";
@@ -20,8 +19,6 @@ const Map: NextPage = () => {
   const app: FirebaseApp = getApp();
   const { shops } = useShops();
   const { results } = useResult();
-  const [point, setPoint] = useState<number>(1);
-  const { user } = useAuth();
   const searchId = useCallback((results: Result[], id: number) => {
     for (const x of results) {
       if (x.id == id) {
@@ -113,19 +110,7 @@ const Map: NextPage = () => {
         });
       });
     });
-
-    if (user) {
-      const array = Object.values(user);
-
-      for (const x of array) {
-        if (x == "") {
-          setPoint((prevstate) => {
-            return prevstate - 1;
-          });
-        }
-      }
-    }
-  }, [shops, geojson]);
+  }, [geojson]);
   return (
     <main>
       <div className="w-screen h-[calc(100vh-70px)]" ref={mapContainer} />
