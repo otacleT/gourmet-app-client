@@ -1,6 +1,8 @@
 export type User = {
   nickname: string;
+  name: string;
   sex: string;
-  address: string;
   birth: string;
+  address: string;
+  job: string;
 };
