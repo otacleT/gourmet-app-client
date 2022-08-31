@@ -10,7 +10,7 @@ export type Item = {
   star: number;
 };
 
-export async function addList(item: Item): Promise<void> {
+export async function addRating(item: Item): Promise<void> {
   const addId = Math.round(Math.random() * 10000000000);
   if (!item.user) return;
   const ref = doc(db, `users/${item.user.uid}/list`, String(addId));
