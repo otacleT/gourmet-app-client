@@ -1,17 +1,16 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { NextPage } from "next";
-import mapboxgl from "mapbox-gl";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import { FirebaseApp, getApp } from "firebase/app";
-import "../lib/firebase/init";
-import { useShops } from "src/hook/Shops";
-import { AddStar } from "src/component/AddStar";
-import { Info } from "src/types/info";
+import mapboxgl from "mapbox-gl";
+import { NextPage } from "next";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { ShopInfo } from "src/component/ShopInfo";
 import { useAuth } from "src/context/auth";
-import { useRouter } from "next/router";
 import { useResult } from "src/hook/Result";
 import { Result } from "src/hook/Result/Result";
+import { useShops } from "src/hook/Shops";
+import { Info } from "src/types/info";
+import "../lib/firebase/init";
 
 const Map: NextPage = () => {
   const [info, setInfo] = useState<Info>();
@@ -23,7 +22,6 @@ const Map: NextPage = () => {
   const { results } = useResult();
   const [point, setPoint] = useState<number>(1);
   const { user } = useAuth();
-  const router = useRouter();
   const searchId = useCallback((results: Result[], id: number) => {
     for (const x of results) {
       if (x.id == id) {
@@ -131,7 +129,7 @@ const Map: NextPage = () => {
   return (
     <main>
       <div className="w-screen h-[calc(100vh-70px)]" ref={mapContainer} />
-      <AddStar info={info} opened={opened} setOpened={setOpened} />
+      <ShopInfo info={info} opened={opened} setOpened={setOpened} />
     </main>
   );
 };
