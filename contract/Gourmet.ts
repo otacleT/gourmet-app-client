@@ -29,17 +29,17 @@ import type {
 
 export interface GourmetInterface extends utils.Interface {
   functions: {
-    "Evaluate(uint256,uint256)": FunctionFragment;
+    "Rating(uint256,uint256)": FunctionFragment;
   };
 
-  getFunction(nameOrSignatureOrTopic: "Evaluate"): FunctionFragment;
+  getFunction(nameOrSignatureOrTopic: "Rating"): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "Evaluate",
+    functionFragment: "Rating",
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
 
-  decodeFunctionResult(functionFragment: "Evaluate", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "Rating", data: BytesLike): Result;
 
   events: {
     "starLog(uint256,uint256)": EventFragment;
@@ -86,21 +86,21 @@ export interface Gourmet extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    Evaluate(
+    Rating(
       _shopId: PromiseOrValue<BigNumberish>,
       _uStar: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
 
-  Evaluate(
+  Rating(
     _shopId: PromiseOrValue<BigNumberish>,
     _uStar: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    Evaluate(
+    Rating(
       _shopId: PromiseOrValue<BigNumberish>,
       _uStar: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -116,7 +116,7 @@ export interface Gourmet extends BaseContract {
   };
 
   estimateGas: {
-    Evaluate(
+    Rating(
       _shopId: PromiseOrValue<BigNumberish>,
       _uStar: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -124,7 +124,7 @@ export interface Gourmet extends BaseContract {
   };
 
   populateTransaction: {
-    Evaluate(
+    Rating(
       _shopId: PromiseOrValue<BigNumberish>,
       _uStar: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
