@@ -17,6 +17,16 @@
     transform: rotate(360deg);
   }
 }
+.scrollBar {
+  /*IE(Internet Explorer)・Microsoft Edgeへの対応*/
+  -ms-overflow-style: none;
+  /*Firefoxへの対応*/
+  scrollbar-width: none;
+}
+/*Google Chrome、Safariへの対応*/
+.scrollBar::-webkit-scrollbar {
+  display: none;
+}
 .tag::before,
 .tag::after {
   content: "";
