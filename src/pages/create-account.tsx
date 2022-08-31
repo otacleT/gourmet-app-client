@@ -1,6 +1,5 @@
 import { Input, Select, Space, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { useId } from "@mantine/hooks";
 import { doc, setDoc } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { useCallback } from "react";
@@ -14,16 +13,18 @@ const CreateAccount = () => {
   const form = useForm({
     initialValues: {
       nickname: "",
+      name: "",
       sex: "",
-      address: "",
       birth: "",
+      address: "",
+      job: "",
     },
   });
   const handleSubmit = useCallback(
     async (values: typeof form.values) => {
       if (!fbUser) return;
       const ref = doc(db, `users/${fbUser.uid}`);
-      setDoc(ref, values);
+      setDoc(ref, { ...values });
     },
     [fbUser]
   );
@@ -46,25 +47,36 @@ const CreateAccount = () => {
         <TextInput
           required
           label="ニックネーム"
-          placeholder="Satoshi Nakamoto"
           autoComplete="off"
           {...form.getInputProps("nickname")}
         />
         <Space h="md" />
+        <TextInput
+          label="氏名"
+          autoComplete="off"
+          {...form.getInputProps("name")}
+        />
+        <Space h="md" />
         <Select
           label="性別"
-          placeholder="性別"
+          placeholder="選択"
           nothingFound="No options"
           data={["男性", "女性"]}
           searchable
           clearable
-          required
           {...form.getInputProps("sex")}
+        />
+        <Space h="md" />
+        <TextInput
+          label="生年月日"
+          placeholder="××××/××/××"
+          autoComplete="off"
+          {...form.getInputProps("birth")}
         />
         <Space h="md" />
         <Input.Wrapper label="現住所">
           <Input component="select" {...form.getInputProps("address")}>
-            <option value=""></option>
+            <option value="住所を入力"></option>
             <option value="北海道">北海道</option>
             <option value="青森県">青森県</option>
             <option value="岩手県">岩手県</option>
@@ -116,10 +128,9 @@ const CreateAccount = () => {
         </Input.Wrapper>
         <Space h="md" />
         <TextInput
-          label="生年月日"
-          placeholder="××××/××/××"
+          label="職業"
           autoComplete="off"
-          {...form.getInputProps("birth")}
+          {...form.getInputProps("job")}
         />
         <Space h="md" />
         <button className="w-full py-3 rounded-md flex justify-center items-center text-lg bg-[#333] text-white">
