@@ -1,0 +1,1 @@
+export { ShopInfo } from "./ShopInfo";
