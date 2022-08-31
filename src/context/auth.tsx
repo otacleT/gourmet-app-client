@@ -18,17 +18,20 @@ type ContextType = {
   fbUser: FirebaseUser | null | undefined;
   isLoading: boolean;
   user: User | null | undefined;
+  point: number;
 };
 
 const AuthContext = createContext<ContextType>({
   fbUser: undefined,
   isLoading: true,
   user: undefined,
+  point: 0,
 });
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>();
   const [isLoading, setIsLoading] = useState(true);
   const [fbUser, setFbUser] = useState<FirebaseUser | null>();
+  const [point, setPoint] = useState<number>(0);
 
   useEffect(() => {
     let unsubribe: Unsubscribe;
@@ -50,12 +53,29 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       }
     });
   }, []);
+  useEffect(() => {
+    if (!user) return;
+    for (const [key, value] of Object.entries(user)) {
+      if (key == "nickname") {
+        setPoint((prevpoint) => {
+          return prevpoint + 50;
+        });
+        console.log("+50");
+      } else if (value != "") {
+        setPoint((prevpoint) => {
+          return prevpoint + 10;
+        });
+        console.log(key + "+10");
+      }
+    }
+  }, [user]);
   return (
     <AuthContext.Provider
       value={{
         fbUser,
         isLoading,
         user,
+        point,
       }}
     >
       {children}
