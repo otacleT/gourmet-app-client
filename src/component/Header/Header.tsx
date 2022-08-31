@@ -1,19 +1,17 @@
-import { Avatar, Button, Dialog, Drawer, Menu, Modal } from "@mantine/core";
+import { Avatar, Drawer, Image, Menu } from "@mantine/core";
 import { useEthers } from "@usedapp/core";
 import Link from "next/link";
 import { FC, useState } from "react";
-import { FcGoogle } from "react-icons/fc";
 import { IoIosArrowDown } from "react-icons/io";
 import { useAuth } from "src/context/auth";
 import { useHistory } from "src/hook/History";
-import { login, logout } from "src/lib/firebase/auth";
+import { logout } from "src/lib/firebase/auth";
 
 export const Header: FC = () => {
   const { activateBrowserWallet, account } = useEthers();
   const { fbUser, user } = useAuth();
   const [isMypage, setIsMypage] = useState<boolean>(false);
   const { history } = useHistory();
-  // const [isLogin, setIsLogin] = useState<boolean>(false);
 
   return (
     <header className="w-full">
@@ -68,60 +66,61 @@ export const Header: FC = () => {
           )}
         </div>
       </div>
-      {/* <Modal
-        opened={isLogin}
-        withCloseButton={false}
-        onClose={() => setIsLogin(false)}
-        size="480px"
-        centered
-        className="text-lg font-medium"
-      >
-        <h1 className="text-2xl font-bold text-center pt-20">ログイン</h1>
-        <div className="w-[330px] mx-auto mt-14 mb-20">
-          <Button
-            leftIcon={<FcGoogle />}
-            className="w-full text-lg text-[#333] border-2 border-[#efefef] h-14 hover:bg-[#efefef]"
-            onClick={login}
-          >
-            Sign in with Google
-          </Button>
-        </div>
-      </Modal> */}
       <Drawer
         opened={isMypage}
         onClose={() => setIsMypage(false)}
         position="right"
         overlayOpacity={0.55}
         overlayBlur={3}
-        className="h-[calc(100vh-70px)] top-auto bottom-0"
+        size="430px"
+        className="h-[calc(100vh-70px)]  top-auto bottom-0 px-10"
       >
         {fbUser?.photoURL !== null && (
-          // <Image
-          //   height={100}
-          //   width={100}
-          //   src={fbUser?.photoURL}
-          //   className="rounded-full overflow-hidden blur-md invert drop-shadow-2xl shadow-black"
-          // />
-          <div className="relative w-28 h-28 mx-auto">
-            <div className="w-[calc(100%+10px)] h-[calc(100%+10px)] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full z-1 border-2 border-[#2cb696]"></div>
-            <img
-              className="w-full h-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-5 rounded-full"
+          <div className="w-full flex justify-between">
+            <Image
+              height={100}
+              width={100}
               src={fbUser?.photoURL}
-              alt=""
+              className="rounded-full overflow-hidden"
             />
+            <div className="w-[calc(100%-115px)]">
+              <p className="text-xl font-bold">{user?.nickname}</p>
+              <p className="text-sm">{fbUser?.email}</p>
+              <div className="flex justify-between mt-2">
+                <p className="text-xs">プロフィール充実度</p>
+                <p className="text-sm">75%</p>
+              </div>
+              <div className="h-3 w-full rounded-full border border-[#aeaeae] relative box-content">
+                <div
+                  className="absolute left-0 top-1/2 -translate-y-1/2 h-3 bg-[#2cb696] rounded-full text-sm text-white flex items-center justify-center"
+                  style={{ width: "75%" }}
+                ></div>
+              </div>
+            </div>
           </div>
         )}
-        <p className="text-xl font-bold text-center mt-4">{user?.nickname}</p>
-        <p className="text-sm text-center">{fbUser?.email}</p>
-        <p className="text-lg text-center">{user?.address}</p>
-        <p className="text-lg text-center">{user?.sex}</p>
+        <h3 className="text-2xl font-bold mt-5">Your profile</h3>
+        <dl className="flex justify-between items-center flex-wrap mt-2">
+          <dt className="w-1/3 text-sm mt-1">Address</dt>
+          <dd className="w-2/3 text-center mt-1">{user?.address}</dd>
+          <dt className="w-1/3 text-sm mt-1">Sex</dt>
+          <dd className="w-2/3 text-center mt-1">{user?.sex}</dd>
+          <dt className="w-1/3 text-sm mt-1">Birth</dt>
+          <dd className="w-2/3 text-center mt-1">{user?.birth}</dd>
+        </dl>
+        <h3 className="text-2xl font-bold mt-7">History</h3>
         {history.map((item) => (
-          <ul key={Math.round(Math.random() * 10000)}>
-            {item.name}
-            {item.address}
-            {item.category}
-            {item.star}
-          </ul>
+          <dl
+            className="flex items-end mt-2"
+            key={Math.round(Math.random() * 10000)}
+          >
+            <dt className="w-3/4 mt-1 font-bold">
+              {item.name}
+              <br />
+              <span className="text-xs font-normal">{item.address}</span>
+            </dt>
+            <dd className="w-1/4 text-xl text-center mt-1">★{item.star}</dd>
+          </dl>
         ))}
       </Drawer>
     </header>
