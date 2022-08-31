@@ -1,6 +1,6 @@
 import { User } from "firebase/auth";
 import { collection, getDocs, getFirestore } from "firebase/firestore";
-import { Item } from "./evaluate";
+import { Item } from "./rating";
 
 export async function getHistory(
   user: User | null | undefined

@@ -12,7 +12,7 @@ import { IconContext } from "react-icons";
 import { RiMapPinLine } from "react-icons/ri";
 import { useAuth } from "src/context/auth";
 import { useRating } from "src/hook/Rating";
-import { addList } from "src/lib/firebase/evaluate";
+import { addRating } from "src/lib/firebase/rating";
 import { Info } from "src/types/info";
 
 type Regist = {
@@ -33,7 +33,7 @@ export const AddStar: FC<Regist> = (props) => {
     async (info: Info | undefined) => {
       if (info == undefined) return;
       await send(info.id, selected);
-      addList({
+      addRating({
         user: fbUser,
         name: info.name,
         category: info.category,
