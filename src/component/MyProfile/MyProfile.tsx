@@ -10,8 +10,9 @@ type Props = {
 
 export const MyProfile: FC<Props> = (props) => {
   const { isMypage, setIsMypage } = props;
-  const { fbUser, user } = useAuth();
+  const { fbUser, user, point } = useAuth();
   const { history } = useHistory();
+
   return (
     <Drawer
       opened={isMypage}
@@ -35,12 +36,12 @@ export const MyProfile: FC<Props> = (props) => {
             <p className="text-sm">{fbUser?.email}</p>
             <div className="flex justify-between mt-2">
               <p className="text-xs">プロフィール充実度</p>
-              <p className="text-sm">75%</p>
+              <p className="text-sm">{point}</p>
             </div>
             <div className="h-3 w-full rounded-full border border-[#aeaeae] relative box-content">
               <div
                 className="absolute left-0 top-1/2 -translate-y-1/2 h-3 bg-[#2cb696] rounded-full text-sm text-white flex items-center justify-center"
-                style={{ width: "75%" }}
+                style={{ width: `${point}%` }}
               ></div>
             </div>
           </div>
@@ -48,12 +49,16 @@ export const MyProfile: FC<Props> = (props) => {
       )}
       <h3 className="text-2xl font-bold mt-5">Your profile</h3>
       <dl className="flex justify-between items-center flex-wrap mt-2">
-        <dt className="w-1/3 text-sm mt-1">Address</dt>
-        <dd className="w-2/3 text-center mt-1">{user?.address}</dd>
+        <dt className="w-1/3 text-sm mt-1">Name</dt>
+        <dd className="w-2/3 text-center mt-1">{user?.name}</dd>
         <dt className="w-1/3 text-sm mt-1">Sex</dt>
         <dd className="w-2/3 text-center mt-1">{user?.sex}</dd>
         <dt className="w-1/3 text-sm mt-1">Birth</dt>
         <dd className="w-2/3 text-center mt-1">{user?.birth}</dd>
+        <dt className="w-1/3 text-sm mt-1">Address</dt>
+        <dd className="w-2/3 text-center mt-1">{user?.address}</dd>
+        <dt className="w-1/3 text-sm mt-1">Job</dt>
+        <dd className="w-2/3 text-center mt-1">{user?.job}</dd>
       </dl>
       <h3 className="text-2xl font-bold mt-7">History</h3>
       {history.map((item) => (
