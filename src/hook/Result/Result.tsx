@@ -8,7 +8,7 @@ export type Result = {
 };
 
 export const useResult = () => {
-  const logs = useLogs({ contract, event: "starLog", args: [null] });
+  const logs = useLogs({ contract, event: "rateLog", args: [null] });
 
   const results = useMemo(() => {
     return (

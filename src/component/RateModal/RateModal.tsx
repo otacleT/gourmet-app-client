@@ -1,4 +1,5 @@
 import { Button, Modal } from "@mantine/core";
+import { useEthers } from "@usedapp/core";
 import { Dispatch, FC, SetStateAction, useCallback, useState } from "react";
 import { IconContext } from "react-icons";
 import { RiMapPinLine } from "react-icons/ri";
@@ -15,14 +16,15 @@ type Props = {
 };
 
 export const RateModal: FC<Props> = (props) => {
+  const { account } = useEthers();
   const { info, show, setShow } = props;
   const { loading, success, error, send } = useRating();
   const [selected, setSelected] = useState<number>(0);
-  const { fbUser } = useAuth();
+  const { fbUser, point } = useAuth();
   const handleSubmit = useCallback(
     async (info: Info | undefined) => {
       if (info == undefined) return;
-      await send(info.id, selected);
+      await send(info.id, selected, point);
       addRating({
         user: fbUser,
         name: info.name,
@@ -31,7 +33,7 @@ export const RateModal: FC<Props> = (props) => {
         star: selected,
       });
     },
-    [info, selected]
+    [info, selected, account]
   );
   const handleCanceled = useCallback(() => {
     setShow(false);
