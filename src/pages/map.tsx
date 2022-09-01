@@ -27,6 +27,7 @@ const Map: NextPage = () => {
     }
     return 0;
   }, []);
+
   const geojson = useMemo(() => {
     return {
       type: "Feature",
@@ -50,6 +51,7 @@ const Map: NextPage = () => {
     };
   }, [shops, results]);
 
+  console.log(results, geojson);
   const handleInfo = useCallback((e: any) => {
     setInfo((prevstate) => {
       return {
