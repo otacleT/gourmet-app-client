@@ -60,12 +60,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setPoint((prevpoint) => {
           return prevpoint + 50;
         });
-        console.log("+50");
       } else if (value != "") {
         setPoint((prevpoint) => {
           return prevpoint + 10;
         });
-        console.log(key + "+10");
       }
     }
   }, [user]);
