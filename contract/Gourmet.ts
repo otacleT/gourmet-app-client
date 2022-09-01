@@ -29,35 +29,39 @@ import type {
 
 export interface GourmetInterface extends utils.Interface {
   functions: {
-    "Rating(uint256,uint256)": FunctionFragment;
+    "Rating(uint256,uint256,uint256)": FunctionFragment;
   };
 
   getFunction(nameOrSignatureOrTopic: "Rating"): FunctionFragment;
 
   encodeFunctionData(
     functionFragment: "Rating",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
 
   decodeFunctionResult(functionFragment: "Rating", data: BytesLike): Result;
 
   events: {
-    "starLog(uint256,uint256)": EventFragment;
+    "rateLog(uint256,uint256)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "starLog"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "rateLog"): EventFragment;
 }
 
-export interface starLogEventObject {
+export interface rateLogEventObject {
   shopId: BigNumber;
   result: BigNumber;
 }
-export type starLogEvent = TypedEvent<
+export type rateLogEvent = TypedEvent<
   [BigNumber, BigNumber],
-  starLogEventObject
+  rateLogEventObject
 >;
 
-export type starLogEventFilter = TypedEventFilter<starLogEvent>;
+export type rateLogEventFilter = TypedEventFilter<rateLogEvent>;
 
 export interface Gourmet extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -89,6 +93,7 @@ export interface Gourmet extends BaseContract {
     Rating(
       _shopId: PromiseOrValue<BigNumberish>,
       _uStar: PromiseOrValue<BigNumberish>,
+      _userPoint: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
@@ -96,6 +101,7 @@ export interface Gourmet extends BaseContract {
   Rating(
     _shopId: PromiseOrValue<BigNumberish>,
     _uStar: PromiseOrValue<BigNumberish>,
+    _userPoint: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -103,22 +109,24 @@ export interface Gourmet extends BaseContract {
     Rating(
       _shopId: PromiseOrValue<BigNumberish>,
       _uStar: PromiseOrValue<BigNumberish>,
+      _userPoint: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
   };
 
   filters: {
-    "starLog(uint256,uint256)"(
+    "rateLog(uint256,uint256)"(
       shopId?: null,
       result?: null
-    ): starLogEventFilter;
-    starLog(shopId?: null, result?: null): starLogEventFilter;
+    ): rateLogEventFilter;
+    rateLog(shopId?: null, result?: null): rateLogEventFilter;
   };
 
   estimateGas: {
     Rating(
       _shopId: PromiseOrValue<BigNumberish>,
       _uStar: PromiseOrValue<BigNumberish>,
+      _userPoint: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
@@ -127,6 +135,7 @@ export interface Gourmet extends BaseContract {
     Rating(
       _shopId: PromiseOrValue<BigNumberish>,
       _uStar: PromiseOrValue<BigNumberish>,
+      _userPoint: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };
