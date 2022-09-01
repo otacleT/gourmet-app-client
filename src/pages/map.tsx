@@ -20,12 +20,13 @@ const Map: NextPage = () => {
   const { shops } = useShops();
   const { results } = useResult();
   const searchId = useCallback((results: Result[], id: number) => {
+    let latest = 0;
     for (const x of results) {
       if (x.id == id) {
-        return x.star;
+        latest = x.star / 10;
       }
     }
-    return 0;
+    return latest;
   }, []);
 
   const geojson = useMemo(() => {
@@ -51,7 +52,6 @@ const Map: NextPage = () => {
     };
   }, [shops, results]);
 
-  console.log(results, geojson);
   const handleInfo = useCallback((e: any) => {
     setInfo((prevstate) => {
       return {
