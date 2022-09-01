@@ -1,6 +1,13 @@
 import { Button, Modal } from "@mantine/core";
 import { useEthers } from "@usedapp/core";
-import { Dispatch, FC, SetStateAction, useCallback, useState } from "react";
+import {
+  Dispatch,
+  FC,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { IconContext } from "react-icons";
 import { RiMapPinLine } from "react-icons/ri";
 import { useAuth } from "src/context/auth";
@@ -39,6 +46,13 @@ export const RateModal: FC<Props> = (props) => {
     setShow(false);
     setSelected(0);
   }, []);
+
+  useEffect(() => {
+    if (success) {
+      setShow(false);
+      setSelected(0);
+    }
+  }, [success]);
 
   return (
     <Modal
