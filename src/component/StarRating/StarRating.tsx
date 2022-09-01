@@ -1,8 +1,13 @@
-import { useCallback, useState } from "react";
+import { Dispatch, FC, SetStateAction, useCallback, useState } from "react";
 
-export const StarRating = () => {
+type Props = {
+  selected: number;
+  setSelected: Dispatch<SetStateAction<number>>;
+};
+
+export const StarRating: FC<Props> = (props) => {
+  const { selected, setSelected } = props;
   const [hover, setHover] = useState<number>(-1);
-  const [selected, setSelected] = useState<number>(0);
   const handleClick = useCallback((num: number) => {
     setSelected(num);
     setHover(-1);

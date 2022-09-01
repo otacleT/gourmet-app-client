@@ -55,7 +55,7 @@ export const RateModal: FC<Props> = (props) => {
         </IconContext.Provider>
         {info?.address}
       </p>
-      <StarRating />
+      <StarRating selected={selected} setSelected={setSelected} />
       <div className="flex justify-around mt-5">
         <Button
           className="flex w-[calc(50%-10px)] h-[40px] justify-center items-center text-sm font-bold rounded-none text-black border border-black hover:bg-inherit"
