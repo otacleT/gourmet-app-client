@@ -1,15 +1,17 @@
 import type { AppProps } from "next/app";
 import "mapbox-gl/dist/mapbox-gl.css";
 import "../styles/globals.css";
-import { DAppProvider, Hardhat } from "@usedapp/core";
+import { DAppProvider, Goerli } from "@usedapp/core";
 import Head from "next/head";
 import { MantineProvider } from "@mantine/core";
 import { Header } from "../component/Header";
 import { AuthProvider } from "src/context/auth";
 
 const config = {
-  multicallAddresses: {
-    [Hardhat.chainId]: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+  readOnlyChainId: Goerli.chainId,
+  readOnlyUrls: {
+    [Goerli.chainId]:
+      "https://eth-goerli.g.alchemy.com/v2/OYnMi37YD5FIQHqIFIrbftfKI2DCUwS_",
   },
 };
 
