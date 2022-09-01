@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "src/context/auth";
-import { Item } from "src/lib/firebase/evaluate";
 import { getHistory } from "src/lib/firebase/history";
+import { Item } from "src/lib/firebase/rating";
 
 export type UseHistoryOutput = {
   isLoading: boolean;
