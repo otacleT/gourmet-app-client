@@ -24,14 +24,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <AuthProvider>
-        <MantineProvider
-          withGlobalStyles
-          withNormalizeCSS
-          theme={{
-            /** Put your mantine theme override here */
-            colorScheme: "light",
-          }}
-        >
+        <MantineProvider withGlobalStyles withNormalizeCSS>
           <Header />
           <Component {...pageProps} />
         </MantineProvider>
