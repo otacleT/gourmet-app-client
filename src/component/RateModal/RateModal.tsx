@@ -19,12 +19,13 @@ import { StarRating } from "../StarRating";
 type Props = {
   info: Info | undefined;
   show: boolean;
+  setOpened: Dispatch<SetStateAction<boolean>>;
   setShow: Dispatch<SetStateAction<boolean>>;
 };
 
 export const RateModal: FC<Props> = (props) => {
   const { account } = useEthers();
-  const { info, show, setShow } = props;
+  const { info, show, setOpened, setShow } = props;
   const { loading, success, error, send } = useRating();
   const [selected, setSelected] = useState<number>(0);
   const { fbUser, point } = useAuth();
@@ -50,6 +51,7 @@ export const RateModal: FC<Props> = (props) => {
   useEffect(() => {
     if (success) {
       setShow(false);
+      setOpened(false);
       setSelected(0);
     }
   }, [success]);

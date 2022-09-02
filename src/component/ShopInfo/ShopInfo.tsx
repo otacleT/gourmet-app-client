@@ -59,7 +59,12 @@ export const ShopInfo: FC<Props> = (props) => {
           </p>
         )}
       </Dialog>
-      <RateModal info={info} show={show} setShow={setShow} />
+      <RateModal
+        info={info}
+        show={show}
+        setOpened={setOpened}
+        setShow={setShow}
+      />
     </div>
   );
 };
