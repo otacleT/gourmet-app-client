@@ -1,15 +1,13 @@
-import { Avatar, Group, Menu, Text } from "@mantine/core";
-import { Goerli, useEthers } from "@usedapp/core";
+import { Avatar, Menu } from "@mantine/core";
 import Link from "next/link";
 import { FC, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import { useAuth } from "src/context/auth";
 import { logout } from "src/lib/firebase/auth";
 import { MyProfile } from "../MyProfile";
+import { WalletConnect } from "../WalletConnect";
 
 export const Header: FC = () => {
-  const { activateBrowserWallet, account, deactivate, chainId, switchNetwork } =
-    useEthers();
   const { fbUser } = useAuth();
   const [isMypage, setIsMypage] = useState<boolean>(false);
 
@@ -27,34 +25,7 @@ export const Header: FC = () => {
               </a>
             </Link>
           )}
-          {fbUser &&
-            (account ? (
-              chainId === Goerli.chainId ? (
-                <button
-                  onClick={deactivate}
-                  className="text-sm leading-none cursor-pointer font-medium text-white bg-[#2cb696] p-3 mr-5 rounded-md"
-                >
-                  Disconnect
-                </button>
-              ) : (
-                <Group>
-                  <Text color="red">Wrong network</Text>
-                  <button
-                    onClick={() => switchNetwork(Goerli.chainId)}
-                    className="text-sm leading-none cursor-pointer font-medium text-white bg-[#2cb696] p-3 mr-5 rounded-md"
-                  >
-                    Switch network
-                  </button>
-                </Group>
-              )
-            ) : (
-              <button
-                className="text-sm leading-none cursor-pointer font-medium text-white bg-[#2cb696] p-3 mr-5 rounded-md"
-                onClick={activateBrowserWallet}
-              >
-                Connect wallet
-              </button>
-            ))}
+          {fbUser && <WalletConnect />}
 
           {fbUser ? (
             <Menu shadow="md" width={200}>
