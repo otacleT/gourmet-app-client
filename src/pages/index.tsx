@@ -1,7 +1,9 @@
 import { NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect } from "react";
 import { useAuth } from "src/context/auth";
+import { useResult } from "src/hook/Result";
 
 const Home: NextPage = () => {
   const { user, fbUser } = useAuth();
