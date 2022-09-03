@@ -1,12 +1,12 @@
-import type { AppProps } from "next/app";
-import "mapbox-gl/dist/mapbox-gl.css";
-import "../styles/globals.css";
-import { DAppProvider, Goerli } from "@usedapp/core";
-import Head from "next/head";
 import { MantineProvider } from "@mantine/core";
-import { Header } from "../component/Header";
+import { NotificationsProvider } from "@mantine/notifications";
+import { DAppProvider, Goerli } from "@usedapp/core";
+import "mapbox-gl/dist/mapbox-gl.css";
+import type { AppProps } from "next/app";
+import Head from "next/head";
 import { AuthProvider } from "src/context/auth";
-import { Toaster } from "react-hot-toast";
+import { Header } from "../component/Header";
+import "../styles/globals.css";
 
 const config = {
   readOnlyChainId: Goerli.chainId,
@@ -26,12 +26,10 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       <AuthProvider>
         <MantineProvider withGlobalStyles withNormalizeCSS>
-          <Header />
-          <Toaster
-            toastOptions={{ className: "min-w-[400px] h-14" }}
-            position="bottom-right"
-          />
-          <Component {...pageProps} />
+          <NotificationsProvider>
+            <Header />
+            <Component {...pageProps} />
+          </NotificationsProvider>
         </MantineProvider>
       </AuthProvider>
     </DAppProvider>
