@@ -8,6 +8,7 @@ import {
   useEffect,
   useState,
 } from "react";
+import { toast } from "react-hot-toast";
 import { IconContext } from "react-icons";
 import { RiMapPinLine } from "react-icons/ri";
 import { useAuth } from "src/context/auth";
@@ -53,6 +54,9 @@ export const RateModal: FC<Props> = (props) => {
       setShow(false);
       setOpened(false);
       setSelected(0);
+      toast.success(`${info?.name}への評価が正常に処理されました`, {
+        position: "bottom-center",
+      });
     }
   }, [success]);
 
