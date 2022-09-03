@@ -1,9 +1,5 @@
-import {
-  GoogleAuthProvider,
-  signInWithPopup,
-  signInWithRedirect,
-  signOut,
-} from "firebase/auth";
+import { GoogleAuthProvider, signInWithRedirect, signOut } from "firebase/auth";
+import { toast } from "react-hot-toast";
 import { auth } from "./init";
 
 export const login = async () => {
@@ -12,6 +8,6 @@ export const login = async () => {
 };
 export const logout = async () => {
   return signOut(auth).then(() => {
-    alert("サインアウト完了");
+    toast.success("ログアウトしました");
   });
 };
