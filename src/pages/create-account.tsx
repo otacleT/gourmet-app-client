@@ -1,9 +1,10 @@
 import { Input, Select, Space, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
+import { showNotification } from "@mantine/notifications";
 import { doc, setDoc } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { useCallback } from "react";
-import { toast } from "react-hot-toast";
+import { AiOutlineCheck } from "react-icons/ai";
 import { useAuth } from "src/context/auth";
 import { db } from "src/lib/firebase/init";
 
@@ -26,7 +27,10 @@ const CreateAccount = () => {
       if (!fbUser) return;
       const ref = doc(db, `users/${fbUser.uid}`);
       setDoc(ref, { ...values });
-      toast.success("アカウント情報を保存しました");
+      showNotification({
+        message: "アカウント情報を保存しました",
+        icon: <AiOutlineCheck />,
+      });
     },
     [fbUser]
   );

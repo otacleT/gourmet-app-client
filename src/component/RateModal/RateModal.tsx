@@ -1,4 +1,5 @@
 import { Button, Modal } from "@mantine/core";
+import { showNotification } from "@mantine/notifications";
 import { useEthers } from "@usedapp/core";
 import {
   Dispatch,
@@ -8,8 +9,9 @@ import {
   useEffect,
   useState,
 } from "react";
-import { toast } from "react-hot-toast";
 import { IconContext } from "react-icons";
+import { AiOutlineCheck } from "react-icons/ai";
+import { IoCloseOutline } from "react-icons/io5";
 import { RiMapPinLine } from "react-icons/ri";
 import { useAuth } from "src/context/auth";
 import { useRating } from "src/hook/Rating";
@@ -54,11 +56,20 @@ export const RateModal: FC<Props> = (props) => {
       setShow(false);
       setOpened(false);
       setSelected(0);
-      toast.success(`${info?.name}への評価が正常に処理されました`, {
-        position: "bottom-center",
+      showNotification({
+        message: `${info?.name}への評価が正常に処理されました`,
+        icon: <AiOutlineCheck />,
+      });
+    } else if (error) {
+      setShow(false);
+      setOpened(false);
+      setSelected(0);
+      showNotification({
+        message: "問題が発生しました",
+        icon: <IoCloseOutline />,
       });
     }
-  }, [success]);
+  }, [success, error]);
 
   return (
     <Modal
