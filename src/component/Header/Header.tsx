@@ -20,8 +20,8 @@ export const Header: FC = () => {
         <div className="flex justify-between items-center">
           {!fbUser && (
             <Link href="/login">
-              <a className="text-sm leading-none cursor-pointer font-medium text-white bg-[#2cb696] p-3 mr-5 rounded-md">
-                Login
+              <a className="text-sm leading-none cursor-pointer font-bold text-white bg-[#2cb696] p-3 mr-5 rounded-md">
+                ログイン
               </a>
             </Link>
           )}
@@ -40,11 +40,13 @@ export const Header: FC = () => {
                 </div>
               </Menu.Target>
               <Menu.Dropdown>
-                <Menu.Label>Menu</Menu.Label>
-                <Menu.Item onClick={() => setIsMypage(true)}>My page</Menu.Item>
+                <Menu.Label>メニュー</Menu.Label>
+                <Menu.Item onClick={() => setIsMypage(true)}>
+                  アカウント情報
+                </Menu.Item>
                 <Menu.Divider />
                 <Menu.Item color="red" onClick={logout}>
-                  Logout
+                  ログアウト
                 </Menu.Item>
               </Menu.Dropdown>
             </Menu>
