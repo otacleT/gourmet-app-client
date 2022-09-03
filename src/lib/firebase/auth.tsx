@@ -1,5 +1,6 @@
+import { showNotification } from "@mantine/notifications";
 import { GoogleAuthProvider, signInWithRedirect, signOut } from "firebase/auth";
-import { toast } from "react-hot-toast";
+import { AiOutlineCheck } from "react-icons/ai";
 import { auth } from "./init";
 
 export const login = async () => {
@@ -8,6 +9,9 @@ export const login = async () => {
 };
 export const logout = async () => {
   return signOut(auth).then(() => {
-    toast.success("ログアウトしました");
+    showNotification({
+      message: "ログアウトしました",
+      icon: <AiOutlineCheck />,
+    });
   });
 };
