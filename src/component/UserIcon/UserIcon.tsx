@@ -10,7 +10,7 @@ type Props = {
 
 export const UserIcon: FC<Props> = (props) => {
   const { setIsMypage } = props;
-  const { fbUser } = useAuth();
+  const { fbUser, user } = useAuth();
   if (fbUser) {
     return (
       <Menu shadow="md" width={200}>
@@ -26,9 +26,11 @@ export const UserIcon: FC<Props> = (props) => {
         </Menu.Target>
         <Menu.Dropdown>
           <Menu.Label>メニュー</Menu.Label>
-          <Menu.Item onClick={() => setIsMypage(true)}>
-            アカウント情報
-          </Menu.Item>
+          {user && (
+            <Menu.Item onClick={() => setIsMypage(true)}>
+              アカウント情報
+            </Menu.Item>
+          )}
           <Menu.Divider />
           <Menu.Item color="red" onClick={logout}>
             ログアウト
