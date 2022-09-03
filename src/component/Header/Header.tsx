@@ -8,7 +8,7 @@ import { MyProfile } from "../MyProfile";
 import { WalletConnect } from "../WalletConnect";
 
 export const Header: FC = () => {
-  const { fbUser } = useAuth();
+  const { fbUser, user } = useAuth();
   const [isMypage, setIsMypage] = useState<boolean>(false);
 
   return (
@@ -25,12 +25,21 @@ export const Header: FC = () => {
               </a>
             </Link>
           )}
-          {fbUser && <WalletConnect />}
+          {fbUser &&
+            (user ? (
+              <WalletConnect />
+            ) : (
+              <Link href="/create-account">
+                <a className="text-sm leading-none cursor-pointer font-bold text-white bg-[#2cb696] p-3 mr-5 rounded-md">
+                  アカウント作成
+                </a>
+              </Link>
+            ))}
 
           {fbUser ? (
             <Menu shadow="md" width={200}>
               <Menu.Target>
-                <div className="relative ">
+                <div className="relative">
                   <Avatar
                     src={fbUser.photoURL}
                     radius="xl"
