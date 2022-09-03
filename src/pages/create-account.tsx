@@ -3,6 +3,7 @@ import { useForm } from "@mantine/form";
 import { doc, setDoc } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { useCallback } from "react";
+import { toast } from "react-hot-toast";
 import { useAuth } from "src/context/auth";
 import { db } from "src/lib/firebase/init";
 
@@ -25,6 +26,7 @@ const CreateAccount = () => {
       if (!fbUser) return;
       const ref = doc(db, `users/${fbUser.uid}`);
       setDoc(ref, { ...values });
+      toast.success("アカウント情報を保存しました");
     },
     [fbUser]
   );
