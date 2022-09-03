@@ -1,36 +1,14 @@
 import { NextPage } from "next";
 import Image from "next/image";
-import Link from "next/link";
-import { useAuth } from "src/context/auth";
+import { ChangeButton } from "src/component/ChangeButton";
 
 const Home: NextPage = () => {
-  const { user, fbUser } = useAuth();
   return (
     <main>
       <div className="w-full h-[calc(100vh-70px)] max-w-6xl px-5 pt-60 mx-auto relative">
-        <p className="text-3xl font-bold ">信頼度に応じた飲食店評価アプリ</p>
+        <p className="text-3xl font-bold">信頼度に応じた飲食店評価アプリ</p>
         <div className="flex items-center mt-10">
-          {fbUser ? (
-            user ? (
-              <Link href="/map">
-                <a className="w-[150px] text-xl font-medium text-white text-center py-3 px-4 rounded-lg bg-[#2cb696] mr-10">
-                  Start
-                </a>
-              </Link>
-            ) : (
-              <Link href="/create-account">
-                <a className="w-[200px] text-xl font-medium text-white text-center py-3 px-4 rounded-lg bg-[#2cb696] mr-10">
-                  Create Account
-                </a>
-              </Link>
-            )
-          ) : (
-            <Link href="/login">
-              <a className="w-[150px] text-xl font-medium text-white text-center py-3 px-4 rounded-lg bg-[#2cb696] mr-10">
-                Login
-              </a>
-            </Link>
-          )}
+          <ChangeButton />
         </div>
         <div className="absolute right-[33%] top-[40px] z-1">
           <div className="w-[230px] h-[310px] relative">
