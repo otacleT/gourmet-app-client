@@ -6,6 +6,7 @@ import Head from "next/head";
 import { MantineProvider } from "@mantine/core";
 import { Header } from "../component/Header";
 import { AuthProvider } from "src/context/auth";
+import { Toaster } from "react-hot-toast";
 
 const config = {
   readOnlyChainId: Goerli.chainId,
@@ -26,6 +27,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <AuthProvider>
         <MantineProvider withGlobalStyles withNormalizeCSS>
           <Header />
+          <Toaster position="bottom-right" />
           <Component {...pageProps} />
         </MantineProvider>
       </AuthProvider>
