@@ -27,7 +27,10 @@ function MyApp({ Component, pageProps }: AppProps) {
       <AuthProvider>
         <MantineProvider withGlobalStyles withNormalizeCSS>
           <Header />
-          <Toaster position="bottom-right" />
+          <Toaster
+            toastOptions={{ className: "min-w-[400px] h-14" }}
+            position="bottom-right"
+          />
           <Component {...pageProps} />
         </MantineProvider>
       </AuthProvider>
