@@ -22,7 +22,7 @@ const Home: NextPage = () => {
   return (
     <main>
       <ResponsiveTxt />
-      <div className="hidden md:block w-full h-[calc(100vh-70px)] min-h-[720px] max-w-3xl px-5 pt-52 md:max-w-4xl lg:max-w-5xl lg:pt-60 mx-auto relative">
+      <div className="hidden md:block w-full h-[calc(100vh-70px)] min-h-[720px] max-w-3xl lg:max-w-6xl px-5 pt-52 md:max-w-4xl lg:pt-60 mx-auto relative">
         {hasMetamask ? (
           <div>
             <p className="md:text-[26px] lg:text-3xl font-bold">
@@ -35,7 +35,7 @@ const Home: NextPage = () => {
         ) : (
           <div>
             <p className="md:text-[26px] lg:text-3xl font-bold">
-              Metamaskをインストールしてください
+              Metamask is required
             </p>
             <a
               className="inline-block text-lg font-bold text-white text-center py-3 px-6 rounded-md bg-[#2cb696] mt-10"
