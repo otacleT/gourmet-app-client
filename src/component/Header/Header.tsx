@@ -1,13 +1,11 @@
 import Link from "next/link";
-import { FC, useEffect, useState } from "react";
-import { useAuth } from "src/context/auth";
+import { FC, useState } from "react";
 import { useMetamask } from "src/context/metamask";
+import { HeaderButton } from "../HeaderButton";
 import { MyProfile } from "../MyProfile";
 import { UserIcon } from "../UserIcon";
-import { WalletConnect } from "../WalletConnect";
 
 export const Header: FC = () => {
-  const { fbUser, user } = useAuth();
   const [isMypage, setIsMypage] = useState<boolean>(false);
   const { hasMetamask } = useMetamask();
 
@@ -19,24 +17,7 @@ export const Header: FC = () => {
         </Link>
         {hasMetamask && (
           <div className="hidden md:flex justify-between items-center">
-            {fbUser ? (
-              user ? (
-                <WalletConnect />
-              ) : (
-                <Link href="/create-account">
-                  <a className="text-sm leading-none cursor-pointer font-bold text-white bg-[#2cb696] p-3 mr-5 rounded-md">
-                    アカウント作成
-                  </a>
-                </Link>
-              )
-            ) : (
-              <Link href="/login">
-                <a className="text-sm leading-none cursor-pointer font-bold text-white bg-[#2cb696] p-3 mr-5 rounded-md">
-                  ログイン
-                </a>
-              </Link>
-            )}
-
+            <HeaderButton />
             <UserIcon setIsMypage={setIsMypage} />
           </div>
         )}
