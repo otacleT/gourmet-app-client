@@ -8,17 +8,17 @@ import { TopButton } from "src/component/TopButton";
 import { useMetamask } from "src/context/metamask";
 
 const Home: NextPage = () => {
-  const { hasMetamask } = useMetamask();
+  const { hasMetamask, isStarting } = useMetamask();
 
   useEffect(() => {
-    if (!hasMetamask) {
+    if (!isStarting && !hasMetamask) {
       showNotification({
         message: "ブラウザにMetamaskがインストールされていません",
         icon: <IoCloseOutline />,
         color: "red",
       });
     }
-  }, [hasMetamask]);
+  }, [hasMetamask, isStarting]);
   return (
     <main>
       <ResponsiveTxt />
