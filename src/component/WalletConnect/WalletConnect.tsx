@@ -1,24 +1,12 @@
 import { Group, Text } from "@mantine/core";
-import { showNotification } from "@mantine/notifications";
 import { Goerli, useEthers } from "@usedapp/core";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
-import { IoCloseOutline } from "react-icons/io5";
 
 export const WalletConnect = () => {
   const { account, chainId, deactivate, activateBrowserWallet, switchNetwork } =
     useEthers();
   const router = useRouter();
-  useEffect(() => {
-    if (!window.ethereum) {
-      showNotification({
-        message: "問題が発生しました",
-        icon: <IoCloseOutline />,
-        color: "red",
-      });
-    }
-  });
   if (router.route === "/") {
     return (
       <Link href="/map">
