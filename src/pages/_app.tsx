@@ -5,6 +5,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import { AuthProvider } from "src/context/auth";
+import { MetamaskProvider } from "src/context/metamask";
 import { Header } from "../component/Header";
 import "../styles/globals.css";
 
@@ -25,12 +26,14 @@ function MyApp({ Component, pageProps }: AppProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <AuthProvider>
-        <MantineProvider withGlobalStyles withNormalizeCSS>
-          <NotificationsProvider>
-            <Header />
-            <Component {...pageProps} />
-          </NotificationsProvider>
-        </MantineProvider>
+        <MetamaskProvider>
+          <MantineProvider withGlobalStyles withNormalizeCSS>
+            <NotificationsProvider>
+              <Header />
+              <Component {...pageProps} />
+            </NotificationsProvider>
+          </MantineProvider>
+        </MetamaskProvider>
       </AuthProvider>
     </DAppProvider>
   );
