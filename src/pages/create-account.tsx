@@ -3,15 +3,17 @@ import { useForm } from "@mantine/form";
 import { showNotification } from "@mantine/notifications";
 import { doc, setDoc } from "firebase/firestore";
 import { useRouter } from "next/router";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { AiOutlineCheck } from "react-icons/ai";
 import { ResponsiveTxt } from "src/component/ResponsiveTxt";
 import { useAuth } from "src/context/auth";
+import { useMetamask } from "src/context/metamask";
 import { db } from "src/lib/firebase/init";
 
 const CreateAccount = () => {
   const { user, fbUser, isLoading } = useAuth();
   const router = useRouter();
+  const { hasMetamask } = useMetamask();
 
   const form = useForm({
     initialValues: {
@@ -35,16 +37,19 @@ const CreateAccount = () => {
     },
     [fbUser]
   );
-  if (isLoading) {
+  useEffect(() => {
+    if (!hasMetamask) {
+      router.push("/");
+    }
+    if (!fbUser) {
+      router.push("/login");
+    }
+    if (user) {
+      router.push("/map");
+    }
+  }, [hasMetamask, fbUser, user]);
+  if (isLoading || !hasMetamask || !fbUser || user) {
     return <div className="loading"></div>;
-  }
-  if (!fbUser) {
-    router.push("/login");
-    return null;
-  }
-  if (user) {
-    router.push("/map");
-    return null;
   }
 
   return (

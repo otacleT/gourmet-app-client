@@ -1,23 +1,29 @@
 import { Button } from "@mantine/core";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { ResponsiveTxt } from "src/component/ResponsiveTxt";
 import { useAuth } from "src/context/auth";
+import { useMetamask } from "src/context/metamask";
 import { login } from "src/lib/firebase/auth";
 
 const LoginPage = () => {
   const { user, fbUser, isLoading } = useAuth();
   const router = useRouter();
-  if (isLoading) {
+  const { hasMetamask } = useMetamask();
+  useEffect(() => {
+    if (!hasMetamask) {
+      router.push("/");
+    }
+    if (user) {
+      router.push("/map");
+    }
+    if (fbUser) {
+      router.push("/create-account");
+    }
+  }, [user, fbUser, hasMetamask]);
+  if (isLoading || user || fbUser || !hasMetamask) {
     return <div className="loading"></div>;
-  }
-  if (user) {
-    router.push("/map");
-    return null;
-  }
-  if (fbUser) {
-    router.push("/create-account");
-    return null;
   }
   return (
     <main>

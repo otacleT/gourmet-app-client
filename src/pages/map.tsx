@@ -1,7 +1,8 @@
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import { FirebaseApp, getApp } from "firebase/app";
 import { NextPage } from "next";
-import { useCallback, useMemo, useState } from "react";
+import { useRouter } from "next/router";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import ReactMap, {
   GeolocateControl,
   Marker,
@@ -9,6 +10,7 @@ import ReactMap, {
 } from "react-map-gl";
 import { ResponsiveTxt } from "src/component/ResponsiveTxt";
 import { ShopInfo } from "src/component/ShopInfo";
+import { useMetamask } from "src/context/metamask";
 import { Result, useResult } from "src/hook/Result/Result";
 import { useShops } from "src/hook/Shops";
 import GeocoderControl from "src/lib/mapbox/geocoder";
@@ -21,6 +23,8 @@ const Map: NextPage = () => {
   const app: FirebaseApp = getApp();
   const { shops } = useShops();
   const { results } = useResult();
+  const router = useRouter();
+  const { hasMetamask } = useMetamask();
   const searchId = useCallback((results: Result[], id: number) => {
     let latest = 0;
     for (const x of results) {
@@ -72,6 +76,14 @@ const Map: NextPage = () => {
     handleInfo(item);
     setOpened(true);
   }, []);
+  useEffect(() => {
+    if (!hasMetamask) {
+      router.push("/");
+    }
+  }, [hasMetamask]);
+  if (!hasMetamask) {
+    return <div className="loading"></div>;
+  }
   return (
     <main>
       <ResponsiveTxt />
