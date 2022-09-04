@@ -3,8 +3,8 @@ import { NextPage } from "next";
 import Image from "next/image";
 import { useEffect } from "react";
 import { IoCloseOutline } from "react-icons/io5";
-import { ChangeButton } from "src/component/ChangeButton";
 import { ResponsiveTxt } from "src/component/ResponsiveTxt";
+import { TopButton } from "src/component/TopButton";
 import { useMetamask } from "src/context/metamask";
 
 const Home: NextPage = () => {
@@ -29,7 +29,7 @@ const Home: NextPage = () => {
               信頼度に応じた飲食店評価アプリ
             </p>
             <div className="flex items-center mt-10">
-              <ChangeButton />
+              <TopButton />
             </div>
           </div>
         ) : (
