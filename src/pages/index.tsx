@@ -1,7 +1,7 @@
 import { showNotification } from "@mantine/notifications";
 import { NextPage } from "next";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { IoCloseOutline } from "react-icons/io5";
 import { ChangeButton } from "src/component/ChangeButton";
 import { ResponsiveTxt } from "src/component/ResponsiveTxt";
