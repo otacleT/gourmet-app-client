@@ -16,7 +16,6 @@ const Home: NextPage = () => {
         message: "ブラウザにMetamaskがインストールされていません",
         icon: <IoCloseOutline />,
         color: "red",
-        autoClose: false,
       });
     }
   }, [hasMetamask]);
