@@ -67,6 +67,7 @@ export const RateModal: FC<Props> = (props) => {
       showNotification({
         message: "問題が発生しました",
         icon: <IoCloseOutline />,
+        color: "red",
       });
     }
   }, [success, error]);
