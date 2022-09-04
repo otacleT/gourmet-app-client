@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { FC, useEffect, useState } from "react";
 import { useAuth } from "src/context/auth";
+import { useMetamask } from "src/context/metamask";
 import { MyProfile } from "../MyProfile";
 import { UserIcon } from "../UserIcon";
 import { WalletConnect } from "../WalletConnect";
@@ -8,13 +9,7 @@ import { WalletConnect } from "../WalletConnect";
 export const Header: FC = () => {
   const { fbUser, user } = useAuth();
   const [isMypage, setIsMypage] = useState<boolean>(false);
-  const [hasMetamask, setHasMetamask] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (window.ethereum && window.ethereum.isMetaMask) {
-      setHasMetamask(true);
-    }
-  }, []);
+  const { hasMetamask } = useMetamask();
 
   return (
     <header className="w-full">

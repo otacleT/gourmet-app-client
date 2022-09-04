@@ -5,13 +5,13 @@ import { useEffect, useState } from "react";
 import { IoCloseOutline } from "react-icons/io5";
 import { ChangeButton } from "src/component/ChangeButton";
 import { ResponsiveTxt } from "src/component/ResponsiveTxt";
+import { useMetamask } from "src/context/metamask";
 
 const Home: NextPage = () => {
-  const [hasMetamask, setHasMetamask] = useState<boolean>(true);
+  const { hasMetamask } = useMetamask();
 
   useEffect(() => {
-    if (!window.ethereum || !window.ethereum.isMetaMask) {
-      setHasMetamask(false);
+    if (!hasMetamask) {
       showNotification({
         message: "ブラウザにMetamaskがインストールされていません",
         icon: <IoCloseOutline />,
@@ -19,7 +19,7 @@ const Home: NextPage = () => {
         autoClose: false,
       });
     }
-  }, []);
+  }, [hasMetamask]);
   return (
     <main>
       <ResponsiveTxt />
