@@ -12,19 +12,19 @@ export const TopButton: FC = () => {
         </a>
       </Link>
     );
-  } else if (!user) {
+  } else if (!fbUser) {
     return (
-      <Link href="/create-account">
+      <Link href="/login">
         <a className="text-lg font-bold text-white text-center py-3 px-6 rounded-md bg-[#2cb696] mr-10">
-          アカウントを作成する
+          ログインして始める
         </a>
       </Link>
     );
   } else {
     return (
-      <Link href="/login">
+      <Link href="/create-account">
         <a className="text-lg font-bold text-white text-center py-3 px-6 rounded-md bg-[#2cb696] mr-10">
-          ログインして始める
+          アカウントを作成する
         </a>
       </Link>
     );
