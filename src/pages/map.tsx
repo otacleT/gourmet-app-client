@@ -24,7 +24,7 @@ const Map: NextPage = () => {
   const { shops } = useShops();
   const { results } = useResult();
   const router = useRouter();
-  const { hasMetamask } = useMetamask();
+  const { hasMetamask, isStarting } = useMetamask();
   const searchId = useCallback((results: Result[], id: number) => {
     let latest = 0;
     for (const x of results) {
@@ -77,10 +77,10 @@ const Map: NextPage = () => {
     setOpened(true);
   }, []);
   useEffect(() => {
-    if (!hasMetamask) {
+    if (!isStarting && !hasMetamask) {
       router.push("/");
     }
-  }, [hasMetamask]);
+  }, [hasMetamask, isStarting]);
   if (!hasMetamask) {
     return <div className="loading"></div>;
   }

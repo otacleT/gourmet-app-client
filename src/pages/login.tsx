@@ -10,18 +10,18 @@ import { login } from "src/lib/firebase/auth";
 const LoginPage = () => {
   const { user, fbUser, isLoading } = useAuth();
   const router = useRouter();
-  const { hasMetamask } = useMetamask();
+  const { hasMetamask, isStarting } = useMetamask();
   useEffect(() => {
-    if (!hasMetamask) {
+    if (!isStarting && !hasMetamask) {
       router.push("/");
-    }
-    if (user) {
-      router.push("/map");
     }
     if (fbUser) {
       router.push("/create-account");
     }
-  }, [user, fbUser, hasMetamask]);
+    if (user) {
+      router.push("/map");
+    }
+  }, [user, fbUser, hasMetamask, isStarting]);
   if (isLoading || user || fbUser || !hasMetamask) {
     return <div className="loading"></div>;
   }

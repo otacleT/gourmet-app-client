@@ -13,7 +13,7 @@ import { db } from "src/lib/firebase/init";
 const CreateAccount = () => {
   const { user, fbUser, isLoading } = useAuth();
   const router = useRouter();
-  const { hasMetamask } = useMetamask();
+  const { hasMetamask, isStarting } = useMetamask();
 
   const form = useForm({
     initialValues: {
@@ -38,7 +38,7 @@ const CreateAccount = () => {
     [fbUser]
   );
   useEffect(() => {
-    if (!hasMetamask) {
+    if (!isStarting && !hasMetamask) {
       router.push("/");
     }
     if (!fbUser) {
@@ -47,7 +47,7 @@ const CreateAccount = () => {
     if (user) {
       router.push("/map");
     }
-  }, [hasMetamask, fbUser, user]);
+  }, [fbUser, user, hasMetamask, isStarting]);
   if (isLoading || !hasMetamask || !fbUser || user) {
     return <div className="loading"></div>;
   }
