@@ -22,8 +22,9 @@ export const MyProfile: FC<Props> = (props) => {
       position="right"
       overlayOpacity={0.55}
       overlayBlur={3}
-      size="430px"
-      className="scrollBar h-[calc(100vh-70px)]  top-auto bottom-0 px-10 overflow-y-scroll pb-14"
+      withCloseButton={false}
+      size="400px"
+      className="hidden md:block scrollBar h-[calc(100vh-70px)] top-auto bottom-0 p-10 overflow-y-scroll"
     >
       <div className="w-full flex justify-between">
         {fbUser?.photoURL ? (

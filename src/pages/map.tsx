@@ -7,6 +7,7 @@ import ReactMap, {
   Marker,
   NavigationControl,
 } from "react-map-gl";
+import { ResponsiveTxt } from "src/component/ResponsiveTxt";
 import { ShopInfo } from "src/component/ShopInfo";
 import { Result, useResult } from "src/hook/Result/Result";
 import { useShops } from "src/hook/Shops";
@@ -72,37 +73,40 @@ const Map: NextPage = () => {
     setOpened(true);
   }, []);
   return (
-    <main className="h-[calc(100vh-70px)]">
-      <ReactMap
-        initialViewState={{
-          longitude: 139.6503,
-          latitude: 35.6762,
-          zoom: 10,
-        }}
-        mapStyle={process.env.NEXT_PUBLIC_MAPBOX_STYLE}
-        mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_GL_ACCESS_TOKEN}
-        attributionControl={false}
-      >
-        <GeocoderControl
-          mapboxAccessToken={
-            process.env.NEXT_PUBLIC_MAPBOX_GL_ACCESS_TOKEN ?? ""
-          }
-          position="top-left"
-          placeholder="search a store"
-        />
-        {geojson.features.map((marker) => (
-          <Marker
-            latitude={marker.geometry.coordinates.lat}
-            longitude={marker.geometry.coordinates.lng}
-            onClick={() => handleMarker(marker)}
-            color="#fe553e"
-            key={Math.round(Math.random() * 10000)}
+    <main>
+      <ResponsiveTxt />
+      <div className="hidden md:block h-[calc(100vh-70px)]">
+        <ReactMap
+          initialViewState={{
+            longitude: 139.6503,
+            latitude: 35.6762,
+            zoom: 10,
+          }}
+          mapStyle={process.env.NEXT_PUBLIC_MAPBOX_STYLE}
+          mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_GL_ACCESS_TOKEN}
+          attributionControl={false}
+        >
+          <GeocoderControl
+            mapboxAccessToken={
+              process.env.NEXT_PUBLIC_MAPBOX_GL_ACCESS_TOKEN ?? ""
+            }
+            position="top-left"
+            placeholder="search a store"
           />
-        ))}
-        <GeolocateControl />
-        <NavigationControl />
-      </ReactMap>
-      <ShopInfo info={info} opened={opened} setOpened={setOpened} />
+          {geojson.features.map((marker) => (
+            <Marker
+              latitude={marker.geometry.coordinates.lat}
+              longitude={marker.geometry.coordinates.lng}
+              onClick={() => handleMarker(marker)}
+              color="#fe553e"
+              key={Math.round(Math.random() * 10000)}
+            />
+          ))}
+          <GeolocateControl />
+          <NavigationControl />
+        </ReactMap>
+        <ShopInfo info={info} opened={opened} setOpened={setOpened} />
+      </div>
     </main>
   );
 };

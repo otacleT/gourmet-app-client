@@ -26,7 +26,7 @@ export const ShopInfo: FC<Props> = (props) => {
         size="lg"
         radius={0}
         position={{ left: "20px", bottom: "20px" }}
-        className="pt-8 rounded-xl z-10"
+        className="hidden md:block pt-8 rounded-xl z-10"
       >
         <div className="tag absolute right-8 top-0 w-10 h-12 bg-[#2cb696] text-lg text-white font-bold leading-none flex items-center justify-center text-center">
           ★<br />

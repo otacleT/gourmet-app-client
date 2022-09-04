@@ -15,7 +15,7 @@ export const Header: FC = () => {
         <Link href="/">
           <a className="text-2xl font-bold">Gourmet APP</a>
         </Link>
-        <div className="flex justify-between items-center">
+        <div className="hidden md:flex justify-between items-center">
           {fbUser ? (
             user ? (
               <WalletConnect />
