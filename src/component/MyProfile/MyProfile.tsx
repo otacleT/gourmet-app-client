@@ -59,20 +59,20 @@ export const MyProfile: FC<Props> = (props) => {
           </div>
         </div>
       </div>
-      <h3 className="text-2xl font-bold mt-5">Your profile</h3>
+      <h3 className="text-xl font-bold mt-5">アカウント情報</h3>
       <dl className="flex justify-between items-center flex-wrap mt-2">
-        <dt className="w-1/3 text-sm mt-1">Name</dt>
-        <dd className="w-2/3 text-center mt-1">{user?.name}</dd>
-        <dt className="w-1/3 text-sm mt-1">Sex</dt>
-        <dd className="w-2/3 text-center mt-1">{user?.sex}</dd>
-        <dt className="w-1/3 text-sm mt-1">Birth</dt>
-        <dd className="w-2/3 text-center mt-1">{user?.birth}</dd>
-        <dt className="w-1/3 text-sm mt-1">Address</dt>
-        <dd className="w-2/3 text-center mt-1">{user?.address}</dd>
-        <dt className="w-1/3 text-sm mt-1">Job</dt>
-        <dd className="w-2/3 text-center mt-1">{user?.job}</dd>
+        <dt className="w-1/3 text-sm mt-1 py-2">名前</dt>
+        <dd className="w-2/3 text-center mt-1 py-2">{user?.name}</dd>
+        <dt className="w-1/3 text-sm mt-1 py-2">性別</dt>
+        <dd className="w-2/3 text-center mt-1 py-2">{user?.sex}</dd>
+        <dt className="w-1/3 text-sm mt-1 py-2">生年月日</dt>
+        <dd className="w-2/3 text-center mt-1 py-2">{user?.birth}</dd>
+        <dt className="w-1/3 text-sm mt-1 py-2">住所</dt>
+        <dd className="w-2/3 text-center mt-1 py-2">{user?.address}</dd>
+        <dt className="w-1/3 text-sm mt-1 py-2">職業</dt>
+        <dd className="w-2/3 text-center mt-1 py-2">{user?.job}</dd>
       </dl>
-      <h3 className="text-2xl font-bold mt-7">History</h3>
+      <h3 className="text-xl font-bold mt-7">評価履歴</h3>
       {history.map((item) => (
         <dl
           className="flex items-end mt-2"
