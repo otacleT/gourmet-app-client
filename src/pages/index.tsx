@@ -1,19 +1,53 @@
+import { showNotification } from "@mantine/notifications";
 import { NextPage } from "next";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import { IoCloseOutline } from "react-icons/io5";
 import { ChangeButton } from "src/component/ChangeButton";
 import { ResponsiveTxt } from "src/component/ResponsiveTxt";
 
 const Home: NextPage = () => {
+  const [hasMetamask, setHasMetamask] = useState<boolean>(true);
+
+  useEffect(() => {
+    if (!window.ethereum || !window.ethereum.isMetaMask) {
+      setHasMetamask(false);
+      showNotification({
+        message: "ブラウザにMetamaskがインストールされていません",
+        icon: <IoCloseOutline />,
+        color: "red",
+        autoClose: false,
+      });
+    }
+  }, []);
   return (
     <main>
       <ResponsiveTxt />
       <div className="hidden md:block w-full h-[calc(100vh-70px)] min-h-[720px] max-w-3xl px-5 pt-52 md:max-w-4xl lg:max-w-5xl lg:pt-60 mx-auto relative">
-        <p className="md:text-[26px] lg:text-3xl font-bold">
-          信頼度に応じた飲食店評価アプリ
-        </p>
-        <div className="flex items-center mt-10">
-          <ChangeButton />
-        </div>
+        {hasMetamask ? (
+          <div>
+            <p className="md:text-[26px] lg:text-3xl font-bold">
+              信頼度に応じた飲食店評価アプリ
+            </p>
+            <div className="flex items-center mt-10">
+              <ChangeButton />
+            </div>
+          </div>
+        ) : (
+          <div>
+            <p className="md:text-[26px] lg:text-3xl font-bold">
+              Metamaskをインストールしてください
+            </p>
+            <a
+              className="inline-block text-lg font-bold text-white text-center py-3 px-6 rounded-md bg-[#2cb696] mt-10"
+              href="https://metamask.io/download/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Download Metamask
+            </a>
+          </div>
+        )}
         <div className="absolute right-[33%] top-[40px] z-10">
           <div className="w-[200px] lg:w-[230px] h-[285px] lg:h-[310px] relative">
             <div className="Comment w-[135px] lg:w-[145px] h-[75px] lg:h-[80px] opacity-0 scale-50 flex items-center justify-center rounded-[50%] border-2 border-[#333] bg-white absolute left-0 top-[30px] -translate-x-[15%] animate-comment01Show">
