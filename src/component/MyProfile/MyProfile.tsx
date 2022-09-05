@@ -1,9 +1,11 @@
 import { Drawer, Image } from "@mantine/core";
-import { Dispatch, FC, SetStateAction } from "react";
+import { Dispatch, FC, SetStateAction, useState } from "react";
+import { IconContext } from "react-icons";
+import { MdFace } from "react-icons/md";
 import { useAuth } from "src/context/auth";
 import { useHistory } from "src/hook/History";
-import { MdFace } from "react-icons/md";
-import { IconContext } from "react-icons";
+import { DisplayProfile } from "../DisplayProfile";
+import { EditProfile } from "../EditProfile";
 
 type Props = {
   isMypage: boolean;
@@ -14,6 +16,7 @@ export const MyProfile: FC<Props> = (props) => {
   const { isMypage, setIsMypage } = props;
   const { fbUser, user, point } = useAuth();
   const { history } = useHistory();
+  const [isEdit, setIsEdit] = useState<boolean>(false);
 
   return (
     <Drawer
@@ -61,29 +64,18 @@ export const MyProfile: FC<Props> = (props) => {
       </div>
       <h3 className="text-xl font-bold mt-10 flex justify-between">
         アカウント情報
-        <span className="text-base text-[#333] underline decoration-solid">
-          編集
-        </span>
+        <button
+          onClick={() => setIsEdit(!isEdit)}
+          className="text-sm leading-none text-[#333] underline decoration-solid"
+        >
+          {isEdit ? "戻る" : "編集"}
+        </button>
       </h3>
-      <dl className="flex justify-between items-center flex-wrap mt-2">
-        <dt className="w-1/3 flex items-center justify-between text-sm mt-1 py-2">
-          名前
-          <span className="text-xs leading-none inline-block rounded-full px-2 py-1 bg-[#fe553e] text-white">
-            +10%
-          </span>
-        </dt>
-        <dd className="w-2/3 text-center mt-1 py-2">{user?.name}</dd>
-        <dt className="w-1/3 text-sm mt-1 py-2">性別</dt>
-        <dd className="w-2/3 text-center mt-1 py-2">{user?.sex}</dd>
-        <dt className="w-1/3 text-sm mt-1 py-2">生年月日</dt>
-        <dd className="w-2/3 text-center mt-1 py-2">
-          {user?.birth ? user.birth : "未入力"}
-        </dd>
-        <dt className="w-1/3 text-sm mt-1 py-2">住所</dt>
-        <dd className="w-2/3 text-center mt-1 py-2">{user?.address}</dd>
-        <dt className="w-1/3 text-sm mt-1 py-2">職業</dt>
-        <dd className="w-2/3 text-center mt-1 py-2">{user?.job}</dd>
-      </dl>
+      {isEdit ? (
+        <EditProfile isEdit={isEdit} setIsEdit={setIsEdit} />
+      ) : (
+        <DisplayProfile />
+      )}
       <h3 className="text-xl font-bold mt-7">評価履歴</h3>
       {history.length === 0 && <p className="mt-3">評価履歴はありません</p>}
       {history.map((item) => (
