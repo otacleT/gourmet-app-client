@@ -146,9 +146,8 @@ const CreateAccount = () => {
             autoComplete="off"
             {...form.getInputProps("job")}
           />
-          <Space h="md" />
-          <button className="w-full py-3 rounded-md flex justify-center items-center text-lg bg-[#333] text-white">
-            更新
+          <button className="w-full py-4 mt-10 rounded-md flex justify-center leading-none font-bold bg-[#2cb696] text-white">
+            アカウント作成
           </button>
         </form>
       </div>
