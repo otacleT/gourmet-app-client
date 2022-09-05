@@ -59,7 +59,12 @@ export const MyProfile: FC<Props> = (props) => {
           </div>
         </div>
       </div>
-      <h3 className="text-xl font-bold mt-10">アカウント情報</h3>
+      <h3 className="text-xl font-bold mt-10 flex justify-between">
+        アカウント情報
+        <span className="text-base text-[#333] underline decoration-solid">
+          編集
+        </span>
+      </h3>
       <dl className="flex justify-between items-center flex-wrap mt-2">
         <dt className="w-1/3 flex items-center justify-between text-sm mt-1 py-2">
           名前
@@ -80,6 +85,7 @@ export const MyProfile: FC<Props> = (props) => {
         <dd className="w-2/3 text-center mt-1 py-2">{user?.job}</dd>
       </dl>
       <h3 className="text-xl font-bold mt-7">評価履歴</h3>
+      {history.length === 0 && <p className="mt-3">評価履歴はありません</p>}
       {history.map((item) => (
         <dl
           className="flex items-end mt-2"
