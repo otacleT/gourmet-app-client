@@ -1,0 +1,1 @@
+export { DisplayProfile } from "./DisplayProfile";
