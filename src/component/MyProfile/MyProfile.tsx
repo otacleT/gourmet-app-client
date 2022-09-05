@@ -23,7 +23,7 @@ export const MyProfile: FC<Props> = (props) => {
       overlayOpacity={0.55}
       overlayBlur={3}
       withCloseButton={false}
-      size="400px"
+      size="420px"
       className="hidden md:block scrollBar h-[calc(100vh-70px)] top-auto bottom-0 p-10 overflow-y-scroll"
     >
       <div className="w-full flex justify-between">
@@ -47,9 +47,9 @@ export const MyProfile: FC<Props> = (props) => {
         <div className="w-[calc(100%-115px)]">
           <p className="text-xl font-bold">{user?.nickname}</p>
           <p className="text-sm">{fbUser?.email}</p>
-          <div className="flex justify-between mt-2">
-            <p className="text-xs">プロフィール充実度</p>
-            <p className="text-sm">{point}</p>
+          <div className="flex justify-between mt-4">
+            <p className="text-xs font-bold">プロフィール充実度</p>
+            <p className="text-sm font-medium">{point}%</p>
           </div>
           <div className="h-3 w-full rounded-full border border-[#aeaeae] relative box-content">
             <div
@@ -59,14 +59,21 @@ export const MyProfile: FC<Props> = (props) => {
           </div>
         </div>
       </div>
-      <h3 className="text-xl font-bold mt-5">アカウント情報</h3>
+      <h3 className="text-xl font-bold mt-10">アカウント情報</h3>
       <dl className="flex justify-between items-center flex-wrap mt-2">
-        <dt className="w-1/3 text-sm mt-1 py-2">名前</dt>
+        <dt className="w-1/3 flex items-center justify-between text-sm mt-1 py-2">
+          名前
+          <span className="text-xs leading-none inline-block rounded-full px-2 py-1 bg-[#fe553e] text-white">
+            +10%
+          </span>
+        </dt>
         <dd className="w-2/3 text-center mt-1 py-2">{user?.name}</dd>
         <dt className="w-1/3 text-sm mt-1 py-2">性別</dt>
         <dd className="w-2/3 text-center mt-1 py-2">{user?.sex}</dd>
         <dt className="w-1/3 text-sm mt-1 py-2">生年月日</dt>
-        <dd className="w-2/3 text-center mt-1 py-2">{user?.birth}</dd>
+        <dd className="w-2/3 text-center mt-1 py-2">
+          {user?.birth ? user.birth : "未入力"}
+        </dd>
         <dt className="w-1/3 text-sm mt-1 py-2">住所</dt>
         <dd className="w-2/3 text-center mt-1 py-2">{user?.address}</dd>
         <dt className="w-1/3 text-sm mt-1 py-2">職業</dt>
