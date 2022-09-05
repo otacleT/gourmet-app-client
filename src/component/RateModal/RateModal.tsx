@@ -76,9 +76,9 @@ export const RateModal: FC<Props> = (props) => {
     <Modal
       opened={show}
       onClose={() => handleCanceled()}
-      title="Star Rating"
+      withCloseButton={false}
       centered
-      className="text-lg font-medium"
+      className="text-lg"
     >
       <p className="text-xl font-bold ">{info?.name}</p>
       <p className="flex flex-wrap w-full items-center text-sm leading-none mt-2">
@@ -90,7 +90,7 @@ export const RateModal: FC<Props> = (props) => {
       <StarRating selected={selected} setSelected={setSelected} />
       <div className="flex justify-around mt-5">
         <Button
-          className="flex w-[calc(50%-10px)] h-[40px] justify-center items-center text-sm font-bold rounded-none text-black border border-black hover:bg-inherit"
+          className="flex w-[calc(50%-10px)] h-[40px] justify-center items-center text-sm font-bold rounded-md text-[#2cb696] border border-[#2cb696] hover:bg-inherit"
           onClick={() => handleCanceled()}
         >
           閉じる
@@ -99,7 +99,7 @@ export const RateModal: FC<Props> = (props) => {
           loading={loading}
           radius={0}
           onClick={() => handleSubmit(info)}
-          className="flex w-[calc(50%-10px)] h-[40px] justify-center items-center text-sm font-bold bg-black text-white hover:bg-black"
+          className="flex w-[calc(50%-10px)] h-[40px] justify-center items-center text-sm font-bold rounded-md text-white bg-[#2cb696] hover:bg-[#2cb696]"
         >
           評価を行う
         </Button>

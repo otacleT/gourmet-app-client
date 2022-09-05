@@ -135,7 +135,7 @@ export const EditProfile: FC<Props> = (props) => {
       </dl>
       <button
         type="submit"
-        className="flex w-60 h-[40px] rounded-full mx-auto mt-3 justify-center items-center text-sm font-bold bg-black text-white hover:bg-black"
+        className="flex w-60 h-[40px] rounded-md mx-auto mt-3 justify-center items-center text-sm font-bold bg-[#2cb696] text-white hover:bg-black"
       >
         更新する
       </button>
