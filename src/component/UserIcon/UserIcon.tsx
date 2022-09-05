@@ -1,6 +1,8 @@
 import { Avatar, Menu } from "@mantine/core";
 import { Dispatch, FC, SetStateAction } from "react";
+import { AiOutlineUser } from "react-icons/ai";
 import { IoIosArrowDown } from "react-icons/io";
+import { MdOutlineLogout } from "react-icons/md";
 import { useAuth } from "src/context/auth";
 import { logout } from "src/lib/firebase/auth";
 
@@ -27,12 +29,15 @@ export const UserIcon: FC<Props> = (props) => {
         <Menu.Dropdown>
           <Menu.Label>メニュー</Menu.Label>
           {user && (
-            <Menu.Item onClick={() => setIsMypage(true)}>
+            <Menu.Item
+              icon={<AiOutlineUser />}
+              onClick={() => setIsMypage(true)}
+            >
               アカウント情報
             </Menu.Item>
           )}
           <Menu.Divider />
-          <Menu.Item color="red" onClick={logout}>
+          <Menu.Item icon={<MdOutlineLogout />} color="red" onClick={logout}>
             ログアウト
           </Menu.Item>
         </Menu.Dropdown>
