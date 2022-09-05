@@ -93,7 +93,7 @@ export const RateModal: FC<Props> = (props) => {
           className="flex w-[calc(50%-10px)] h-[40px] justify-center items-center text-sm font-bold rounded-none text-black border border-black hover:bg-inherit"
           onClick={() => handleCanceled()}
         >
-          CANCEL
+          閉じる
         </Button>
         <Button
           loading={loading}
@@ -101,7 +101,7 @@ export const RateModal: FC<Props> = (props) => {
           onClick={() => handleSubmit(info)}
           className="flex w-[calc(50%-10px)] h-[40px] justify-center items-center text-sm font-bold bg-black text-white hover:bg-black"
         >
-          SUBMIT
+          評価を行う
         </Button>
       </div>
     </Modal>
