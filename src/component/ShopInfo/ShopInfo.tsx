@@ -48,13 +48,13 @@ export const ShopInfo: FC<Props> = (props) => {
         </dl>
         {account ? (
           <button
-            className="w-full flex items-center rounded-md justify-center font-medium text-white bg-[#2cb696] p-3 mt-4 relative"
+            className="w-full flex items-center rounded-md justify-center font-bold leading-none text-white bg-[#2cb696] p-3 mt-4 relative"
             onClick={() => setShow(!show)}
           >
             このお店を評価する
           </button>
         ) : (
-          <p className="w-full text-base text-left text-[#fe553e] p-3 mt-4">
+          <p className="w-full text-base text-[#fe553e] font-bold text-center p-3 mt-4">
             ウォレットを接続してください
           </p>
         )}
