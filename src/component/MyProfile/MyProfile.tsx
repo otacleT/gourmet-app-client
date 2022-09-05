@@ -1,5 +1,5 @@
 import { Drawer, Image } from "@mantine/core";
-import { Dispatch, FC, SetStateAction, useState } from "react";
+import { Dispatch, FC, SetStateAction, useCallback, useState } from "react";
 import { IconContext } from "react-icons";
 import { MdFace } from "react-icons/md";
 import { useAuth } from "src/context/auth";
@@ -18,10 +18,15 @@ export const MyProfile: FC<Props> = (props) => {
   const { history } = useHistory();
   const [isEdit, setIsEdit] = useState<boolean>(false);
 
+  const handleClose = useCallback(() => {
+    setIsMypage(false);
+    setIsEdit(false);
+  }, []);
+
   return (
     <Drawer
       opened={isMypage}
-      onClose={() => setIsMypage(false)}
+      onClose={() => handleClose()}
       position="right"
       overlayOpacity={0.55}
       overlayBlur={3}
