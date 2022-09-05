@@ -29,7 +29,7 @@ export const EditProfile: FC<Props> = (props) => {
       editProfile(values, fbUser);
       setIsEdit(false);
       showNotification({
-        message: "アカウント情報を変更しました",
+        message: "アカウント情報を更新しました",
         icon: <AiOutlineCheck />,
       });
     },
