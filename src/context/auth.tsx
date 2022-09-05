@@ -55,12 +55,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
   useEffect(() => {
     if (!user) return;
+    setPoint(0);
     for (const [key, value] of Object.entries(user)) {
       if (key == "nickname") {
         setPoint((prevpoint) => {
           return prevpoint + 50;
         });
-      } else if (value != "") {
+      } else if (value) {
         setPoint((prevpoint) => {
           return prevpoint + 10;
         });
