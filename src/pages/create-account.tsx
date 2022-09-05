@@ -147,7 +147,7 @@ const CreateAccount = () => {
             {...form.getInputProps("job")}
           />
           <button className="w-full py-4 mt-10 rounded-md flex justify-center leading-none font-bold bg-[#2cb696] text-white">
-            アカウント作成
+            登録する
           </button>
         </form>
       </div>
