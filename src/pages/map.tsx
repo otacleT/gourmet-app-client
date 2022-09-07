@@ -56,7 +56,7 @@ const Map: NextPage = () => {
         },
       })),
     };
-  }, [shops, results]);
+  }, [results]);
 
   const handleInfo = useCallback((e: any) => {
     setInfo((prevstate) => {
@@ -112,7 +112,12 @@ const Map: NextPage = () => {
               onClick={() => handleMarker(marker)}
               key={Math.round(Math.random() * 10000)}
             >
-              <span>
+              <span
+                style={{
+                  width: `${marker.properties.star * 10 + 5}px`,
+                  height: `${marker.properties.star * 10 + 5}px`,
+                }}
+              >
                 <b>{marker.properties.star}</b>
               </span>
             </Marker>
