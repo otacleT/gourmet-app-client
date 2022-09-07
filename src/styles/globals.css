@@ -117,6 +117,30 @@
   top: 3px !important;
   right: 3px !important;
 }
+.mapboxgl-marker {
+  width: 0;
+  height: 0;
+}
+
+.mapboxgl-marker span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  width: 30px;
+  height: 30px;
+  color: #fff;
+  background: #fe553e;
+  border: solid 2px;
+  border-radius: 0 70% 70%;
+  box-shadow: 0 0 2px #000;
+  cursor: pointer;
+  transform-origin: 0 0;
+  transform: rotateZ(-135deg);
+}
+.mapboxgl-marker span b {
+  transform: rotateZ(135deg);
+}
 @media screen and (min-width: 640px) {
   .mapboxgl-ctrl-geocoder {
     min-width: 400px !important;
