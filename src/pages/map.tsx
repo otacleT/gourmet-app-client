@@ -110,9 +110,12 @@ const Map: NextPage = () => {
               latitude={marker.geometry.coordinates.lat}
               longitude={marker.geometry.coordinates.lng}
               onClick={() => handleMarker(marker)}
-              color="#fe553e"
               key={Math.round(Math.random() * 10000)}
-            />
+            >
+              <span>
+                <b>{marker.properties.star}</b>
+              </span>
+            </Marker>
           ))}
           <GeolocateControl />
           <NavigationControl />
