@@ -117,18 +117,16 @@
   top: 3px !important;
   right: 3px !important;
 }
-.mapboxgl-marker {
+/* .mapboxgl-marker {
   width: 0;
   height: 0;
-}
+} */
 
 .mapboxgl-marker span {
   display: flex;
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  width: 30px;
-  height: 30px;
   color: #fff;
   background: #fe553e;
   border: solid 2px;
@@ -139,6 +137,7 @@
   transform: rotateZ(-135deg);
 }
 .mapboxgl-marker span b {
+  font-size: 14px;
   transform: rotateZ(135deg);
 }
 @media screen and (min-width: 640px) {
