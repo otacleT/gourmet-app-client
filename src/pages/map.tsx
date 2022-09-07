@@ -110,7 +110,7 @@ const Map: NextPage = () => {
               latitude={marker.geometry.coordinates.lat}
               longitude={marker.geometry.coordinates.lng}
               onClick={() => handleMarker(marker)}
-              key={Math.round(Math.random() * 10000)}
+              key={marker.properties.id}
             >
               <span
                 style={{
