@@ -97,6 +97,7 @@ const Map: NextPage = () => {
           mapStyle={process.env.NEXT_PUBLIC_MAPBOX_STYLE}
           mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_GL_ACCESS_TOKEN}
           attributionControl={false}
+          // minZoom={8}
         >
           <GeocoderControl
             mapboxAccessToken={
