@@ -106,7 +106,7 @@ const Map: NextPage = () => {
             position="top-left"
             placeholder="search a store"
           />
-          {geojson.features.map((marker) => (
+          {geojson.features.map((marker, index) => (
             <Marker
               latitude={marker.geometry.coordinates.lat}
               longitude={marker.geometry.coordinates.lng}
@@ -115,11 +115,12 @@ const Map: NextPage = () => {
             >
               <span
                 style={{
-                  width: `${marker.properties.star * 10 + 5}px`,
-                  height: `${marker.properties.star * 10 + 5}px`,
+                  width: `${marker.properties.star * 3 + 30}px`,
+                  height: `${marker.properties.star * 3 + 30}px`,
                 }}
               >
                 <b>{marker.properties.star}</b>
+                <b>{index}</b>
               </span>
             </Marker>
           ))}
