@@ -115,12 +115,11 @@ const Map: NextPage = () => {
             >
               <span
                 style={{
-                  width: `${marker.properties.star * 3 + 30}px`,
-                  height: `${marker.properties.star * 3 + 30}px`,
+                  width: `${marker.properties.star * 6 + 30}px`,
+                  height: `${marker.properties.star * 6 + 30}px`,
                 }}
               >
                 <b>{marker.properties.star}</b>
-                <b>{index}</b>
               </span>
             </Marker>
           ))}
