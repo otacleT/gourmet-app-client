@@ -106,7 +106,7 @@ const Map: NextPage = () => {
             position="top-left"
             placeholder="search a store"
           />
-          {geojson.features.map((marker, index) => (
+          {geojson.features.map((marker) => (
             <Marker
               latitude={marker.geometry.coordinates.lat}
               longitude={marker.geometry.coordinates.lng}
