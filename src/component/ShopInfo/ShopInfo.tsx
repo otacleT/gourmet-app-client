@@ -1,5 +1,6 @@
 import { Dialog } from "@mantine/core";
 import { useEthers } from "@usedapp/core";
+import Image from "next/image";
 import { Dispatch, FC, SetStateAction, useState } from "react";
 import { IconContext } from "react-icons";
 import { RiMapPinLine } from "react-icons/ri";
@@ -30,7 +31,7 @@ export const ShopInfo: FC<Props> = (props) => {
         className="hidden md:block pt-8 rounded-bl-xl rounded-br-xl"
       >
         <div className="absolute top-0 left-0 -translate-y-full w-full h-[200px] overflow-hidden rounded-tl-xl rounded-tr-xl">
-          <img className="w-full object-cover" src="/cooking.jpg" alt="" />
+          <Image className="object-cover" src="/cooking.jpg" layout="fill" />
         </div>
         <div className="tag absolute right-8 top-0 w-10 h-12 bg-[#2cb696] text-lg text-white font-bold leading-none flex items-center justify-center text-center">
           ★<br />
