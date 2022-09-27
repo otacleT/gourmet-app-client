@@ -1,6 +1,6 @@
 ## 信頼度に応じた飲食店評価アプリ
 
-https://user-images.githubusercontent.com/80461281/190844614-3b68ff13-f3a7-496d-b67b-9b4a16e6ee2e.mp4
+https://user-images.githubusercontent.com/80461281/192454707-5f732768-f741-419a-bcf9-d9fc244ba440.mp4
 
 ### アプリの概要
 技育展2022で登壇し、**優秀賞**をいただくことができました。   
