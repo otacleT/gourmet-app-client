@@ -1,8 +1,8 @@
 export type User = {
-  nickname: string;
-  name: string;
-  sex: string;
-  birth: string;
-  address: string;
-  job: string;
-};
+  name: string
+  address: string
+  birth: string
+  job: string
+  nickname: string
+  sex: string
+}

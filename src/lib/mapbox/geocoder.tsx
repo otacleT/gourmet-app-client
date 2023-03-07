@@ -1,113 +1,90 @@
-import MapboxGeocoder, { GeocoderOptions } from "@mapbox/mapbox-gl-geocoder";
-import { ReactElement, useState } from "react";
-import { ControlPosition, Marker, MarkerProps, useControl } from "react-map-gl";
+import MapboxGeocoder, {GeocoderOptions} from '@mapbox/mapbox-gl-geocoder'
+import {ReactElement, useState} from 'react'
+import {ControlPosition, Marker, MarkerProps, useControl} from 'react-map-gl'
 
-type GeocoderControlProps = Omit<
-  GeocoderOptions,
-  "accessToken" | "mapboxgl" | "marker"
-> & {
-  mapboxAccessToken: string;
-  marker?: boolean | Omit<MarkerProps, "longitude" | "latitude">;
+type GeocoderControlProps = Omit<GeocoderOptions, 'accessToken' | 'mapboxgl' | 'marker'> & {
+  mapboxAccessToken: string
+  marker?: boolean | Omit<MarkerProps, 'longitude' | 'latitude'>
 
-  position: ControlPosition;
+  onError?: (e: object) => void
 
-  onLoading?: (e: object) => void;
-  onResults?: (e: object) => void;
-  onResult?: (e: object) => void;
-  onError?: (e: object) => void;
-};
+  onLoading?: (e: object) => void
+  onResult?: (e: object) => void
+  onResults?: (e: object) => void
+  position: ControlPosition
+}
 
-/* eslint-disable complexity,max-statements */
 export default function GeocoderControl(props: GeocoderControlProps) {
-  const { position, mapboxAccessToken, ...otherProps } = props;
-  const [marker, setMarker] = useState<ReactElement<any, any> | null>(null);
+  const {mapboxAccessToken, ...otherProps} = props
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [marker, setMarker] = useState<ReactElement<any, any> | null>(null)
 
   const geocoder = useControl<MapboxGeocoder>(
     () => {
       const ctrl = new MapboxGeocoder({
         ...otherProps,
-        marker: false,
         accessToken: mapboxAccessToken,
-      });
-      ctrl.on("loading", props.onLoading ?? noop);
-      ctrl.on("results", props.onResults ?? noop);
-      ctrl.on("result", (evt) => {
-        props.onResult ? props.onResult(evt) : noop();
+        marker: false,
+      })
+      ctrl.on('loading', props.onLoading ?? noop)
+      ctrl.on('results', props.onResults ?? noop)
+      ctrl.on('result', (evt) => {
+        props.onResult ? props.onResult(evt) : noop()
 
-        const { result } = evt;
+        const {result} = evt
         const location =
           result &&
-          (result.center ||
-            (result.geometry?.type === "Point" && result.geometry.coordinates));
+          (result.center || (result.geometry?.type === 'Point' && result.geometry.coordinates))
         if (location && props.marker) {
-          setMarker(<Marker longitude={location[0]} latitude={location[1]} />);
+          setMarker(<Marker longitude={location[0]} latitude={location[1]} />)
         } else {
-          setMarker(null);
+          setMarker(null)
         }
-      });
-      ctrl.on("error", props.onError ?? noop);
-      return ctrl;
+      })
+      ctrl.on('error', props.onError ?? noop)
+      return ctrl
     },
     {
       position: props.position,
     }
-  );
+  )
 
-  // @ts-ignore (TS2339) private member
   if (geocoder._map) {
-    if (
-      geocoder.getProximity() !== props.proximity &&
-      props.proximity !== undefined
-    ) {
-      geocoder.setProximity(props.proximity);
+    if (geocoder.getProximity() !== props.proximity && props.proximity !== undefined) {
+      geocoder.setProximity(props.proximity)
     }
-    if (
-      geocoder.getRenderFunction() !== props.render &&
-      props.render !== undefined
-    ) {
-      geocoder.setRenderFunction(props.render);
+    if (geocoder.getRenderFunction() !== props.render && props.render !== undefined) {
+      geocoder.setRenderFunction(props.render)
     }
-    if (
-      geocoder.getLanguage() !== props.language &&
-      props.language !== undefined
-    ) {
-      geocoder.setLanguage(props.language);
+    if (geocoder.getLanguage() !== props.language && props.language !== undefined) {
+      geocoder.setLanguage(props.language)
     }
     if (geocoder.getZoom() !== props.zoom && props.zoom !== undefined) {
-      geocoder.setZoom(props.zoom);
+      geocoder.setZoom(props.zoom)
     }
     if (geocoder.getFlyTo() !== props.flyTo && props.flyTo !== undefined) {
-      geocoder.setFlyTo(props.flyTo);
+      geocoder.setFlyTo(props.flyTo)
     }
-    if (
-      geocoder.getPlaceholder() !== props.placeholder &&
-      props.placeholder !== undefined
-    ) {
-      geocoder.setPlaceholder(props.placeholder);
+    if (geocoder.getPlaceholder() !== props.placeholder && props.placeholder !== undefined) {
+      geocoder.setPlaceholder(props.placeholder)
     }
-    if (
-      geocoder.getCountries() !== props.countries &&
-      props.countries !== undefined
-    ) {
-      geocoder.setCountries(props.countries);
+    if (geocoder.getCountries() !== props.countries && props.countries !== undefined) {
+      geocoder.setCountries(props.countries)
     }
     if (geocoder.getTypes() !== props.types && props.types !== undefined) {
-      geocoder.setTypes(props.types);
+      geocoder.setTypes(props.types)
     }
-    if (
-      geocoder.getMinLength() !== props.minLength &&
-      props.minLength !== undefined
-    ) {
-      geocoder.setMinLength(props.minLength);
+    if (geocoder.getMinLength() !== props.minLength && props.minLength !== undefined) {
+      geocoder.setMinLength(props.minLength)
     }
     if (geocoder.getLimit() !== props.limit && props.limit !== undefined) {
-      geocoder.setLimit(props.limit);
+      geocoder.setLimit(props.limit)
     }
     if (geocoder.getFilter() !== props.filter && props.filter !== undefined) {
-      geocoder.setFilter(props.filter);
+      geocoder.setFilter(props.filter)
     }
     if (geocoder.getOrigin() !== props.origin && props.origin !== undefined) {
-      geocoder.setOrigin(props.origin);
+      geocoder.setOrigin(props.origin)
     }
     // Types missing from @types/mapbox__mapbox-gl-geocoder
     // if (geocoder.getAutocomplete() !== props.autocomplete && props.autocomplete !== undefined) {
@@ -123,15 +100,16 @@ export default function GeocoderControl(props: GeocoderControlProps) {
     //   geocoder.setWorldview(props.worldview);
     // }
   }
-  return marker;
+  return marker
 }
 
-const noop = () => {};
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+const noop = () => {}
 
 GeocoderControl.defaultProps = {
   marker: true,
-  onLoading: noop,
-  onResults: noop,
-  onResult: noop,
   onError: noop,
-};
+  onLoading: noop,
+  onResult: noop,
+  onResults: noop,
+}

@@ -1,32 +1,38 @@
-import Link from "next/link";
-import { FC } from "react";
-import { useAuth } from "src/context/auth";
+import Link from 'next/link'
+import {FC} from 'react'
+import {useAuth} from 'src/context/auth'
 
+/**
+ * @package
+ */
 export const TopButton: FC = () => {
-  const { user, fbUser } = useAuth();
+  const {fbUser, user} = useAuth()
   if (fbUser && user) {
     return (
-      <Link href="/map">
-        <a className="text-lg font-bold text-white text-center py-3 px-6 rounded-md bg-[#2cb696] mr-10">
-          マップに戻る
-        </a>
+      <Link
+        className='text-lg font-bold text-white text-center py-3 px-6 rounded-md bg-[#2cb696] mr-10'
+        href='/map'
+      >
+        マップに戻る
       </Link>
-    );
+    )
   } else if (!fbUser) {
     return (
-      <Link href="/login">
-        <a className="text-lg font-bold text-white text-center py-3 px-6 rounded-md bg-[#2cb696] mr-10">
-          ログインして始める
-        </a>
+      <Link
+        className='text-lg font-bold text-white text-center py-3 px-6 rounded-md bg-[#2cb696] mr-10'
+        href='/login'
+      >
+        ログインして始める
       </Link>
-    );
+    )
   } else {
     return (
-      <Link href="/create-account">
-        <a className="text-lg font-bold text-white text-center py-3 px-6 rounded-md bg-[#2cb696] mr-10">
-          アカウントを作成する
-        </a>
+      <Link
+        className='text-lg font-bold text-white text-center py-3 px-6 rounded-md bg-[#2cb696] mr-10'
+        href='/create-account'
+      >
+        アカウントを作成する
       </Link>
-    );
+    )
   }
-};
+}
