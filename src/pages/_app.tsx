@@ -8,8 +8,7 @@ import type {AppProps} from 'next/app'
 import Head from 'next/head'
 import {AuthProvider} from 'src/context/auth'
 import {MetamaskProvider} from 'src/context/metamask'
-
-import {Header} from '../component/Header'
+import {Layout} from 'src/layout'
 
 const config = {
   readOnlyChainId: Goerli.chainId,
@@ -30,8 +29,9 @@ function MyApp({Component, pageProps}: AppProps) {
         <MetamaskProvider>
           <MantineProvider withGlobalStyles withNormalizeCSS>
             <NotificationsProvider>
-              <Header />
-              <Component {...pageProps} />
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
             </NotificationsProvider>
           </MantineProvider>
         </MetamaskProvider>
