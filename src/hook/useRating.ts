@@ -1,6 +1,6 @@
 import {useContractFunction} from '@usedapp/core'
 
-import {contract} from '..'
+import {contract} from '.'
 
 export const useRating = () => {
   const {send, state} = useContractFunction(contract, 'Rating', {

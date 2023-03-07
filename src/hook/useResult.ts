@@ -1,7 +1,7 @@
 import {useLogs} from '@usedapp/core'
 import {useMemo} from 'react'
 
-import {contract} from '..'
+import {contract} from '.'
 
 export type Result = {
   id: number

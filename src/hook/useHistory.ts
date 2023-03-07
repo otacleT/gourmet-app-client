@@ -13,7 +13,7 @@ const DEFAULT_OUTPUT: UseHistoryOutput = {
   isLoading: true,
 }
 
-export function useHistory(): UseHistoryOutput {
+export const useHistory = (): UseHistoryOutput => {
   const [output, setOutput] = useState(DEFAULT_OUTPUT)
   const {fbUser} = useAuth()
 

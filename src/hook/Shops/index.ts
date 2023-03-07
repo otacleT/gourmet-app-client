@@ -1,1 +1,0 @@
-export {useShops} from './Shops'
