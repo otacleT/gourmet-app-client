@@ -6,7 +6,7 @@ import {AiOutlineCheck} from 'react-icons/ai'
 import {IoCloseOutline} from 'react-icons/io5'
 import {RiMapPinLine} from 'react-icons/ri'
 import {useAuth} from 'src/context/auth'
-import {useRating} from 'src/hook/Rating'
+import {useRating} from 'src/hook/useRating'
 import {addRating} from 'src/lib/firebase/rating'
 import {Info} from 'src/types/info'
 

@@ -8,8 +8,8 @@ import ReactMap, {GeolocateControl, Marker, NavigationControl} from 'react-map-g
 import {ResponsiveTxt} from 'src/component/ResponsiveTxt'
 import {ShopInfo} from 'src/component/ShopInfo'
 import {useMetamask} from 'src/context/metamask'
-import {Result, useResult} from 'src/hook/Result/Result'
-import {useShops} from 'src/hook/Shops'
+import {Result, useResult} from 'src/hook/useResult'
+import {useShops} from 'src/hook/useShops'
 import GeocoderControl from 'src/lib/mapbox/geocoder'
 import {Info} from 'src/types/info'
 

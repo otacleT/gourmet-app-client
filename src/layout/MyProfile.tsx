@@ -3,7 +3,7 @@ import {Dispatch, FC, SetStateAction, useCallback, useState} from 'react'
 import {IconContext} from 'react-icons'
 import {MdFace} from 'react-icons/md'
 import {useAuth} from 'src/context/auth'
-import {useHistory} from 'src/hook/History'
+import {useHistory} from 'src/hook/useHistory'
 
 import {DisplayProfile} from './DisplayProfile'
 import {EditProfile} from './EditProfile'
