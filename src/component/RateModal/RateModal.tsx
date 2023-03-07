@@ -19,6 +19,9 @@ type Props = {
   show: boolean
 }
 
+/**
+ * @package
+ */
 export const RateModal: FC<Props> = (props) => {
   const {info, setOpened, setShow, show} = props
   const {error, loading, send, success} = useRating()

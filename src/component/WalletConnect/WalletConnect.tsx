@@ -2,8 +2,12 @@ import {Group, Text} from '@mantine/core'
 import {Goerli, useEthers} from '@usedapp/core'
 import Link from 'next/link'
 import {useRouter} from 'next/router'
+import {FC} from 'react'
 
-export const WalletConnect = () => {
+/**
+ * @package
+ */
+export const WalletConnect: FC = () => {
   const {account, activateBrowserWallet, chainId, deactivate, switchNetwork} = useEthers()
   const router = useRouter()
   if (router.route === '/') {

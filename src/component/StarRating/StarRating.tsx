@@ -5,6 +5,9 @@ type Props = {
   setSelected: Dispatch<SetStateAction<number>>
 }
 
+/**
+ * @package
+ */
 export const StarRating: FC<Props> = (props) => {
   const {selected, setSelected} = props
   const [hover, setHover] = useState<number>(-1)

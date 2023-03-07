@@ -2,6 +2,9 @@ import Link from 'next/link'
 import {FC} from 'react'
 import {useAuth} from 'src/context/auth'
 
+/**
+ * @package
+ */
 export const TopButton: FC = () => {
   const {fbUser, user} = useAuth()
   if (fbUser && user) {

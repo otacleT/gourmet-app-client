@@ -14,6 +14,9 @@ type Props = {
   setOpened: Dispatch<SetStateAction<boolean>>
 }
 
+/**
+ * @package
+ */
 export const ShopInfo: FC<Props> = (props) => {
   const {account} = useEthers()
   const {info, opened, setOpened} = props
