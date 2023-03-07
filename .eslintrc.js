@@ -18,7 +18,7 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: ['sort-keys-custom-order', 'simple-import-sort'],
+  plugins: ['sort-keys-custom-order', 'simple-import-sort', 'import-access'],
   rules: {
     'no-console': ['error', {allow: ['warn', 'info', 'error']}],
     'no-undef': 'off',
