@@ -1,1 +1,1 @@
-export { useResult } from "./Result";
+export {useResult} from './Result'

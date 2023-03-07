@@ -1,1 +1,1 @@
-export { useShops } from "./Shops";
+export {useShops} from './Shops'

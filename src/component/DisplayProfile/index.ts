@@ -1,1 +1,1 @@
-export { DisplayProfile } from "./DisplayProfile";
+export {DisplayProfile} from './DisplayProfile'

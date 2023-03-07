@@ -1,36 +1,30 @@
-import {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import {createContext, ReactNode, useContext, useEffect, useState} from 'react'
 
 type ContextType = {
-  hasMetamask: boolean;
-  isStarting: boolean;
-};
+  hasMetamask: boolean
+  isStarting: boolean
+}
 
 const MetamaskContext = createContext<ContextType>({
   hasMetamask: false,
   isStarting: true,
-});
+})
 
-export const MetamaskProvider = ({ children }: { children: ReactNode }) => {
-  const [hasMetamask, setHasMetamask] = useState<boolean>(false);
-  const [isStarting, setIsStarting] = useState<boolean>(true);
+export const MetamaskProvider = ({children}: {children: ReactNode}) => {
+  const [hasMetamask, setHasMetamask] = useState<boolean>(false)
+  const [isStarting, setIsStarting] = useState<boolean>(true)
 
   useEffect(() => {
     if (window.ethereum && window.ethereum.isMetaMask) {
-      setHasMetamask(true);
+      setHasMetamask(true)
     }
-    setIsStarting(false);
-  }, []);
+    setIsStarting(false)
+  }, [])
   return (
-    <MetamaskContext.Provider value={{ hasMetamask, isStarting }}>
+    <MetamaskContext.Provider value={{hasMetamask, isStarting}}>
       {children}
     </MetamaskContext.Provider>
-  );
-};
+  )
+}
 
-export const useMetamask = () => useContext(MetamaskContext);
+export const useMetamask = () => useContext(MetamaskContext)

@@ -1,1 +1,1 @@
-export { ResponsiveTxt } from "./ResponsiveTxt";
+export {ResponsiveTxt} from './ResponsiveTxt'

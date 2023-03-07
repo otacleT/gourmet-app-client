@@ -1,1 +1,1 @@
-export { RateModal } from "./RateModal";
+export {RateModal} from './RateModal'
