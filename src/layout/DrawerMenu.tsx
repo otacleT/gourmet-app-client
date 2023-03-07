@@ -16,7 +16,7 @@ type Props = {
 /**
  * @package
  */
-export const MyProfile: FC<Props> = (props) => {
+export const DrawerMenu: FC<Props> = (props) => {
   const {isMypage, setIsMypage} = props
   const {fbUser, point, user} = useAuth()
   const {history} = useHistory()

@@ -2,8 +2,8 @@ import Link from 'next/link'
 import {FC, useState} from 'react'
 import {useMetamask} from 'src/context/metamask'
 
+import {DrawerMenu} from './DrawerMenu'
 import {HeaderButton} from './HeaderButton'
-import {MyProfile} from './MyProfile'
 import {UserIcon} from './UserIcon'
 
 /**
@@ -26,7 +26,7 @@ export const Header: FC = () => {
           </div>
         )}
       </div>
-      <MyProfile isMypage={isMypage} setIsMypage={setIsMypage} />
+      <DrawerMenu isMypage={isMypage} setIsMypage={setIsMypage} />
     </header>
   )
 }
