@@ -2,10 +2,13 @@ import Link from 'next/link'
 import {FC, useState} from 'react'
 import {useMetamask} from 'src/context/metamask'
 
-import {HeaderButton} from '../HeaderButton'
-import {MyProfile} from '../MyProfile'
-import {UserIcon} from '../UserIcon'
+import {HeaderButton} from './HeaderButton'
+import {MyProfile} from './MyProfile'
+import {UserIcon} from './UserIcon'
 
+/**
+ * @package
+ */
 export const Header: FC = () => {
   const [isMypage, setIsMypage] = useState<boolean>(false)
   const {hasMetamask} = useMetamask()

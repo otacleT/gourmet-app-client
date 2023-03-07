@@ -5,14 +5,17 @@ import {MdFace} from 'react-icons/md'
 import {useAuth} from 'src/context/auth'
 import {useHistory} from 'src/hook/History'
 
-import {DisplayProfile} from '../DisplayProfile'
-import {EditProfile} from '../EditProfile'
+import {DisplayProfile} from './DisplayProfile'
+import {EditProfile} from './EditProfile'
 
 type Props = {
   isMypage: boolean
   setIsMypage: Dispatch<SetStateAction<boolean>>
 }
 
+/**
+ * @package
+ */
 export const MyProfile: FC<Props> = (props) => {
   const {isMypage, setIsMypage} = props
   const {fbUser, point, user} = useAuth()

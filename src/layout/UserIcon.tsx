@@ -10,6 +10,9 @@ type Props = {
   setIsMypage: Dispatch<SetStateAction<boolean>>
 }
 
+/**
+ * @package
+ */
 export const UserIcon: FC<Props> = (props) => {
   const {setIsMypage} = props
   const {fbUser, user} = useAuth()

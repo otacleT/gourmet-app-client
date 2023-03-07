@@ -1,8 +1,10 @@
 import Link from 'next/link'
+import {WalletConnect} from 'src/component/WalletConnect'
 import {useAuth} from 'src/context/auth'
 
-import {WalletConnect} from '../WalletConnect'
-
+/**
+ * @package
+ */
 export const HeaderButton = () => {
   const {fbUser, user} = useAuth()
   if (fbUser && user) {
