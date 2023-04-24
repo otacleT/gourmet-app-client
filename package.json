@@ -47,6 +47,7 @@
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "eslint-plugin-sort-keys-custom-order": "^1.0.5",
     "husky": "^8.0.3",
+    "hygen": "^6.2.11",
     "lint-staged": "^13.1.2",
     "postcss": "^8.4.14",
     "prettier": "^2.8.4",
