@@ -1,1 +1,0 @@
-export { ResponsiveTxt } from "./ResponsiveTxt";

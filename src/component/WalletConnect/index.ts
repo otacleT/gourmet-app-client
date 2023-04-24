@@ -1,1 +1,1 @@
-export { WalletConnect } from "./WalletConnect";
+export {WalletConnect} from './WalletConnect'
