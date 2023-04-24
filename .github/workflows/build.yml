@@ -18,6 +18,17 @@ jobs:
         node-version: [16.x, 18.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
+    env:
+      NEXT_PUBLIC_MAPBOX_GL_ACCESS_TOKEN: ${{ secrets.NEXT_PUBLIC_MAPBOX_GL_ACCESS_TOKEN }}
+      NEXT_PUBLIC_MAPBOX_STYLE: ${{ secrets.NEXT_PUBLIC_MAPBOX_STYLE }}
+      NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY }}
+      NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: ${{ secrets.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN }}
+      NEXT_PUBLIC_FIREBASE_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_PROJECT_ID }}
+      NEXT_PUBLIC_FIREBASE_STORAGE_BACKET: ${{ secrets.NEXT_PUBLIC_FIREBASE_STORAGE_BACKET }}
+      NEXT_PUBLIC_FIREBASE_MESSAGE_SENDER_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_MESSAGE_SENDER_ID }}
+      NEXT_PUBLIC_FIREBASE_APP_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_APP_ID }}
+      NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID }}
+
     steps:
       - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
