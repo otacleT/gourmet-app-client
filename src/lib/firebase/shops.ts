@@ -1,5 +1,5 @@
 import {collection, getDocs, getFirestore} from 'firebase/firestore'
-import {Shop} from 'src/types/shop'
+import {Shop} from 'src/type/shop'
 
 export async function getShops(): Promise<Shop[]> {
   const shops = new Array<Shop>()

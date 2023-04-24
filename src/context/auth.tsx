@@ -2,7 +2,7 @@ import {onAuthStateChanged, Unsubscribe, User as FirebaseUser} from 'firebase/au
 import {doc, onSnapshot} from 'firebase/firestore'
 import {createContext, ReactNode, useContext, useEffect, useState} from 'react'
 import {auth, db} from 'src/lib/firebase/init'
-import {User} from 'src/types/user'
+import {User} from 'src/type/user'
 
 type ContextType = {
   fbUser: FirebaseUser | null | undefined

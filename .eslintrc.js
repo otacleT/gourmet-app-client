@@ -11,6 +11,7 @@ module.exports = {
     'plugin:jsx-a11y/recommended',
     'plugin:@typescript-eslint/recommended',
     'prettier',
+    'plugin:storybook/recommended',
   ],
   overrides: [],
   parser: '@typescript-eslint/parser',
@@ -20,7 +21,12 @@ module.exports = {
   },
   plugins: ['sort-keys-custom-order', 'simple-import-sort', 'import-access'],
   rules: {
-    'no-console': ['error', {allow: ['warn', 'info', 'error']}],
+    'no-console': [
+      'error',
+      {
+        allow: ['warn', 'info', 'error'],
+      },
+    ],
     'no-undef': 'off',
     'react/jsx-uses-react': 'off',
     'react/react-in-jsx-scope': 'off',
@@ -28,8 +34,18 @@ module.exports = {
     'react/prop-types': 'off',
     'simple-import-sort/exports': 'error',
     'simple-import-sort/imports': 'error',
-    'sort-keys-custom-order/object-keys': ['error', {orderedKeys: ['id', 'name', 'title']}],
-    'sort-keys-custom-order/type-keys': ['error', {orderedKeys: ['id', 'name', 'title']}],
+    'sort-keys-custom-order/object-keys': [
+      'error',
+      {
+        orderedKeys: ['id', 'name', 'title'],
+      },
+    ],
+    'sort-keys-custom-order/type-keys': [
+      'error',
+      {
+        orderedKeys: ['id', 'name', 'title'],
+      },
+    ],
   },
   settings: {
     react: {
