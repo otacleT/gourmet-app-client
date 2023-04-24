@@ -1,4 +1,6 @@
-import {Dispatch, FC, SetStateAction, useCallback, useState} from 'react'
+import {Dispatch, FC, SetStateAction} from 'react'
+
+import {useStarRating} from './hook/useStarRating'
 
 type Props = {
   selected: number
@@ -10,17 +12,8 @@ type Props = {
  */
 export const StarRating: FC<Props> = (props) => {
   const {selected, setSelected} = props
-  const [hover, setHover] = useState<number>(-1)
-  const handleClick = useCallback(
-    (num: number) => {
-      setSelected(num)
-      setHover(-1)
-    },
-    [setSelected, setHover]
-  )
-  const handleHover = useCallback((num: number) => {
-    setHover(num)
-  }, [])
+  const {handleClick, handleHover, hover, setHover} = useStarRating()
+
   return (
     <div className='relative w-[5em] h-[1em] text-3xl leading-[1em] mt-3'>
       <div className='absolute top-0 left-0 overflow-hidden whitespace-nowrap text-[#fe553e] w-[5em]'>
@@ -34,7 +27,7 @@ export const StarRating: FC<Props> = (props) => {
                   ? 'opacity-100 cursor-pointer'
                   : 'opacity-0 hover:opacity-100 cursor-pointer'
               }
-              onClick={() => handleClick(num)}
+              onClick={() => handleClick(num, setSelected)}
               onFocus={() => handleHover(num)}
               onMouseOver={() => handleHover(num)}
               onMouseLeave={() => setHover(-1)}

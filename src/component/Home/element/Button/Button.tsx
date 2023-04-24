@@ -5,7 +5,7 @@ import {useAuth} from 'src/context/auth'
 /**
  * @package
  */
-export const TopButton: FC = () => {
+export const Button: FC = () => {
   const {fbUser, user} = useAuth()
   if (fbUser && user) {
     return (
