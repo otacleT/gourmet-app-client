@@ -2,7 +2,7 @@ import {Button, Modal} from '@mantine/core'
 import {Dispatch, FC, SetStateAction} from 'react'
 import {IconContext} from 'react-icons'
 import {RiMapPinLine} from 'react-icons/ri'
-import {Info} from 'src/types/info'
+import {Info} from 'src/type/info'
 
 import {StarRating} from '../StarRating'
 import {useRateModal} from './hook/useRateModal'

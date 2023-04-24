@@ -1,5 +1,4 @@
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'
-import '../lib/firebase/init'
 
 import {FC} from 'react'
 import ReactMap, {GeolocateControl, Marker, NavigationControl} from 'react-map-gl'
