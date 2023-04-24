@@ -1,6 +1,6 @@
-import {Dispatch, FC, SetStateAction, useCallback, useState} from 'react'
+import {Dispatch, FC, SetStateAction} from 'react'
 
-import {useStarRating} from './hooks/useStarRating'
+import {useStarRating} from './hook/useStarRating'
 
 type Props = {
   selected: number
