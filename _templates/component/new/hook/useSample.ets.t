@@ -1,5 +1,5 @@
 ---
-to: "<%= hasHook ? `${path}/hooks/useSample.ts` : null %>"
+to: "<%= hasHook ? `${path}/hook/useSample.ts` : null %>"
 ---
 import {useCallback} from 'react'
 

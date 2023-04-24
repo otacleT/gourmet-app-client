@@ -4,9 +4,9 @@ import Image from 'next/image'
 import {Dispatch, FC, SetStateAction, useState} from 'react'
 import {IconContext} from 'react-icons'
 import {RiMapPinLine} from 'react-icons/ri'
-import {Info} from 'src/types/info'
+import {Info} from 'src/type/info'
 
-import {RateModal} from '../RateModal'
+import {RateModal} from './element/RateModal'
 
 type Props = {
   info: Info | undefined

@@ -1,6 +1,6 @@
 import {User as FirebaseUser} from 'firebase/auth'
 import {doc, setDoc} from 'firebase/firestore'
-import {User} from 'src/types/user'
+import {User} from 'src/type/user'
 
 import {db} from './init'
 

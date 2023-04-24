@@ -1,16 +1,11 @@
 import {Button, Modal} from '@mantine/core'
-import {showNotification} from '@mantine/notifications'
-import {Dispatch, FC, SetStateAction, useCallback, useEffect, useState} from 'react'
+import {Dispatch, FC, SetStateAction} from 'react'
 import {IconContext} from 'react-icons'
-import {AiOutlineCheck} from 'react-icons/ai'
-import {IoCloseOutline} from 'react-icons/io5'
 import {RiMapPinLine} from 'react-icons/ri'
-import {useAuth} from 'src/context/auth'
-import {useRating} from 'src/hook/useRating'
-import {addRating} from 'src/lib/firebase/rating'
 import {Info} from 'src/types/info'
 
 import {StarRating} from '../StarRating'
+import {useRateModal} from './hook/useRateModal'
 
 type Props = {
   info: Info | undefined
@@ -24,48 +19,11 @@ type Props = {
  */
 export const RateModal: FC<Props> = (props) => {
   const {info, setOpened, setShow, show} = props
-  const {error, loading, send, success} = useRating()
-  const [selected, setSelected] = useState<number>(0)
-  const {fbUser, point} = useAuth()
-  const handleSubmit = useCallback(
-    async (info: Info | undefined) => {
-      if (info == undefined) return
-      await send(info.id, selected, point)
-      addRating({
-        name: info.name,
-        address: info.address,
-        category: info.category,
-        star: selected,
-        user: fbUser,
-      })
-    },
-    [selected, send, fbUser, point]
+  const {handleCanceled, handleSubmit, loading, selected, setSelected} = useRateModal(
+    info,
+    setShow,
+    setOpened
   )
-  const handleCanceled = useCallback(() => {
-    setShow(false)
-    setSelected(0)
-  }, [setShow, setSelected])
-
-  useEffect(() => {
-    if (success) {
-      setShow(false)
-      setOpened(false)
-      setSelected(0)
-      showNotification({
-        icon: <AiOutlineCheck />,
-        message: `${info?.name}への評価が正常に処理されました`,
-      })
-    } else if (error) {
-      setShow(false)
-      setOpened(false)
-      setSelected(0)
-      showNotification({
-        color: 'red',
-        icon: <IoCloseOutline />,
-        message: '問題が発生しました',
-      })
-    }
-  }, [success, error, info, setShow, setOpened])
 
   return (
     <Modal
